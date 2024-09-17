@@ -80,7 +80,7 @@ model Article {
     headline String
     summary  String
     content  String
-    views    Int
+    views    Int     @default(0)
     image    String
     paid     Boolean @default(true)
 
