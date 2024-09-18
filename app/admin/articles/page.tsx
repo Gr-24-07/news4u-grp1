@@ -1,4 +1,4 @@
-import { getArticles } from "@/app/actions/articles";
+import { getArticles } from "@/app/data/articles";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

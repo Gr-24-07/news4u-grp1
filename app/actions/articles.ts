@@ -8,13 +8,21 @@ const CreateArticleSchema = z.object({
     summary: z.string().min(1, "Summary is required"),
     content: z.string().min(1, "Content is required"),
     image: z.string().min(1, "Content is required").url("Invalid image url"),
+    categories: z.string().transform((str) => {
+        console.log(str);
+        const arr = JSON.parse(str) as string[];
+        console.log(arr);
+
+        return arr; // Parse categories JSON array
+    }),
+    paid: z
+        .string()
+        .optional()
+        .transform((val) => {
+            if (val === "on") return true;
+            return false;
+        }),
 });
-
-export async function getArticles() {
-    const result = await prisma.article.findMany();
-
-    return result;
-}
 
 export type CreateArticleFail = {
     success: false;
@@ -24,6 +32,7 @@ export type CreateArticleFail = {
             summary: string;
             content: string;
             image: string;
+            categories: string[];
         },
         string
     >;
@@ -33,6 +42,8 @@ export async function createArticle(
     formData: FormData
 ): Promise<CreateArticleFail | undefined> {
     const result = Object.fromEntries(formData.entries());
+    console.log(result);
+
     const parsedResult = await CreateArticleSchema.safeParseAsync(result);
 
     if (!parsedResult.success) {
@@ -55,10 +66,16 @@ export async function createArticle(
             content: data.content,
             summary: data.summary,
             image: data.image,
+            paid: data.paid,
             author: {
                 connect: {
                     id: author,
                 },
+            },
+            category: {
+                connect: data.categories.map((category: string) => ({
+                    name: category,
+                })),
             },
         },
     });
