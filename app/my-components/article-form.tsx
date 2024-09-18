@@ -58,22 +58,38 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
         >
             <div>
                 <Label htmlFor="headline">Headline</Label>
-                <Input type="text" name="headline"></Input>
+                <Input
+                    type="text"
+                    name="headline"
+                    defaultValue={article?.headline || ""}
+                ></Input>
                 <FormError errors={errors?.headline?._errors}></FormError>
             </div>
             <div>
                 <Label htmlFor="image">Image</Label>
-                <Input type="text" name="image"></Input>
+                <Input
+                    type="text"
+                    name="image"
+                    defaultValue={article?.image || ""}
+                ></Input>
                 <FormError errors={errors?.image?._errors}></FormError>
             </div>
             <div>
                 <Label htmlFor="summary">Summary</Label>
-                <Textarea rows={3} name="summary"></Textarea>
+                <Textarea
+                    rows={3}
+                    name="summary"
+                    defaultValue={article?.summary || ""}
+                ></Textarea>
                 <FormError errors={errors?.summary?._errors}></FormError>
             </div>
             <div>
                 <Label htmlFor="content">Content</Label>
-                <Textarea rows={10} name="content"></Textarea>
+                <Textarea
+                    rows={10}
+                    name="content"
+                    defaultValue={article?.content || ""}
+                ></Textarea>
                 <FormError errors={errors?.content?._errors}></FormError>
             </div>
             <div className="space-y-2 rounded-md border border-input bg-transparent px-3 py-2 shadow-sm">
@@ -88,6 +104,11 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                                 id={category.name}
                                 name="categories"
                                 value={category.name}
+                                defaultChecked={article?.category.some(
+                                    (cat) => {
+                                        return cat.name === category.name;
+                                    }
+                                )}
                                 onCheckedChange={() =>
                                     toggleCategorySelection(category.name)
                                 }
@@ -103,7 +124,11 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
             <div className="space-y-2 rounded-md border border-input bg-transparent px-3 py-2 shadow-sm">
                 <h2>Settings</h2>
                 <div className="items-top flex space-x-2">
-                    <Checkbox id={"paid"} name={"paid"}></Checkbox>
+                    <Checkbox
+                        id={"paid"}
+                        name={"paid"}
+                        defaultChecked={article?.paid || false}
+                    ></Checkbox>
                     <Label htmlFor={"paid"}>Paid Article</Label>
                 </div>
             </div>
