@@ -3,7 +3,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createArticle, CreateArticleFail } from "../actions/articles";
+import {
+    createArticle,
+    CreateArticleFail,
+    updateArticle,
+} from "../actions/articles";
 import FormError from "./form-error";
 import { useRef, useState } from "react";
 import { Category } from "@prisma/client";
@@ -19,26 +23,41 @@ export type ArticleFormProps = {
 
 export default function ArticleForm({ categories, article }: ArticleFormProps) {
     const [errors, setErrors] = useState<CreateArticleFail["errors"]>();
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(
+        article?.category.map((cat) => {
+            return cat.name;
+        }) || []
+    );
+
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
 
     async function handleAction(formData: FormData) {
         formData.append("categories", JSON.stringify(selectedCategories));
 
-        const result = await createArticle(formData);
+        let result;
+
+        if (article) {
+            result = await updateArticle(formData);
+        } else {
+            result = await createArticle(formData);
+        }
 
         if (result?.success === false) {
             setErrors(result?.errors);
         } else {
             toast({
-                title: "Article successfully created",
+                title: `Article successfully ${
+                    article ? "updated" : "created"
+                }`,
                 variant: "default",
                 className: "bg-secondary",
             });
             setErrors(undefined);
-            formRef.current?.reset();
-            setSelectedCategories([]);
+            if (!article) {
+                formRef.current?.reset();
+                setSelectedCategories([]);
+            }
         }
     }
 
@@ -56,6 +75,7 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
             className="flex flex-col gap-4"
             ref={formRef}
         >
+            {article && <input type="hidden" name="id" value={article?.id} />}
             <div>
                 <Label htmlFor="headline">Headline</Label>
                 <Input

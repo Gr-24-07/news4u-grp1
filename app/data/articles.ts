@@ -25,3 +25,24 @@ export async function getArticles(): Promise<ArticleWithCategoryAuthor[]> {
 
     return result;
 }
+
+export async function getArticle(
+    id: string
+): Promise<ArticleWithCategoryAuthor | null> {
+    const result = await prisma.article.findUnique({
+        where: {
+            id: id,
+        },
+        include: {
+            category: true,
+            author: {
+                select: {
+                    firstName: true,
+                    lastName: true,
+                },
+            },
+        },
+    });
+
+    return result;
+}
