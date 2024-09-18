@@ -1,14 +1,17 @@
+"use client";
+
+import { deleteArticle } from "@/app/actions/articles";
 import { ArticleWithCategoryAuthor } from "@/app/data/articles";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Check, Pencil, X } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { Check, Pencil, Trash, X } from "lucide-react";
 import Link from "next/link";
 
 export default function ArticleTable({
@@ -18,7 +21,6 @@ export default function ArticleTable({
 }) {
     return (
         <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>Headline</TableHead>
@@ -29,6 +31,7 @@ export default function ArticleTable({
                     <TableHead>Created</TableHead>
                     <TableHead>Updated</TableHead>
                     <TableHead>Edit</TableHead>
+                    <TableHead>Delete</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -61,10 +64,10 @@ export default function ArticleTable({
                             </TableCell>
                             <TableCell>{`${article.author.firstName} ${article.author.lastName}`}</TableCell>
                             <TableCell>
-                                {article.createdAt.toLocaleDateString()}
+                                {article.createdAt.toLocaleDateString("sv")}
                             </TableCell>
                             <TableCell>
-                                {article.updatedAt.toLocaleDateString()}
+                                {article.updatedAt.toLocaleDateString("sv")}
                             </TableCell>
                             <TableCell>
                                 <Link
@@ -73,6 +76,25 @@ export default function ArticleTable({
                                 >
                                     <Pencil />
                                 </Link>
+                            </TableCell>
+                            <TableCell>
+                                <button
+                                    onClick={async () => {
+                                        const doDelete = confirm(
+                                            `Are you sure you want to delete article titled "${article.headline}"`
+                                        );
+                                        if (doDelete) {
+                                            deleteArticle(article.id);
+                                            toast({
+                                                title: "Article successfully deleted",
+                                                className: "bg-secondary",
+                                            });
+                                        }
+                                    }}
+                                    className="text-destructive animate-pulse border p-1 border-destructive hover:bg-red-200"
+                                >
+                                    <Trash></Trash>
+                                </button>
                             </TableCell>
                         </TableRow>
                     );

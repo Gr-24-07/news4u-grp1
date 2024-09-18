@@ -3,6 +3,7 @@
 import prisma from "@/lib/db";
 import { z, ZodFormattedError } from "zod";
 import { getCategories } from "../data/categories";
+import { revalidatePath } from "next/cache";
 
 const CreateArticleSchema = z.object({
     headline: z.string().min(1, "Headline is required"),
@@ -78,6 +79,8 @@ export async function createArticle(
             },
         },
     });
+
+    revalidatePath("/admin/articles");
 }
 
 const UpdateArticleSchema = z.object({
@@ -162,4 +165,16 @@ export async function updateArticle(
             },
         },
     });
+
+    revalidatePath("/admin/articles");
+}
+
+export async function deleteArticle(id: string) {
+    await prisma.article.delete({
+        where: {
+            id: id,
+        },
+    });
+
+    revalidatePath("/admin/articles");
 }
