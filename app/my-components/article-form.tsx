@@ -1,12 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createArticle, CreateArticleFail } from "../actions/articles";
 import FormError from "./form-error";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Category } from "@prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArticleWithCategoryAuthor } from "../data/articles";
@@ -22,6 +21,8 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
     const [errors, setErrors] = useState<CreateArticleFail["errors"]>();
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const { toast } = useToast();
+    const formRef = useRef<HTMLFormElement>(null);
+
     async function handleAction(formData: FormData) {
         formData.append("categories", JSON.stringify(selectedCategories));
 
@@ -36,6 +37,8 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                 className: "bg-secondary",
             });
             setErrors(undefined);
+            formRef.current?.reset();
+            setSelectedCategories([]);
         }
     }
 
@@ -48,7 +51,11 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
     }
 
     return (
-        <form action={handleAction} className="flex flex-col gap-4">
+        <form
+            action={handleAction}
+            className="flex flex-col gap-4"
+            ref={formRef}
+        >
             <div>
                 <Label htmlFor="headline">Headline</Label>
                 <Input type="text" name="headline"></Input>
