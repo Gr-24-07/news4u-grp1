@@ -152,9 +152,11 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                     <Label htmlFor={"paid"}>Paid Article</Label>
                 </div>
             </div>
-            <SubmitButton loadingValue="Creating article...">
-                Create
-            </SubmitButton>
+            {article ? (
+                <SubmitButton loadingValue="Saving...">Save</SubmitButton>
+            ) : (
+                <SubmitButton loadingValue="Creating...">Create</SubmitButton>
+            )}
         </form>
     );
 }
