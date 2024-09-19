@@ -9,10 +9,11 @@ export default function Footer() {
     { name: "Economy", href: "/economy" },
     { name: "Business", href: "/business" },
     { name: "Sports", href: "/sports" },
+    { name: "Live", href: "/live" },
   ];
 
   return (
-    <div className="container mx-auto ">
+    <div className="container mx-auto bg-slate-200">
       <footer className="md:py-12">
         <div className="flex flex-1">
           <Link className="font-bold text-3xl my-5" href="/">
@@ -22,7 +23,7 @@ export default function Footer() {
 
         <div className="flex w-full items-center gap-4">
           <div>
-            <ul className="text-sky-500 flex flex-1 space-x-10">
+            <ul className="text-blue-500 flex flex-1 space-x-10">
               {links.map((link) => (
                 <Link key={link.name} href={link.href}>
                   {link.name}

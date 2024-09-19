@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
@@ -12,15 +12,24 @@ export default function Navbar() {
     { name: "Economy", href: "/economy" },
     { name: "Business", href: "/business" },
     { name: "Sports", href: "/sports" },
+    { name: "Live", href: "/live" },
   ];
 
   return (
     <div className="container mx-auto">
       <div className="flex items-center">
-        <div className="flex-1">
+        <div>
           <Button asChild size="icon" variant="ghost">
             <Link href="/">
               <Menu />
+            </Link>
+          </Button>
+        </div>
+
+        <div className="flex-1">
+          <Button asChild size="icon" variant="ghost">
+            <Link href="/">
+              <Search />
             </Link>
           </Button>
         </div>
@@ -48,7 +57,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className="text-sky-500 flex items-center ">
+      <nav className="text-blue-500 flex items-center bg-slate-200">
         <div className="flex w-full items-center gap-4">
           <div>
             <ul className="flex flex-1 space-x-10 items-center p-3 justify-center">
