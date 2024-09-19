@@ -18,7 +18,6 @@ import { useToast } from "@/hooks/use-toast";
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
-import { Facebook } from "lucide-react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export type ArticleFormProps = {
@@ -82,7 +81,6 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
             className="flex flex-col gap-4"
             ref={formRef}
         >
-            <Facebook />
             {article && <input type="hidden" name="id" value={article?.id} />}
             <div>
                 <Label htmlFor="headline">Headline</Label>
