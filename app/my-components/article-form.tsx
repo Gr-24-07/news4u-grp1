@@ -150,6 +150,14 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                         defaultChecked={article?.paid || false}
                     ></Checkbox>
                     <Label htmlFor={"paid"}>Paid Article</Label>
+                    <Checkbox
+                        id={"editorsChoice"}
+                        name={"editorsChoice"}
+                        defaultChecked={article?.editorsChoice || false}
+                    ></Checkbox>
+                    <Label htmlFor={"editorsChoice"}>
+                        Editor&apos;s Choice
+                    </Label>
                 </div>
             </div>
             {article ? (
