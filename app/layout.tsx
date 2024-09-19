@@ -30,8 +30,8 @@ export default function RootLayout({
         )}
       >
         {children}
-        <Navbar></Navbar>
-        <Footer></Footer>
+        <Navbar/>
+        <Footer/>
         <Toaster />
       </body>
     </html>
