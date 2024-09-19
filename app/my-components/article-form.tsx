@@ -173,13 +173,6 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
             ) : (
                 <SubmitButton loadingValue="Creating...">Create</SubmitButton>
             )}
-            <div>
-                <h1>Preview</h1>
-                <div
-                    className="prose"
-                    dangerouslySetInnerHTML={{ __html: content }}
-                ></div>
-            </div>
         </form>
     );
 }

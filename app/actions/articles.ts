@@ -68,7 +68,7 @@ export async function createArticle(
 
     data.content = xss(data.content);
 
-    //Temporary replace with real author
+    //TODO replace with real author
     const author = "cm16g8qds000011a22psj5pvs";
 
     await prisma.article.create({
@@ -161,7 +161,7 @@ export async function updateArticle(
 
     data.content = xss(data.content);
 
-    //Temporary replace with real author
+    //TODO replace with real author
     const author = "cm16g8qds000011a22psj5pvs";
 
     await prisma.article.update({
