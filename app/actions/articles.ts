@@ -22,6 +22,13 @@ const CreateArticleSchema = z.object({
             if (val === "on") return true;
             return false;
         }),
+    editorsChoice: z
+        .string()
+        .optional()
+        .transform((val) => {
+            if (val === "on") return true;
+            return false;
+        }),
 });
 
 export type CreateArticleFail = {
@@ -34,6 +41,7 @@ export type CreateArticleFail = {
             image: string;
             categories: string;
             paid?: string | undefined;
+            editorsChoice?: string | undefined;
         },
         string
     >;
@@ -67,6 +75,7 @@ export async function createArticle(
             summary: data.summary,
             image: data.image,
             paid: data.paid,
+            editorsChoice: data.editorsChoice,
             author: {
                 connect: {
                     id: author,
@@ -101,6 +110,13 @@ const UpdateArticleSchema = z.object({
             if (val === "on") return true;
             return false;
         }),
+    editorsChoice: z
+        .string()
+        .optional()
+        .transform((val) => {
+            if (val === "on") return true;
+            return false;
+        }),
 });
 
 export type UpdateArticleFail = {
@@ -114,6 +130,7 @@ export type UpdateArticleFail = {
             image: string;
             categories: string;
             paid?: string | undefined;
+            editorsChoice?: string | undefined;
         },
         string
     >;
@@ -152,6 +169,7 @@ export async function updateArticle(
             summary: data.summary,
             image: data.image,
             paid: data.paid,
+            editorsChoice: data.editorsChoice,
             author: {
                 connect: {
                     id: author,

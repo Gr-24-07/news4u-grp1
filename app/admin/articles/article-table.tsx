@@ -11,7 +11,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/hooks/use-toast";
-import { Check, Pencil, Trash, X } from "lucide-react";
+import { Check, Pencil, Star, Trash, X } from "lucide-react";
 import Link from "next/link";
 
 export default function ArticleTable({
@@ -27,6 +27,7 @@ export default function ArticleTable({
                     <TableHead>Summary</TableHead>
                     <TableHead className="text-right">Views</TableHead>
                     <TableHead>Paid</TableHead>
+                    <TableHead>Editor&apos;s Choice</TableHead>
                     <TableHead>Author</TableHead>
                     <TableHead>Created</TableHead>
                     <TableHead>Updated</TableHead>
@@ -53,14 +54,25 @@ export default function ArticleTable({
                             </TableCell>
                             <TableCell>
                                 {article.paid ? (
-                                    <button className="text-green-800">
+                                    <div className="text-green-800">
                                         <Check />
-                                    </button>
+                                    </div>
                                 ) : (
-                                    <button className="text-red-800">
+                                    <div className="text-red-800">
                                         <X />
-                                    </button>
+                                    </div>
                                 )}
+                            </TableCell>
+                            <TableCell>
+                                <div className="text-yellow-500">
+                                    <Star
+                                        fill={
+                                            article.editorsChoice
+                                                ? "#fcd703"
+                                                : "#fff"
+                                        }
+                                    />
+                                </div>
                             </TableCell>
                             <TableCell>{`${article.author.firstName} ${article.author.lastName}`}</TableCell>
                             <TableCell>
