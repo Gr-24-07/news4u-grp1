@@ -76,13 +76,14 @@ model VerificationToken {
 }
 
 model Article {
-    id       String  @id @default(uuid())
-    headline String
-    summary  String
-    content  String
-    views    Int
-    image    String
-    paid     Boolean @default(true)
+    id            String  @id @default(uuid())
+    headline      String
+    summary       String
+    content       String
+    views         Int     @default(0)
+    image         String
+    paid          Boolean @default(true)
+    editorsChoice Boolean @default(false)
 
     category Category[]
 
@@ -95,7 +96,7 @@ model Article {
 
 model Category {
     id   String @id @default(uuid())
-    name String
+    name String @unique
 
     articles Article[]
 }
