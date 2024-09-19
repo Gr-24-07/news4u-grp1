@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { z, ZodFormattedError } from "zod";
 import { getCategories } from "../data/categories";
 import { revalidatePath } from "next/cache";
+import xss from "xss";
 
 const CreateArticleSchema = z.object({
     headline: z.string().min(1, "Headline is required"),
@@ -65,7 +66,9 @@ export async function createArticle(
 
     const data = parsedResult.data;
 
-    //Temporary replace with real author
+    data.content = xss(data.content);
+
+    //TODO replace with real author
     const author = "cm16g8qds000011a22psj5pvs";
 
     await prisma.article.create({
@@ -156,7 +159,9 @@ export async function updateArticle(
 
     const data = parsedResult.data;
 
-    //Temporary replace with real author
+    data.content = xss(data.content);
+
+    //TODO replace with real author
     const author = "cm16g8qds000011a22psj5pvs";
 
     await prisma.article.update({

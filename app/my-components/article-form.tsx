@@ -15,6 +15,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArticleWithCategoryAuthor } from "../data/articles";
 import SubmitButton from "./submit-button";
 import { useToast } from "@/hooks/use-toast";
+import React from "react";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export type ArticleFormProps = {
     categories: Category[];
@@ -28,12 +32,14 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
             return cat.name;
         }) || []
     );
+    const [content, setContent] = useState(article?.content || "");
 
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
 
     async function handleAction(formData: FormData) {
         formData.append("categories", JSON.stringify(selectedCategories));
+        formData.append("content", content);
 
         let result;
 
@@ -85,14 +91,16 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                 ></Input>
                 <FormError errors={errors?.headline?._errors}></FormError>
             </div>
-            <div>
-                <Label htmlFor="image">Image</Label>
-                <Input
-                    type="text"
-                    name="image"
-                    defaultValue={article?.image || ""}
-                ></Input>
-                <FormError errors={errors?.image?._errors}></FormError>
+            <div className="h-80">
+                <Label>Content</Label>
+                <ReactQuill
+                    className="h-64"
+                    theme="snow"
+                    value={content}
+                    onChange={setContent}
+                />
+
+                <FormError errors={errors?.content?._errors}></FormError>
             </div>
             <div>
                 <Label htmlFor="summary">Summary</Label>
@@ -104,13 +112,13 @@ export default function ArticleForm({ categories, article }: ArticleFormProps) {
                 <FormError errors={errors?.summary?._errors}></FormError>
             </div>
             <div>
-                <Label htmlFor="content">Content</Label>
-                <Textarea
-                    rows={10}
-                    name="content"
-                    defaultValue={article?.content || ""}
-                ></Textarea>
-                <FormError errors={errors?.content?._errors}></FormError>
+                <Label htmlFor="image">Image</Label>
+                <Input
+                    type="text"
+                    name="image"
+                    defaultValue={article?.image || ""}
+                ></Input>
+                <FormError errors={errors?.image?._errors}></FormError>
             </div>
             <div className="space-y-2 rounded-md border border-input bg-transparent px-3 py-2 shadow-sm">
                 <h2>Categories</h2>
