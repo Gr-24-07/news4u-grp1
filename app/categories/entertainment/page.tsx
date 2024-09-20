@@ -33,7 +33,7 @@ export default async function EntertainmentNews() {
       });
 
     return (
-      <main className="container mx-auto">
+      <main className="w-full p-5">
         <h1 className='mt-5 font-bold text-3xl'> Entertainment</h1>
       <hr className="mt-5 border-gray-500" />
       <hr className="my-1 border-gray-500" />
