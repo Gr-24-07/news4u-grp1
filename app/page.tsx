@@ -54,9 +54,7 @@ export default async function HomePage() {
     });
 
     return (
-        <main className="container mx-auto">
-             <hr className="mt-5 border-gray-500" />
-             <hr className="my-1 border-gray-500" />
+        <main className="w-full p-5">
 
             <div className="flex flex-col md:flex-row justify-center">
                 <div className="max-w-screen-lg w-full flex flex-col md:flex-row">

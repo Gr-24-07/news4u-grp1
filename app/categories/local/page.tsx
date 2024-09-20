@@ -34,7 +34,7 @@ export default async function Local() {
       });
 
     return (
-      <main className="container mx-auto">
+      <main className="w-full p-5">
         <h1 className='mt-5 font-bold text-3xl'> Local</h1>
              <hr className="mt-5 border-gray-500" />
              <hr className="my-1 border-gray-500" />
@@ -77,34 +77,34 @@ export default async function Local() {
         <hr className="my-1 border-gray-500" /> 
 
         <section className="mt-12 p-5">
-          <h2 className="text-lg font-bold mb-6 text-gray-700">More</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherCategories.map((category) => (
-              <div key={category.id} className="p-4 ">
-                <h3 className="text-md font-bold text-gray-800 mb-2">{category.name}</h3>
-                <div className="space-y-2">
-                  {category.articles && category.articles.length > 0 ? (
-                    category.articles.map((article) => (
-                      <div key={article.id} className="pb-2 mb-2">
-                        <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
-                        <div className="relative">
-                          <img
-                            src={article.image}
-                            alt={article.headline}
-                            className="h-56 max-w-96 object-cover"
-                          />
-                        </div>
-                        <p className="text-xs text-gray-600">{article.summary}</p>
+              <h2 className="text-lg font-bold mb-6 text-gray-700">More</h2>
+              <div className="grid grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {otherCategories.map((category) => (
+                      <div key={category.id} className="p-4">
+                          <h3 className="text-md font-bold text-gray-800 mb-2">{category.name}</h3>
+                          <div className="space-y-2">
+                              {category.articles && category.articles.length > 0 ? (
+                                  category.articles.map((article) => (
+                                      <div key={article.id} className="pb-2 mb-2">
+                                          <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
+                                          <div className="relative">
+                                              <img
+                                                  src={article.image}
+                                                  alt={article.headline}
+                                                  className="w-auto object-cover mt-2"
+                                              />
+                                          </div>
+                                          <p className="text-xs text-gray-600">{article.summary}</p>
+                                      </div>
+                                  ))
+                              ) : (
+                                  <p>No articles available</p>
+                              )}
+                          </div>
                       </div>
-                    ))
-                  ) : (
-                    <p>No articles available</p>
-                  )}
-                </div>
+                  ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
       </main>
     );
 }
