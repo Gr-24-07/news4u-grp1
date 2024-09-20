@@ -8,8 +8,8 @@ export default function VerificationSuccessMessage() {
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/sign-in"); // Redirect to sign-in page after 7 seconds
-    }, 7000);
+      router.push("/sign-in"); // Redirect to sign-in page after 5 seconds
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [router]);

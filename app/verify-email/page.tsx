@@ -84,7 +84,6 @@ export default function VerifyEmail() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <p className="text-green-600">Email verified successfully!</p>
-            <p className="text-sm mt-2 text-black">Redirecting to success page...</p>
           </div>
         )}
         {status === 'error' && (
