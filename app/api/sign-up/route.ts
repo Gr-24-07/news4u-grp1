@@ -18,17 +18,21 @@ const registerSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    
+
     // Validate input
-    const { email, password, firstName, lastName, dateOfBirth, newsletter } = registerSchema.parse(body);
+    const { email, password, firstName, lastName, dateOfBirth, newsletter } =
+      registerSchema.parse(body);
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (existingUser) {
-      return NextResponse.json({ error: "User already exists" }, { status: 400 });
+      return NextResponse.json(
+        { error: "User already exists" },
+        { status: 400 }
+      );
     }
 
     // Hash password
@@ -52,16 +56,22 @@ export async function POST(req: Request) {
     // Send verification email
     await sendVerificationEmail(email, token, email);
 
-    return NextResponse.json({
-      message: "User registered successfully. Please check your email to verify your account.",
-      success: true
-    }, { status: 200 });
-
+    return NextResponse.json(
+      {
+        message:
+          "User registered successfully. Please check your email to verify your account.",
+        success: true,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Registration error:", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
-    return NextResponse.json({ error: "An error occurred during registration" }, { status: 500 });
+    return NextResponse.json(
+      { error: "An error occurred during registration" },
+      { status: 500 }
+    );
   }
 }

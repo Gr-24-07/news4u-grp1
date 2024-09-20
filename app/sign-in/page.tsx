@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import React from 'react';
-import SignInForm from '../my-components/SignInForm';
-import Link from 'next/link';
+import React from "react";
+import SignInForm from "../my-components/SignInForm";
+import Link from "next/link";
 
 export default function SignInPage() {
   return (
@@ -11,7 +11,7 @@ export default function SignInPage() {
         <h1 className="text-4xl font-bold mb-4">Sign In</h1>
         <SignInForm />
         <p className="mt-4">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <Link href="/sign-up" className="text-blue-500 hover:underline">
             Sign up here
           </Link>

@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const SignInSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type FormData = z.infer<typeof SignInSchema>;
@@ -22,36 +29,41 @@ export default function SignInForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit = async (data: FormData) => {
     setError(null);
     setIsSubmitting(true);
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: data.email,
         password: data.password,
       });
 
       if (result?.error) {
-        if (result.error === 'No user found with this email' || result.error === 'Invalid password') {
-          setError('Invalid email or password. Please try again or sign up if you don\'t have an account.');
+        if (
+          result.error === "No user found with this email" ||
+          result.error === "Invalid password"
+        ) {
+          setError(
+            "Invalid email or password. Please try again or sign up if you don't have an account."
+          );
         } else {
           setError(result.error);
         }
       } else if (result?.ok) {
-        window.location.href = '/sign-in/success';
+        window.location.href = "/sign-in/success";
       } else {
-        setError('An unexpected error occurred. Please try again later.');
+        setError("An unexpected error occurred. Please try again later.");
       }
     } catch (error) {
-      console.error('An error occurred', error);
-      setError('An unexpected error occurred. Please try again later.');
+      console.error("An error occurred", error);
+      setError("An unexpected error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -85,14 +97,21 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input {...field} type="password" placeholder="Enter your password" />
+                <Input
+                  {...field}
+                  type="password"
+                  placeholder="Enter your password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={!form.formState.isValid || isSubmitting}>
-          {isSubmitting ? 'Signing In...' : 'Sign In'}
+        <Button
+          type="submit"
+          disabled={!form.formState.isValid || isSubmitting}
+        >
+          {isSubmitting ? "Signing In..." : "Sign In"}
         </Button>
       </form>
     </Form>

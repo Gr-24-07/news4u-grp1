@@ -1,11 +1,13 @@
-import crypto from 'crypto';
-import prisma from '@/lib/db';
+import crypto from "crypto";
+import prisma from "@/lib/db";
 
 export function generateVerificationToken(): string {
-  return crypto.randomBytes(32).toString('hex');
+  return crypto.randomBytes(32).toString("hex");
 }
 
-export async function createVerificationToken(identifier: string): Promise<string> {
+export async function createVerificationToken(
+  identifier: string
+): Promise<string> {
   const token = generateVerificationToken();
   const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
 

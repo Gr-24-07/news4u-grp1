@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function VerificationSuccessMessage() {
   const router = useRouter();
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/sign-in'); // Redirect to sign-in page after 7 seconds
+      router.push("/sign-in"); // Redirect to sign-in page after 7 seconds
     }, 7000);
 
     return () => clearTimeout(timer);

@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function SuccessMessage() {
   const router = useRouter();
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/'); // Redirect to home page after 3 seconds
+      router.push("/"); // Redirect to home page after 3 seconds
     }, 3000);
 
     return () => clearTimeout(timer);

@@ -71,11 +71,11 @@ export default function VerifyEmail() {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Email Verification</h1>
+        <h1 className="text-2xl font-bold mb-4 text-black">Email Verification</h1>
         {status === 'loading' && (
           <div>
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p>Verifying your email...</p>
+            <p className="text-black">Verifying your email...</p>
           </div>
         )}
         {status === 'success' && (
@@ -84,7 +84,7 @@ export default function VerifyEmail() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <p className="text-green-600">Email verified successfully!</p>
-            <p className="text-sm mt-2">Redirecting to success page...</p>
+            <p className="text-sm mt-2 text-black">Redirecting to success page...</p>
           </div>
         )}
         {status === 'error' && (
