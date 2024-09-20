@@ -4,21 +4,21 @@ import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews 
 
 const prisma = new PrismaClient();
 
-export default async function SportNews() {
-    // Fetch Latest News in Sport Category
+export default async function EntertainmentNews() {
+    // Fetch Latest News in Entertainment Category
     const latestNews: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Sport' } }}, 
+        where: { category: {some: { name: 'Entertainment' } }}, 
         orderBy: { createdAt: 'desc' },
     });
-    
-    // Fetch Editor's Choice in Sport Category
+
+    // Fetch Editor's Choice in Entertainment Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Sport' }}, paid: true },  
+        where: { category: {some: { name: 'Entertainment' }}, paid: true },  
     });
     
-    // Fetch Most Popular in Sport Category
+    // Fetch Most Popular in Entertainment Category
     const mostPopular: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Sport' }} },
+        where: { category: {some: { name: 'Entertainment' }} },
         orderBy: { views: 'desc' },
     });
 
@@ -34,9 +34,9 @@ export default async function SportNews() {
 
     return (
       <main className="container mx-auto">
-        <h1 className='mt-5 font-bold text-3xl'> Sport</h1>
-             <hr className="mt-5 border-gray-500" />
-             <hr className="my-1 border-gray-500" />
+        <h1 className='mt-5 font-bold text-3xl'> Entertainment</h1>
+      <hr className="mt-5 border-gray-500" />
+      <hr className="my-1 border-gray-500" />
 
         <div className="flex justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 max-w-screen-lg w-full">

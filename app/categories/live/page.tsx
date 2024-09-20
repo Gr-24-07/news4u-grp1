@@ -25,6 +25,7 @@ export default async function LiveNews() {
 
     return (
         <main className="container mx-auto">
+            <h1 className='mt-5 font-bold text-3xl text-red-600'> Live</h1>
         <hr className="mt-5 border-gray-500" />
         <hr className="my-1 border-gray-500" />
 
@@ -34,7 +35,7 @@ export default async function LiveNews() {
                 {/* Left Column - Latest Live News */}
                 <div className="w-3/4 p-4">
                 <section className="p-2 rounded-lg mx-auto">
-                    <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">Live</h2>
+        
                     <div className="space-y-3">
                     {latestLiveNews.map((article) => (
                         <div key={article.id}>

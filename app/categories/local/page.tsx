@@ -4,7 +4,7 @@ import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews 
 
 const prisma = new PrismaClient();
 
-export default async function LocalNews() {
+export default async function Local() {
     // Fetch Latest News in Local Category
     const latestNews: Articles[] = await prisma.article.findMany({
         where: { category: {some: { name: 'Local' } }}, 
@@ -35,6 +35,7 @@ export default async function LocalNews() {
 
     return (
       <main className="container mx-auto">
+        <h1 className='mt-5 font-bold text-3xl'> Local</h1>
              <hr className="mt-5 border-gray-500" />
              <hr className="my-1 border-gray-500" />
 

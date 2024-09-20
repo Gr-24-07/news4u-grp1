@@ -34,9 +34,11 @@ export default async function NationalNews() {
 
     return (
       <main className="container mx-auto">
+        <h1 className='mt-5 font-bold text-3xl'> National</h1>
+        
              <hr className="mt-5 border-gray-500" />
              <hr className="my-1 border-gray-500" />
-             
+
         <div className="flex justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 max-w-screen-lg w-full">
             {/* Latest News Section */}
