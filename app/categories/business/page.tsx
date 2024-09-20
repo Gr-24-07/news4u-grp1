@@ -37,6 +37,7 @@ export default async function BusinessNewsPage() {
 
     return (
       <main className="container mx-auto">
+        <h1 className='mt-5 font-bold text-3xl'> Business</h1>
              <hr className="mt-5 border-gray-500" />
              <hr className="my-1 border-gray-500" />
              
