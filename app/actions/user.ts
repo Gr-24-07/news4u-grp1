@@ -16,7 +16,9 @@ export default async function updateUserRole(id: string, role: Role) {
     });
 
     if (!res.success) {
-        return;
+        return {
+            success: false,
+        };
     }
 
     await prisma.user.update({
