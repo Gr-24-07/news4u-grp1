@@ -84,7 +84,7 @@ export default function ArticleTable({
                             <TableCell>
                                 <Link
                                     href={`/admin/articles/edit/${article.id}`}
-                                    className="block text-blue-800 animate-pulse border p-1 border-blue-800 hover:bg-blue-200"
+                                    className="inline-block text-blue-800 animate-pulse border p-1 border-blue-800 hover:bg-blue-200"
                                 >
                                     <Pencil />
                                 </Link>
