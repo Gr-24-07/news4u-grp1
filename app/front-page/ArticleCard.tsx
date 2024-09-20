@@ -1,7 +1,8 @@
-import { Article } from './types'; 
+import { Articles } from './types';
 
+type ArticleCardProps = { article: Articles };
 
-export function ArticleCardLatestNews({ article }: { article: Article }) {
+export function ArticleCardLatestNews({ article }: ArticleCardProps) {
   return (
     <div>
       <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
@@ -18,7 +19,7 @@ export function ArticleCardLatestNews({ article }: { article: Article }) {
   );
 }
 
-export function ArticleCardPopularNews({ article }: { article: Article }) {
+export function ArticleCardPopularNews({ article }: ArticleCardProps) {
   return (
     <div>
       <h3 className="font-bold text-md text-black hover:underline">{article.headline}</h3>
@@ -35,7 +36,7 @@ export function ArticleCardPopularNews({ article }: { article: Article }) {
   );
 }
 
-export function ArticleCardEditorChoice({ article }: { article: Article }) {
+export function ArticleCardEditorChoice({ article }: ArticleCardProps) {
   return (
     <div>
       <h3 className="font-bold text-md text-black hover:underline">{article.headline}</h3>
