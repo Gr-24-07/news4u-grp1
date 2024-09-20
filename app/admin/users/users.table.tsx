@@ -2,11 +2,12 @@ import { UserBasicInfo } from "@/app/data/users";
 import {
     Table,
     TableBody,
-    TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+
+import UserTableRow from "./user-table-row";
 
 export default function UsersTable({ users }: { users: UserBasicInfo[] }) {
     return (
@@ -21,11 +22,7 @@ export default function UsersTable({ users }: { users: UserBasicInfo[] }) {
             <TableBody>
                 {users.map((user) => {
                     return (
-                        <TableRow key={user.id}>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
-                            <TableCell>{user.role}</TableCell>
-                        </TableRow>
+                        <UserTableRow key={user.id} user={user}></UserTableRow>
                     );
                 })}
             </TableBody>
