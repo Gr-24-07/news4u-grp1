@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Articles } from '@/app/front-page/types'; 
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
@@ -39,18 +40,21 @@ export default async function LiveNews() {
                     <div className="space-y-3">
                     {latestLiveNews.map((article) => (
                         <div key={article.id}>
-                        <div>
-                            <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
-                            <img
-                            src={article.image}
-                            alt={article.headline}
-                            className="w-full object-cover mt-2"
-                            />
-                            <p className="text-sm text-gray-800 whitespace-normal break-words">
-                            {article.summary}
-                            </p>
-                            <hr className="my-4 border-gray-300" />
-                        </div>
+                            <Link href={`/article-page/${article.id}`}>
+                                <div>
+                                    <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
+                                    <img
+                                    src={article.image}
+                                    alt={article.headline}
+                                    className="w-full object-cover mt-2"
+                                    />
+                                    
+                                    <p className="text-sm text-gray-800 whitespace-normal break-words pt-3">
+                                    {article.summary}
+                                    </p>
+                                    <hr className="my-4 border-gray-300" />
+                                </div>
+                            </Link>
                         </div>
                     ))}
                     </div>
@@ -78,20 +82,20 @@ export default async function LiveNews() {
                               {category.articles && category.articles.length > 0 ? (
                                   category.articles.map((article) => (
                                       <div key={article.id} className="pb-2 mb-2">
-                                          <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
-                                          <div className="relative">
-                                              <img
-                                                  src={article.image}
-                                                  alt={article.headline}
-                                                  className="w-auto object-cover mt-2"
-                                              />
-                                          </div>
-                                          <p className="text-xs text-gray-600">{article.summary}</p>
+                                        <Link href={`/article-page/${article.id}`}>
+                                            <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
+                                            <div className="relative">
+                                                <img
+                                                    src={article.image}
+                                                    alt={article.headline}
+                                                    className="w-auto object-cover mt-2"
+                                                />
+                                            </div>
+                                            <p className="text-xs text-gray-600 pt-3">{article.summary}</p>
+                                          </Link>
                                       </div>
                                   ))
-                              ) : (
-                                  <p>No articles available</p>
-                              )}
+                              ) : null}
                           </div>
                       </div>
                   ))}
