@@ -5,10 +5,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import Navbar from "./my-components/navbar";
 import Footer from "./my-components/footer";
+import CookieConsent from "./my-components/cookie-consent";
 
 const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+    subsets: ["latin"],
+    variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -17,23 +18,24 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased pb-10 overflow-scroll",
-          fontSans.variable
-        )}
-      >
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster />
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body
+                className={cn(
+                    "min-h-screen bg-background font-sans antialiased pb-10 overflow-scroll",
+                    fontSans.variable
+                )}
+            >
+                <Navbar />
+                {children}
+                <Footer />
+                <CookieConsent />
+                <Toaster />
+            </body>
+        </html>
+    );
 }
