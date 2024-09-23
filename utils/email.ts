@@ -30,3 +30,17 @@ export async function sendVerificationEmail(
     `,
   });
 }
+export async function sendPasswordResetEmail(email: string, token: string) {
+  const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
+
+  await transporter.sendMail({
+    from: process.env.EMAIL_FROM,
+    to: email,
+    subject: "Reset Your Password",
+    html: `
+      <p>You requested a password reset. Click the link below to set a new password:</p>
+      <a href="${resetUrl}">${resetUrl}</a>
+      <p>If you didn't request this, please ignore this email.</p>
+    `,
+  });
+}
