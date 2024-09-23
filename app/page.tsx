@@ -109,7 +109,7 @@ export default async function HomePage() {
                                     <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
                                     <div className="space-y-3">
                                         {latestNews.map((article) => (
-                                             <Link href={`/article.page/${article.id}`}>
+                                             <Link href={`/article-page/${article.id}`}>
                                                 <ArticleCardLatestNews key={article.id} article={article} />
                                             </Link>
                                         ))}
