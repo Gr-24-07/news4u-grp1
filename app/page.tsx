@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from './front-page/ArticleCard';
 import { Articles } from './front-page/types';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
@@ -64,20 +65,23 @@ export default async function HomePage() {
 
                         {/* First Row: Live News */}
                         <section className="p-2 rounded-lg mx-auto">
-                            <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">Live</h2>
+                            <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
+                                <Link href={"/categories/live"}>Live</Link>
+                            </h2>
                             <div className="space-y-3">
                                 {latestLiveNews.map((article) => (
                                     <div key={article.id}>
-                                        <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
-                                        <img
-                                            src={article.image}
-                                            alt={article.headline}
-                                            className="w-full object-cover mt-2"
-                                        />
-                                        <p className="text-sm text-gray-800 whitespace-normal break-words">
+                                        <Link href={`/article-page/${article.id}`}>
+                                            <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
+                                            <img
+                                                src={article.image}
+                                                alt={article.headline}
+                                                className="w-full object-cover mt-2"
+                                            />
+                                        <p className="text-sm text-gray-800 whitespace-normal break-words pt-3">
                                             {article.summary}
                                         </p>
-                                        <hr className="my-4 border-gray-300" />
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
@@ -91,7 +95,9 @@ export default async function HomePage() {
                                     <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
                                     <div className="space-y-3">
                                         {mostPopular.map((article) => (
-                                            <ArticleCardPopularNews key={article.id} article={article} />
+                                            <Link href={`/article-page/${article.id}`}>
+                                                <ArticleCardPopularNews key={article.id} article={article} />
+                                            </Link>
                                         ))}
                                     </div>
                                 </section>
@@ -103,7 +109,9 @@ export default async function HomePage() {
                                     <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
                                     <div className="space-y-3">
                                         {latestNews.map((article) => (
-                                            <ArticleCardLatestNews key={article.id} article={article} />
+                                             <Link href={`/article.page/${article.id}`}>
+                                                <ArticleCardLatestNews key={article.id} article={article} />
+                                            </Link>
                                         ))}
                                     </div>
                                 </section>
@@ -117,7 +125,9 @@ export default async function HomePage() {
                             <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
                             <div className="space-y-3">
                                 {editorsChoice.map((article) => (
-                                    <ArticleCardEditorChoice key={article.id} article={article} />
+                                     <Link href={`/article-page/${article.id}`}>
+                                        <ArticleCardEditorChoice key={article.id} article={article} />
+                                    </Link>
                                 ))}
                             </div>
                         </section>
@@ -138,6 +148,7 @@ export default async function HomePage() {
                               {category.articles && category.articles.length > 0 ? (
                                   category.articles.map((article) => (
                                       <div key={article.id} className="pb-2 mb-2">
+                                         <Link href={`/article-page/${article.id}`}>
                                           <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
                                           <div className="relative">
                                               <img
@@ -146,12 +157,11 @@ export default async function HomePage() {
                                                   className="w-auto object-cover mt-2"
                                               />
                                           </div>
-                                          <p className="text-xs text-gray-600">{article.summary}</p>
+                                          <p className="text-xs text-gray-600 pt-2">{article.summary}</p>
+                                          </Link>
                                       </div>
                                   ))
-                              ) : (
-                                  <p>No articles available</p>
-                              )}
+                              ) : null}
                           </div>
                       </div>
                   ))}

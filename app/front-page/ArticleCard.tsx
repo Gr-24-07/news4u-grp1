@@ -11,7 +11,7 @@ export function ArticleCardLatestNews({ article }: ArticleCardProps) {
         alt={article.headline}
         className="w-full object-cover mt-2"
       />
-      <p className="text-sm text-gray-800 whitespace-normal break-words">
+      <p className="text-sm text-gray-800 whitespace-normal break-words pt-3">
         {article.summary}
       </p>
       <hr className="my-4 border-gray-300" /> 
@@ -28,7 +28,7 @@ export function ArticleCardPopularNews({ article }: ArticleCardProps) {
         alt={article.headline}
         className="w-full object-cover mt-2"
       />
-      <p className="text-sm text-gray-800 whitespace-normal break-words">
+      <p className="text-sm text-gray-800 whitespace-normal break-words pt-2">
         {article.summary}
       </p>
       <hr className="my-4 border-gray-300" /> 
@@ -40,7 +40,7 @@ export function ArticleCardEditorChoice({ article }: ArticleCardProps) {
   return (
     <div>
       <h3 className="font-bold text-md text-black hover:underline">{article.headline}</h3>
-      <p className="text-sm text-gray-800 whitespace-normal break-words">
+      <p className="text-sm text-gray-800 whitespace-normal break-words pt-2">
         {article.summary}
       </p>
       <hr className="my-4 border-gray-300" /> 

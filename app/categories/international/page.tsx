@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Articles } from '@/app/front-page/types'; 
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from '@/app/front-page/ArticleCard';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
@@ -38,14 +39,16 @@ export default async function InternationalNews() {
              <hr className="mt-5 border-gray-500" />
              <hr className="my-1 border-gray-500" />
 
-        <div className="flex justify-center">
+             <div className="flex justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 max-w-screen-lg w-full">
             {/* Latest News Section */}
             <section className="order-1 lg:order-2 col-span-1 lg:col-span-4 p-2 rounded-lg mx-auto">
               <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
               <div className="space-y-3">
                 {latestNews.map((article) => (
-                  <ArticleCardLatestNews key={article.id} article={article} />
+                  <Link href={`/article-page/${article.id}`}>
+                    <ArticleCardLatestNews key={article.id} article={article} />
+                  </Link>
                 ))}
               </div>
             </section>
@@ -55,7 +58,9 @@ export default async function InternationalNews() {
               <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
               <div className="space-y-3">
                 {mostPopular.map((article) => (
-                  <ArticleCardPopularNews key={article.id} article={article} />
+                  <Link href={`/article-page/${article.id}`}>
+                    <ArticleCardPopularNews key={article.id} article={article} />
+                  </Link>
                 ))}
               </div>
             </section>
@@ -65,7 +70,9 @@ export default async function InternationalNews() {
               <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
               <div className="space-y-3">
                 {editorsChoice.map((article) => (
-                  <ArticleCardEditorChoice key={article.id} article={article} />
+                  <Link href={`/article-page/${article.id}`}>
+                    <ArticleCardEditorChoice key={article.id} article={article} />
+                  </Link>
                 ))}
               </div>
             </section>
@@ -85,20 +92,20 @@ export default async function InternationalNews() {
                               {category.articles && category.articles.length > 0 ? (
                                   category.articles.map((article) => (
                                       <div key={article.id} className="pb-2 mb-2">
-                                          <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
-                                          <div className="relative">
-                                              <img
-                                                  src={article.image}
-                                                  alt={article.headline}
-                                                  className="w-auto object-cover mt-2"
-                                              />
-                                          </div>
-                                          <p className="text-xs text-gray-600">{article.summary}</p>
+                                        <Link href={`/article-page/${article.id}`}>
+                                            <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
+                                            <div className="relative">
+                                                <img
+                                                    src={article.image}
+                                                    alt={article.headline}
+                                                    className="w-auto object-cover mt-2"
+                                                />
+                                            </div>
+                                          <p className="text-xs text-gray-600 pt-3">{article.summary}</p>
+                                          </Link>
                                       </div>
                                   ))
-                              ) : (
-                                  <p>No articles available</p>
-                              )}
+                              ) : null}
                           </div>
                       </div>
                   ))}
