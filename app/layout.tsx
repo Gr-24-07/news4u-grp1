@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import Navbar from "./my-components/navbar";
 import Footer from "./my-components/footer";
-import CookieModal from "./my-components/cookie-modal";
+import CookieConsent from "./my-components/cookie-consent";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -33,7 +33,7 @@ export default function RootLayout({
                 <Navbar />
                 {children}
                 <Footer />
-                <CookieModal />
+                <CookieConsent />
                 <Toaster />
             </body>
         </html>

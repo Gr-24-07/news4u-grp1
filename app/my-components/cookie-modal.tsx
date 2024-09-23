@@ -2,15 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { setConsentCookie } from "../actions/cookie-consent";
 
-export default function CookieModal() {
-    const [show, setShow] = useState(true);
+export default function CookieModal({ showModal }: { showModal: boolean }) {
+    const [show, setShow] = useState(showModal);
 
-    function handleDecline() {
+    async function handleDecline() {
+        await setConsentCookie(false);
         setShow(false);
     }
 
-    function handleAccept() {
+    async function handleAccept() {
+        await setConsentCookie(true);
         setShow(false);
     }
 
