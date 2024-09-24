@@ -14,45 +14,45 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Missing email or password");
-          }
-
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              password: true,
-              role: true,
-            },
-          });
-
-          if (!user) {
-            throw new Error("No user found with this email");
-          }
-
-          const isPasswordValid = await compare(
-            credentials.password,
-            user.password
-          );
-
-          if (!isPasswordValid) {
-            throw new Error("Invalid password");
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-          };
-        } catch (error) {
-          console.error("Authorization error:", error);
-          throw error; // Re-throw the error to be caught by NextAuth
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Missing email or password");
         }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            password: true,
+            role: true,
+            emailVerified: true,
+          },
+        });
+
+        if (!user) {
+          throw new Error("No user found with this email");
+        }
+
+        if (!user.emailVerified) {
+          throw new Error("Please verify your email before signing in");
+        }
+
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
       },
     }),
   ],
@@ -66,6 +66,8 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/sign-in",
+    verifyRequest: "/verify-email", // custom verification page
+    newUser: "/sign-up", // custom new user page
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -83,8 +85,28 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  events: {
+    async signIn({ user }) {
+      // You can add custom logic here, e.g., updating last login time
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { updatedAt: new Date() },
+      });
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",
+  logger: {
+    error(code, ...message) {
+      console.error(code, message);
+    },
+    warn(code, ...message) {
+      console.warn(code, message);
+    },
+    debug(code, ...message) {
+      console.debug(code, message);
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

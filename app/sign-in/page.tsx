@@ -16,12 +16,13 @@ export default function SignInPage() {
             Sign up here
           </Link>
         </p>
-        <Link
-          href="/forgot-password"
-          className="text-blue-500 hover:underline mt-3"
-        >
-          <p>Forgot Password?</p>
-        </Link>
+
+        <p className="mt-4">
+          Forgot password?{" "}
+          <Link href="/forgot-password" className="text-blue-500 hover:underline">
+            Click here
+          </Link>
+        </p>
       </main>
     </div>
   );
