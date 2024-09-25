@@ -2,6 +2,8 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import AuthBackground from "@/app/my-components/AuthBackground";
+
 
 export default function VerificationSuccessMessage() {
   const router = useRouter();
@@ -15,18 +17,22 @@ export default function VerificationSuccessMessage() {
   }, [router]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 bg-gray-100 sm:px-6 lg:px-8">
-      <main className="w-full max-w-md bg-white shadow-sm rounded-lg px-4 py-8 sm:px-10">
-        <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
-          Successful Verification
-        </h1>
-        <p className="text-sm text-gray-700 text-center mb-2">
-          Your email has been successfully verified.
-        </p>
-        <p className="text-sm text-gray-600 text-center">
-          Redirecting to sign-in page...
-        </p>
-      </main>
-    </div>
+    <AuthBackground>
+      <div className="w-full max-w-md">
+        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+          <div className="px-6 py-8">
+            <h1 className="text-3xl font-extrabold text-white text-center mb-6">
+              Successful Verification
+            </h1>
+            <p className="text-sm text-gray-200 text-center mb-2">
+              Your email has been successfully verified.
+            </p>
+            <p className="text-sm text-gray-300 text-center">
+              Redirecting to sign-in page...
+            </p>
+          </div>
+        </div>
+      </div>
+    </AuthBackground>
   );
 }
