@@ -12,6 +12,7 @@ import {
 import { formatPrice } from "@/lib/utils";
 import { SubscriptionType } from "@prisma/client";
 import { CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 interface SubscriptionTypeProps {
     subscriptionType: SubscriptionType;
@@ -74,8 +75,13 @@ export function NewsSubscriptionCardGradient({
                 </ul>
             </CardContent>
             <CardFooter className="bg-gradient-to-r from-blue-50 to-blue-100 border-t border-blue-200 py-6">
-                <Button className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300">
-                    Subscribe Now
+                <Button
+                    className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
+                    asChild
+                >
+                    <Link href={`/subscribe/${subscriptionType.slug}`}>
+                        Subscribe Now
+                    </Link>
                 </Button>
             </CardFooter>
         </Card>

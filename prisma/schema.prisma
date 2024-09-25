@@ -118,6 +118,7 @@ model SubscriptionType {
     id                String         @id @default(uuid())
     name              String
     description       String
+    slug              String         @unique
     priceInCents      Int
     durationInSeconds Int
     subscriptions     Subscription[]
