@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Loader2, CheckCircle, XCircle } from "lucide-react";
+import AuthBackground from "../my-components/AuthBackground";
 
 export default function VerifyEmail() {
   const [status, setStatus] = useState<"loading" | "success" | "error">(
@@ -43,33 +45,7 @@ export default function VerifyEmail() {
           }, 2000); // Delay for 2 seconds to show success message
         } else {
           setStatus("error");
-          switch (data.error) {
-            case "INVALID_TOKEN":
-            case "INVALID_OR_EXPIRED_TOKEN":
-              setError(
-                "This verification link is invalid or has expired. Please request a new one or try logging in if you have already verified your email."
-              );
-              break;
-            case "EXPIRED_TOKEN":
-              setError(
-                "This verification link has expired. Please request a new one."
-              );
-              break;
-            case "USER_NOT_FOUND":
-              setError(
-                "We couldn't find a user associated with this verification link. Please sign up or contact support if you believe this is an error."
-              );
-              break;
-            case "VERIFICATION_FAILED":
-              setError(
-                "An error occurred during verification. Please try again later or contact support if the problem persists."
-              );
-              break;
-            default:
-              setError(
-                "An unexpected error occurred. Please try again later or contact support if the problem persists."
-              );
-          }
+          setError(getErrorMessage(data.error));
         }
       } catch (error) {
         setStatus("error");
@@ -84,55 +60,51 @@ export default function VerifyEmail() {
     verifyEmail();
   }, [searchParams, router]);
 
+  const getErrorMessage = (errorCode: string) => {
+    switch (errorCode) {
+      case "INVALID_TOKEN":
+      case "INVALID_OR_EXPIRED_TOKEN":
+        return "This verification link is invalid or has expired. Please request a new one or try logging in if you have already verified your email.";
+      case "EXPIRED_TOKEN":
+        return "This verification link has expired. Please request a new one.";
+      case "USER_NOT_FOUND":
+        return "We couldn't find a user associated with this verification link. Please sign up or contact support if you believe this is an error.";
+      case "VERIFICATION_FAILED":
+        return "An error occurred during verification. Please try again later or contact support if the problem persists.";
+      default:
+        return "An unexpected error occurred. Please try again later or contact support if the problem persists.";
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4 text-black">
-          Email Verification
-        </h1>
-        {status === "loading" && (
-          <div>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-black">Verifying your email...</p>
+    <AuthBackground>
+      <div className="w-full max-w-md">
+        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+          <div className="px-6 py-8">
+            <h1 className="text-3xl font-extrabold text-white text-center mb-6">
+              Email Verification
+            </h1>
+            {status === "loading" && (
+              <div className="text-center">
+                <Loader2 className="h-12 w-12 text-white animate-spin mx-auto mb-4" />
+                <p className="text-white">Verifying your email...</p>
+              </div>
+            )}
+            {status === "success" && (
+              <div className="text-center">
+                <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+                <p className="text-green-400">Email verified successfully!</p>
+              </div>
+            )}
+            {status === "error" && (
+              <div className="text-center">
+                <XCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
+                <p className="text-red-400">{error}</p>
+              </div>
+            )}
           </div>
-        )}
-        {status === "success" && (
-          <div>
-            <svg
-              className="h-12 w-12 text-green-500 mx-auto mb-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-            <p className="text-green-600">Email verified successfully!</p>
-          </div>
-        )}
-        {status === "error" && (
-          <div>
-            <svg
-              className="h-12 w-12 text-red-500 mx-auto mb-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-            <p className="text-red-500">{error}</p>
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+    </AuthBackground>
   );
 }
