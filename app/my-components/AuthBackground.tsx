@@ -1,9 +1,8 @@
 import React from 'react';
 
-interface AuthBackgroundProps {
 type AuthBackgroundProps = {
   children: React.ReactNode;
-}
+};
 
 const AuthBackground: React.FC<AuthBackgroundProps> = ({ children }) => {
   return (
