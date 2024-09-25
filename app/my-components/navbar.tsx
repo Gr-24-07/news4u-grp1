@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AuthStatus from "./AuthStatusClient";
 
 export default function Navbar() {
-  const isAdmin = true;
+  const isAdmin = true; // This should be determined server-side based on the user's role
 
   const links = [
     { name: "Local", href: "/categories/local" },
@@ -12,7 +13,7 @@ export default function Navbar() {
     { name: "Economy", href: "/categories/economy" },
     { name: "Business", href: "/categories/business" },
     { name: "Sports", href: "/categories/sports" },
-    { name: "Entertainment", href:"/categories/entertainment"},
+    { name: "Entertainment", href: "/categories/entertainment" },
     { name: "Live", href: "/categories/live" },
   ];
 
@@ -41,24 +42,10 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex flex-1 justify-end">
-          <Button>
-            <Link className="" href="/">
-              Register
-            </Link>
-          </Button>
-        </div>
-
-        <div className="flex ml-2 justify-end">
-          <Button>
-            <Link className="" href="/">
-              Sign In
-            </Link>
-          </Button>
-        </div>
+        <AuthStatus />
       </div>
-      <hr className=" border-gray-500" />
-            
+      <hr className="border-gray-500" />
+
       <nav className="text-blue-500 flex items-center bg-slate-200">
         <div className="flex w-full items-center gap-4">
           <div>
@@ -82,11 +69,9 @@ export default function Navbar() {
               )}
             </ul>
           </div>
-          
         </div>
-        
       </nav>
-      <hr className=" border-gray-500" />
+      <hr className="border-gray-500" />
     </div>
   );
 }
