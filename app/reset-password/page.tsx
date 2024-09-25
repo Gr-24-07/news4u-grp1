@@ -63,7 +63,7 @@ export default function ResetPasswordPage() {
       });
       const result = await response.json();
       if (response.ok) {
-        setMessage(result.message);
+        setMessage("Password reset successful. You can now log in with your new password.");
         setIsSuccess(true);
       } else {
         setMessage(result.error || "An error occurred. Please try again.");
@@ -79,58 +79,64 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
           <div className="px-6 py-8">
-            <h2 className="text-center text-3xl font-extrabold text-white mb-6">
-              Reset your password
-            </h2>
             {!isSuccess ? (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="block text-sm font-medium text-white">
-                          New Password
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="password"
-                            className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="block text-sm font-medium text-white">
-                          Confirm New Password
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="password"
-                            className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    type="submit"
-                    className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+              <>
+                <h2 className="text-center text-3xl font-extrabold text-white mb-6">
+                  Reset your password
+                </h2>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
                   >
-                    Reset Password
-                  </Button>
-                </form>
-              </Form>
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="block text-sm font-medium text-white">
+                            New Password
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type="password"
+                              className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-400" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="block text-sm font-medium text-white">
+                            Confirm New Password
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type="password"
+                              className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-400" />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="submit"
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Reset Password
+                    </Button>
+                  </form>
+                </Form>
+                {message && <p className="mt-2 text-sm text-red-400">{message}</p>}
+              </>
             ) : (
               <div className="text-center">
                 <p className="text-sm font-medium text-white">{message}</p>
@@ -138,9 +144,6 @@ export default function ResetPasswordPage() {
                   Redirecting to sign-in page...
                 </p>
               </div>
-            )}
-            {message && !isSuccess && (
-              <p className="mt-2 text-sm text-red-400">{message}</p>
             )}
           </div>
         </div>

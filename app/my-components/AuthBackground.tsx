@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface AuthBackgroundProps {
+type AuthBackgroundProps = {
   children: React.ReactNode;
 }
 
