@@ -6,9 +6,9 @@ import { z } from "zod";
 const CreateSubSchema = z.object({
     userId: z.string().min(1),
     subId: z.string().min(1),
-    cardnumber: z.string().min(1, "Required"),
-    cvc: z.string().min(1, "Required"),
-    date: z.string().min(1, "Required"),
+    cardnumber: z.string().length(16, "Invalid card number"),
+    cvc: z.string().length(3, "Required, 3 digits"),
+    date: z.string().min(1, "Required, MM/YY"),
 });
 
 export type CreateSubFailValidate = {

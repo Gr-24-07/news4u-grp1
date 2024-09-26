@@ -19,6 +19,20 @@ type PaymentFormProps = {
 export default function PaymentForm({ userId, subId }: PaymentFormProps) {
     const [errors, setErrors] = useState<CreateSubFailValidate["errors"]>();
     const [dbError, setDbError] = useState<string>();
+    const [cardNumber, setCardNumber] = useState(""); // For display with spaces
+    const [rawCardNumber, setRawCardNumber] = useState(""); // For the actual value without spaces
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Remove non-digit characters
+        const value = e.target.value.replace(/\D/g, "");
+
+        // Format the value by adding a space every 4 digits
+        const formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
+
+        setCardNumber(formattedValue);
+        setRawCardNumber(value); // Store the raw value without spaces
+    };
+
     return (
         <form
             action={async (formData) => {
@@ -36,8 +50,18 @@ export default function PaymentForm({ userId, subId }: PaymentFormProps) {
             className="flex flex-col gap-4 w-full max-w-sm border border-1 rounded-lg p-6"
         >
             <div>
-                <Label htmlFor="cardnumber">Cardnumber</Label>
-                <Input name="cardnumber" id="cardnumber"></Input>
+                <Label htmlFor="card">Cardnumber</Label>
+                <Input
+                    id="card"
+                    type="text"
+                    value={cardNumber}
+                    onChange={handleChange}
+                    maxLength={19}
+                    placeholder="**** **** **** ****"
+                ></Input>
+
+                {/* This is the hidden raw value you can use for form submission */}
+                <input type="hidden" name="cardnumber" value={rawCardNumber} />
                 <FormError errors={errors?.cardnumber?._errors}></FormError>
             </div>
             <div className="flex gap-2">
@@ -51,11 +75,13 @@ export default function PaymentForm({ userId, subId }: PaymentFormProps) {
                         id="date"
                         placeholder="MM/YY"
                     ></Input>
+
                     <FormError errors={errors?.date?._errors}></FormError>
                 </div>
                 <div>
                     <Label htmlFor="cvc">CVC/CVV</Label>
-                    <Input name="cvc" id="cvc"></Input>
+                    <Input name="cvc" id="cvc" maxLength={3}></Input>
+
                     <FormError errors={errors?.cvc?._errors}></FormError>
                 </div>
             </div>
