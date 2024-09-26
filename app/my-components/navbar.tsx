@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SubscribeButton from "./subscribe-button";
+import AuthStatus from "./AuthStatusClient";
 
 export default function Navbar() {
     const isAdmin = true;
@@ -41,7 +42,6 @@ export default function Navbar() {
                         News4U
                     </Link>
                 </div>
-
                 <div className="flex flex-1 justify-end">
                     <Button>
                         <Link className="" href="/">
@@ -60,6 +60,7 @@ export default function Navbar() {
                 <div className="flex ml-2 justify-end">
                     <SubscribeButton></SubscribeButton>
                 </div>
+                <AuthStatus />
             </div>
             <hr className=" border-gray-500" />
 
