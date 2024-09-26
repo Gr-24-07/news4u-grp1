@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { cleanupExpiredTokens } from "@/utils/token";
+import { withAuth } from "@/utils/withAuth";
 
-export async function POST(req: Request) {
+async function handler(req: Request) {
   try {
     await cleanupExpiredTokens();
     return NextResponse.json({ message: "Expired tokens cleaned up" });
@@ -10,3 +11,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Cleanup failed" }, { status: 500 });
   }
 }
+
+export const POST = withAuth(handler);

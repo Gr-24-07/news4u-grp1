@@ -1,70 +1,67 @@
+import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
 
 const LIMIT = 5; // Max number of requests
 const WINDOW = 60 * 1000; // Time window in milliseconds (1 minute)
 
 const ipRequests = new Map<string, number[]>();
 
-export async function middleware(request: NextRequest) {
-  // Rate limiting logic for verify-email
-  if (request.nextUrl.pathname === "/api/verify-email") {
-    const ip = request.ip ?? "127.0.0.1";
-    const now = Date.now();
-    const windowStart = now - WINDOW;
+export default withAuth(
+  function middleware(req: NextRequestWithAuth) {
+    // Rate limiting logic for verify-email
+    if (req.nextUrl.pathname === "/api/verify-email") {
+      const ip = req.ip ?? "127.0.0.1";
+      const now = Date.now();
+      const windowStart = now - WINDOW;
 
-    const requestTimestamps = ipRequests.get(ip) || [];
-    const requestsInWindow = requestTimestamps.filter(
-      (timestamp) => timestamp > windowStart
-    );
+      const requestTimestamps = ipRequests.get(ip) || [];
+      const requestsInWindow = requestTimestamps.filter(
+        (timestamp) => timestamp > windowStart
+      );
 
-    if (requestsInWindow.length >= LIMIT) {
-      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+      if (requestsInWindow.length >= LIMIT) {
+        return NextResponse.json(
+          { error: "Too many requests" },
+          { status: 429 }
+        );
+      }
+
+      requestsInWindow.push(now);
+      ipRequests.set(ip, requestsInWindow);
+
+      // Allow the request to proceed without authentication for /api/verify-email
+      return NextResponse.next();
     }
 
-    requestsInWindow.push(now);
-    ipRequests.set(ip, requestsInWindow);
-  }
+    // Role-based access control
+    const token = req.nextauth.token;
 
-  // Authentication logic
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-
-  // Define protected routes
-  const protectedPaths = ["/admin", "/profile", "/api/protected"];
-  const editorPaths = ["/editor"];
-  const adminPaths = ["/admin"];
-
-  if (
-    !token &&
-    protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))
-  ) {
-    // Redirect to login page if accessing protected route without authentication
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
-
-  // Role-based access control
-  if (token) {
-    if (
-      editorPaths.some((path) => request.nextUrl.pathname.startsWith(path)) &&
-      token.role !== "EDITOR" &&
-      token.role !== "ADMIN"
-    ) {
-      return NextResponse.redirect(new URL("/", request.url));
+    if (token) {
+      if (
+        req.nextUrl.pathname.startsWith("/editor") &&
+        token.role !== "EDITOR" &&
+        token.role !== "ADMIN"
+      ) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+      if (req.nextUrl.pathname.startsWith("/admin") && token.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
     }
-    if (
-      adminPaths.some((path) => request.nextUrl.pathname.startsWith(path)) &&
-      token.role !== "ADMIN"
-    ) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token, req }) => {
+        // Allow unauthenticated access to /api/verify-email
+        if (req.nextUrl.pathname === "/api/verify-email") {
+          return true;
+        }
+        // Require authentication for all other protected routes
+        return !!token;
+      },
+    },
   }
-
-  return NextResponse.next();
-}
+);
 
 export const config = {
   matcher: [
@@ -73,6 +70,5 @@ export const config = {
     "/profile/:path*",
     "/api/protected/:path*",
     "/editor/:path*",
-    // Add any other paths that should be protected or checked by the middleware
   ],
 };

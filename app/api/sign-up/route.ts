@@ -5,7 +5,6 @@ import { createVerificationToken } from "@/utils/token";
 import { sendVerificationEmail } from "@/utils/email";
 import { z } from "zod";
 
-// Define a schema for input validation
 const registerSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
@@ -19,11 +18,9 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Validate input
     const { email, password, firstName, lastName, dateOfBirth, newsletter } =
       registerSchema.parse(body);
 
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -35,10 +32,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await prisma.user.create({
       data: {
         email,
@@ -50,10 +45,8 @@ export async function POST(req: Request) {
       },
     });
 
-    // Create verification token
     const token = await createVerificationToken(email);
 
-    // Send verification email
     await sendVerificationEmail(email, token, email);
 
     return NextResponse.json(
