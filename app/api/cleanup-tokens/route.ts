@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cleanupExpiredTokens } from "@/utils/token";
-import { withAuth } from "@/utils/withAuth";
+import { withAuthSession } from "@/utils/withAuthSession";
 
 async function handler(req: Request) {
   try {
@@ -12,4 +12,4 @@ async function handler(req: Request) {
   }
 }
 
-export const POST = withAuth(handler);
+export const POST = withAuthSession(handler);
