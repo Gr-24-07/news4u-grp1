@@ -28,7 +28,7 @@ export default function SignUpSuccessMessage() {
     <AuthBackground>
       <main className="flex w-full max-w-md flex-1 flex-col items-center justify-center px-4 text-center text-white">
         <CheckCircle className="mb-6 h-16 w-16 text-green-400" />
-        <h1 className="text-4xl font-bold mb-4">Sign-up Successful!</h1>
+        <h1 className="text-4xl font-bold mb-4">Registration Successful!</h1>
         <p className="font-semibold mb-2">
           Please check your email to verify your account.
         </p>

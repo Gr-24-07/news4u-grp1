@@ -147,7 +147,7 @@ export default function SignInForm() {
               href="/sign-up"
               className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
             >
-              Sign up
+              Register
             </Link>
             <Link
               href="/forgot-password"
