@@ -3,23 +3,15 @@ import bcrypt from "bcrypt";
 import prisma from "@/lib/db";
 import { createVerificationToken } from "@/utils/token";
 import { sendVerificationEmail } from "@/utils/email";
+import { apiRegisterSchema } from "@/validators/auth";
 import { z } from "zod";
-
-const registerSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  dateOfBirth: z.string().optional(),
-  newsletter: z.boolean().optional(),
-});
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
+    
     const { email, password, firstName, lastName, dateOfBirth, newsletter } =
-      registerSchema.parse(body);
+      apiRegisterSchema.parse(body);
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -41,12 +33,11 @@ export async function POST(req: Request) {
         firstName: firstName || null,
         lastName: lastName || null,
         dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
-        newletter: newsletter || false,
+        newletter: newsletter || false,  // Changed to match your Prisma schema
       },
     });
 
     const token = await createVerificationToken(email);
-
     await sendVerificationEmail(email, token, email);
 
     return NextResponse.json(

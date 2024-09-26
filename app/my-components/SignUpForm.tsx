@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { registerSchema } from "@/validators/auth";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -17,21 +18,6 @@ import {
 } from "@/components/ui/form";
 import Link from "next/link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-const registerSchema = z
-  .object({
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters long"),
-    confirmPassword: z.string(),
-    dateOfBirth: z.string().optional(),
-    newsletter: z.boolean(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
 
 type FormData = z.infer<typeof registerSchema>;
 
@@ -250,7 +236,7 @@ export default function SignUpForm() {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 opacity-20" />
+              <div className="w-full border-t border-indigo-600" />
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 text-white bg-opacity-100 backdrop-filter backdrop-blur-lg z-10 relative">
