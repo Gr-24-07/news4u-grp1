@@ -1,6 +1,20 @@
 /** @type {import('next').NextConfig} */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "ichef.bbci.co.uk",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "**",
+            },
+        ],
+    },
   env: {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
@@ -11,16 +25,7 @@ const nextConfig = {
     SMTP_PORT: process.env.SMTP_PORT,
     SMTP_SECURE: process.env.SMTP_SECURE,
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "ichef.bbci.co.uk",
-        port: "",
-        pathname: "/**",
-      },
-    ],
-  },
+  
 };
 
 export default nextConfig;
