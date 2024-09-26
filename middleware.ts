@@ -28,25 +28,38 @@ export async function middleware(request: NextRequest) {
   }
 
   // Authentication logic
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-  
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
   // Define protected routes
-  const protectedPaths = ['/admin', '/profile', '/api/protected'];
-  const editorPaths = ['/editor'];
-  const adminPaths = ['/admin'];
-  
-  if (!token && protectedPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
+  const protectedPaths = ["/admin", "/profile", "/api/protected"];
+  const editorPaths = ["/editor"];
+  const adminPaths = ["/admin"];
+
+  if (
+    !token &&
+    protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))
+  ) {
     // Redirect to login page if accessing protected route without authentication
-    return NextResponse.redirect(new URL('/sign-in', request.url));
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   // Role-based access control
   if (token) {
-    if (editorPaths.some(path => request.nextUrl.pathname.startsWith(path)) && token.role !== 'EDITOR' && token.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/', request.url));
+    if (
+      editorPaths.some((path) => request.nextUrl.pathname.startsWith(path)) &&
+      token.role !== "EDITOR" &&
+      token.role !== "ADMIN"
+    ) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
-    if (adminPaths.some(path => request.nextUrl.pathname.startsWith(path)) && token.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/', request.url));
+    if (
+      adminPaths.some((path) => request.nextUrl.pathname.startsWith(path)) &&
+      token.role !== "ADMIN"
+    ) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
@@ -55,11 +68,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/api/verify-email',
-    '/admin/:path*',
-    '/profile/:path*',
-    '/api/protected/:path*',
-    '/editor/:path*',
+    "/api/verify-email",
+    "/admin/:path*",
+    "/profile/:path*",
+    "/api/protected/:path*",
+    "/editor/:path*",
     // Add any other paths that should be protected or checked by the middleware
   ],
-}
+};

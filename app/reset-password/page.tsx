@@ -63,7 +63,9 @@ export default function ResetPasswordPage() {
       });
       const result = await response.json();
       if (response.ok) {
-        setMessage("Password reset successful. You can now log in with your new password.");
+        setMessage(
+          "Password reset successful. You can now log in with your new password."
+        );
         setIsSuccess(true);
       } else {
         setMessage(result.error || "An error occurred. Please try again.");
@@ -135,7 +137,9 @@ export default function ResetPasswordPage() {
                     </Button>
                   </form>
                 </Form>
-                {message && <p className="mt-2 text-sm text-red-400">{message}</p>}
+                {message && (
+                  <p className="mt-2 text-sm text-red-400">{message}</p>
+                )}
               </>
             ) : (
               <div className="text-center">
