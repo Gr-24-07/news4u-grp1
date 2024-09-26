@@ -11,8 +11,8 @@ const CreateSubSchema = z.object({
     date: z.string().min(1, "Required"),
 });
 
-export type CreateSubFail = {
-    success: false;
+export type CreateSubFailValidate = {
+    error: "validation";
     errors: z.ZodFormattedError<
         {
             userId: string;
@@ -25,9 +25,14 @@ export type CreateSubFail = {
     >;
 };
 
+export type CreateSubFailDb = {
+    error: "database";
+    errorMessage: string;
+};
+
 export async function createSubscription(
     formData: FormData
-): Promise<CreateSubFail | undefined> {
+): Promise<CreateSubFailValidate | CreateSubFailDb | undefined> {
     const result = Object.fromEntries(formData.entries());
 
     const parsedResult = await CreateSubSchema.safeParseAsync(result);
@@ -36,10 +41,12 @@ export async function createSubscription(
         const formattedErrors = parsedResult.error.format();
 
         return {
-            success: false,
+            error: "validation",
             errors: formattedErrors,
         };
     }
+
+    console.log(parsedResult.data);
 
     const subType = await prisma.subscriptionType.findUnique({
         where: {
@@ -47,9 +54,44 @@ export async function createSubscription(
         },
     });
 
-    // await prisma.subscription.create({
-    //     data: {
-    //         expiresAt: "2024-12-12",
-    //     },
-    // });
+    if (!subType) {
+        return {
+            error: "database",
+            errorMessage: "Subscription Type not found",
+        };
+    }
+
+    const existingSub = await prisma.subscription.findUnique({
+        where: {
+            userId: parsedResult.data.userId,
+        },
+    });
+
+    if (existingSub) {
+        return {
+            error: "database",
+            errorMessage: "User is already subscribed",
+        };
+    }
+
+    const expireDate = new Date(
+        new Date().getTime() + subType?.durationInSeconds * 1000
+    );
+
+    await prisma.subscription.create({
+        data: {
+            expiresAt: expireDate,
+            priceInCents: subType.priceInCents,
+            user: {
+                connect: {
+                    id: parsedResult.data.userId,
+                },
+            },
+            subscriptionType: {
+                connect: {
+                    id: subType.id,
+                },
+            },
+        },
+    });
 }

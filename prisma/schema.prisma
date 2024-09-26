@@ -31,9 +31,8 @@ model User {
     sessions      Session[]
     // Optional for WebAuthn support
 
-    createdAt      DateTime @default(now())
-    updatedAt      DateTime @updatedAt
-    subscriptionId String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -110,7 +109,7 @@ model Subscription {
     user         User     @relation(fields: [userId], references: [id])
     userId       String   @unique
 
-    SubscriptionType   SubscriptionType? @relation(fields: [subscriptionTypeId], references: [id])
+    subscriptionType   SubscriptionType? @relation(fields: [subscriptionTypeId], references: [id])
     subscriptionTypeId String?
 }
 
