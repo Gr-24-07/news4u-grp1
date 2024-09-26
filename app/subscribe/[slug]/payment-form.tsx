@@ -19,19 +19,29 @@ type PaymentFormProps = {
 export default function PaymentForm({ userId, subId }: PaymentFormProps) {
     const [errors, setErrors] = useState<CreateSubFailValidate["errors"]>();
     const [dbError, setDbError] = useState<string>();
-    const [cardNumber, setCardNumber] = useState(""); // For display with spaces
-    const [rawCardNumber, setRawCardNumber] = useState(""); // For the actual value without spaces
+    const [cardNumber, setCardNumber] = useState("");
+    const [rawCardNumber, setRawCardNumber] = useState("");
+    const [expiration, setExpiration] = useState("");
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         // Remove non-digit characters
         const value = e.target.value.replace(/\D/g, "");
 
-        // Format the value by adding a space every 4 digits
+        // add space every 4 characters
         const formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
 
         setCardNumber(formattedValue);
-        setRawCardNumber(value); // Store the raw value without spaces
-    };
+        setRawCardNumber(value);
+    }
+
+    function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
+        let value = e.target.value;
+        if (value.length === 2 && expiration.length === 1) {
+            value += "/";
+        }
+
+        setExpiration(value);
+    }
 
     return (
         <form
@@ -74,6 +84,9 @@ export default function PaymentForm({ userId, subId }: PaymentFormProps) {
                         name="date"
                         id="date"
                         placeholder="MM/YY"
+                        value={expiration}
+                        onChange={handleDate}
+                        maxLength={5}
                     ></Input>
 
                     <FormError errors={errors?.date?._errors}></FormError>

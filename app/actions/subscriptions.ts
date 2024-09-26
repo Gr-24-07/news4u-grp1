@@ -8,7 +8,9 @@ const CreateSubSchema = z.object({
     subId: z.string().min(1),
     cardnumber: z.string().length(16, "Invalid card number"),
     cvc: z.string().length(3, "Required, 3 digits"),
-    date: z.string().min(1, "Required, MM/YY"),
+    date: z
+        .string()
+        .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Invalid date, use MM/YY"),
 });
 
 export type CreateSubFailValidate = {
