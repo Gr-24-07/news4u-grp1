@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
-import { validateResetToken } from "@/utils/token";
+import { validateAndConsumeResetToken } from "@/utils/token";
 
 export async function POST(req: Request) {
   try {
     const { token, password } = await req.json();
 
-    const { email, isValid } = validateResetToken(token);
+    const { email, isValid } = await validateAndConsumeResetToken(token);
 
     if (!isValid) {
       return NextResponse.json(
@@ -26,8 +26,12 @@ export async function POST(req: Request) {
 
     await prisma.user.update({
       where: { email },
-      data: { password: hashedPassword },
+      data: {
+        password: hashedPassword,
+      },
     });
+
+    // TODO: Add logic here to invalidate all user sessions if needed
 
     return NextResponse.json({
       message:

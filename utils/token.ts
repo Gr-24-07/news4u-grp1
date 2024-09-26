@@ -74,3 +74,67 @@ export function validateResetToken(token: string): {
     return { email: "", isValid: false };
   }
 }
+
+export async function createResetToken(email: string): Promise<string> {
+  const token = generateResetToken(email);
+  const expires = new Date(Date.now() + 3600000); // 1 hour from now
+
+  await prisma.verificationToken.create({
+    data: {
+      identifier: email,
+      token,
+      expires,
+    },
+  });
+
+  return token;
+}
+
+export async function validateAndConsumeResetToken(token: string): Promise<{
+  email: string;
+  isValid: boolean;
+}> {
+  const { email, isValid } = validateResetToken(token);
+  if (!isValid) {
+    return { email, isValid: false };
+  }
+
+  const storedToken = await prisma.verificationToken.findUnique({
+    where: {
+      identifier_token: {
+        identifier: email,
+        token,
+      },
+    },
+  });
+
+  if (!storedToken) {
+    return { email, isValid: false };
+  }
+
+  // Check if the token has expired
+  if (storedToken.expires < new Date()) {
+    // Delete expired token
+    await prisma.verificationToken.delete({
+      where: {
+        identifier_token: {
+          identifier: email,
+          token,
+        },
+      },
+    });
+    return { email, isValid: false };
+  }
+
+  // Consume the token by deleting it
+  await prisma.verificationToken.delete({
+    where: {
+      identifier_token: {
+        identifier: email,
+        token,
+      },
+    },
+  });
+
+  return { email, isValid: true };
+}

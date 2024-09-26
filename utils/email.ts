@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { createResetToken } from "@/utils/token";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -30,7 +31,9 @@ export async function sendVerificationEmail(
     `,
   });
 }
-export async function sendPasswordResetEmail(email: string, token: string) {
+
+export async function sendPasswordResetEmail(email: string) {
+  const token = await createResetToken(email);
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
 
   await transporter.sendMail({
