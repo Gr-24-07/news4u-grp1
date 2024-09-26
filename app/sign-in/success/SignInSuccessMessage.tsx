@@ -9,8 +9,8 @@ export default function SuccessMessage() {
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/"); // Redirect to home page after 3 seconds
-    }, 3000);
+      router.push("/"); // Redirect to home page after 5 seconds
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [router]);

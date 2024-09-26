@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import AuthBackground from "./AuthBackground";
 
 const SignInSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
