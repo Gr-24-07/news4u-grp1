@@ -36,7 +36,7 @@ export function NewsSubscriptionCardGradient({
 
     return (
         <Card className="w-[300px] h-[500px] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 text-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-blue-200 flex flex-col">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-b border-blue-300 h-[130px] flex flex-col justify-center">
+            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-b border-blue-300 h-[130px] flex flex-col justify-start">
                 <CardTitle className="text-2xl font-bold truncate">
                     {subscriptionType.name}
                 </CardTitle>
