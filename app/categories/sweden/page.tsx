@@ -14,7 +14,7 @@ export default async function NationalNews() {
 
     // Fetch Editor's Choice in National Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'National' }}, paid: true },  
+        where: { category: {some: { name: 'National' }}, editorsChoice: true },  
     });
     
     // Fetch Most Popular in National Category

@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Articles } from '@/app/front-page/types'; 
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from '@/app/front-page/ArticleCard';
 import Link from 'next/link';
+import CurrencyConverter from '@/app/currency-rate/page';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,7 @@ export default async function EconomyNews() {
 
     // Fetch Editor's Choice in Economy Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Economy' }}, paid: true },  
+        where: { category: {some: { name: 'Economy' }},  editorsChoice: true },  
     });
     
     // Fetch Most Popular in Economy Category
@@ -67,7 +68,8 @@ export default async function EconomyNews() {
 
             {/* Editor's Choice Section */}
             <section className="order-3 lg:order-3 col-span-2 p-2 rounded-lg">
-              <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+            <CurrencyConverter />
+              <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
               <div className="space-y-3">
                 {editorsChoice.map((article) => (
                   <Link href={`/article-page/${article.id}`}>

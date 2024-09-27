@@ -1,49 +1,43 @@
-import { PrismaClient } from "@prisma/client";
-import {
-  ArticleCardEditorChoice,
-  ArticleCardLatestNews,
-  ArticleCardPopularNews,
-} from "./front-page/ArticleCard";
-import { Articles } from "./front-page/types";
-import Link from "next/link";
+import { PrismaClient } from '@prisma/client';
+import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from './front-page/ArticleCard';
+import { Articles } from './front-page/types';
+import Link from 'next/link';
+import CurrencyConverter from './currency-rate/page';
+
 
 const prisma = new PrismaClient();
 
 export default async function HomePage() {
-  // Fetch Latest News in Live Category
-  const latestLiveNews: Articles[] = await prisma.article.findMany({
-    where: { category: { some: { name: "Live" } } },
-    orderBy: { createdAt: "desc" },
-  });
+    // Fetch Latest News in Live Category
+    const latestLiveNews: Articles[] = await prisma.article.findMany({
+        where: { category: { some: { name: 'Live' } } },
+        orderBy: { createdAt: 'desc' },
+    });
 
-  const liveNewsIds = latestLiveNews.map((article) => article.id);
+    const liveNewsIds = latestLiveNews.map(article => article.id);
 
-  // Fetch Latest News
-  const latestNews: Articles[] = await prisma.article.findMany({
-    where: {
-      id: { notIn: liveNewsIds },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 10,
-  });
+    // Fetch Latest News
+    const latestNews: Articles[] = await prisma.article.findMany({  
+      where: {
+        id: { notIn: liveNewsIds }, 
+      },
+      orderBy: { createdAt: 'desc' },
+        take: 10,
+    });
 
-  // Fetch Editor's Choice
-  const editorsChoice: Articles[] = await prisma.article.findMany({
-    where: {
-      id: { notIn: liveNewsIds }, // Exclude Live News articles
-      paid: true,
-    },
-    take: 10,
-  });
+    // Fetch Editor's Choice
+    const editorsChoice: Articles[] = await prisma.article.findMany({
+      where: {
+        id: { notIn: liveNewsIds }, // Exclude Live News articles
+        editorsChoice: true,
+      },
+        take: 10,
+    });
 
-  // Fetch Most Popular
-  const mostPopular: Articles[] = await prisma.article.findMany({
-    where: {
-      id: { notIn: liveNewsIds },
-    },
-    orderBy: { views: "desc" },
-    take: 10,
-  });
+    // Fetch Most Popular
+    const mostPopular: Articles[] = await prisma.article.findMany({
+      where: {
+        id: { notIn: liveNewsIds }, 
 
   // Fetch other category views
   const otherCategories = await prisma.category.findMany({
@@ -54,6 +48,7 @@ export default async function HomePage() {
       articles: {
         orderBy: { createdAt: "desc" },
         take: 1,
+
       },
     },
   });
@@ -110,6 +105,22 @@ export default async function HomePage() {
                   </div>
                 </section>
               </div>
+
+                    {/* Right Column: Editor's Choice News */}
+                    <div className="w-full md:w-1/4 p-4">
+                        <section className="p-2 rounded-lg">
+                            <CurrencyConverter />
+                            <h2 className="text-sm font-bold mb-2 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
+                            <div className="space-y-3">
+                                {editorsChoice.map((article) => (
+                                     <Link href={`/article-page/${article.id}`}>
+                                        <ArticleCardEditorChoice key={article.id} article={article} />
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
 
               {/* Right Column: Latest News */}
               <div className="w-full md:w-2/3 p-2">

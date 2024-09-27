@@ -15,7 +15,7 @@ export default async function Local() {
 
     // Fetch Editor's Choice in Local Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Local' }}, paid: true },  
+        where: { category: {some: { name: 'Local' }},  editorsChoice: true },  
     });
     
     // Fetch Most Popular in Local Category
