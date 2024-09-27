@@ -1,15 +1,23 @@
 import prisma from "@/lib/db";
 import { formatPrice } from "@/lib/utils";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PaymentForm from "./payment-form";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default async function Page({
-    params,
-}: {
+type PageProps = {
     params: {
         slug: string;
     };
-}) {
+};
+
+export default async function Page({ params }: PageProps) {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+        redirect("/sign-in");
+    }
+
     const subType = await prisma.subscriptionType.findUnique({
         where: {
             slug: params.slug,
@@ -33,8 +41,7 @@ export default async function Page({
                 </p>
             </div>
             <PaymentForm
-                //TODO Replace with real user
-                userId={"cm16g8qds000011a22psj5pvs"}
+                userId={session.user.id}
                 subId={subType.id}
             ></PaymentForm>
         </div>
