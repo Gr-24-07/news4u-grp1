@@ -14,7 +14,7 @@ export default async function InternationalNews() {
 
     // Fetch Editor's Choice in International Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'International' }}, paid: true },  
+        where: { category: {some: { name: 'International' }},  editorsChoice: true },  
     });
     
     // Fetch Most Popular in International Category

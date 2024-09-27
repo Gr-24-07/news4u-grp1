@@ -15,7 +15,7 @@ export default async function BusinessNewsPage() {
 
     // Fetch Editor's Choice in Business Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Business' }}, paid: true },  
+        where: { category: {some: { name: 'Business' }},  editorsChoice: true },  
      
     });
     

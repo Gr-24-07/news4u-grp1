@@ -14,7 +14,7 @@ export default async function SportNews() {
     
     // Fetch Editor's Choice in Sport Category
     const editorsChoice: Articles[] = await prisma.article.findMany({
-        where: { category: {some: { name: 'Sport' }}, paid: true },  
+        where: { category: {some: { name: 'Sport' }},  editorsChoice: true },  
     });
     
     // Fetch Most Popular in Sport Category
