@@ -24,7 +24,7 @@ model User {
     firstName     String?
     lastName      String?
     dateOfBirth   DateTime?
-    newsletter     Boolean       @default(false)
+    newsletter    Boolean       @default(false)
     subscription  Subscription?
     articles      Article[]
     accounts      Account[]
@@ -68,7 +68,7 @@ model Session {
 
 model VerificationToken {
     identifier String
-    token      String 
+    token      String
     expires    DateTime
 
     @@id([identifier, token])
