@@ -24,7 +24,7 @@ model User {
     firstName     String?
     lastName      String?
     dateOfBirth   DateTime?
-    newletter     Boolean       @default(false)
+    newsletter     Boolean       @default(false)
     subscription  Subscription?
     articles      Article[]
     accounts      Account[]

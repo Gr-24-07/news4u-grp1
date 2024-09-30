@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         firstName: firstName || null,
         lastName: lastName || null,
         dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
-        newletter: newsletter || false,  // Changed to match your Prisma schema
+        newsletter: newsletter || false,  // Changed to match your Prisma schema
       },
     });
 

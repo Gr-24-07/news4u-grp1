@@ -7,15 +7,16 @@ const baseRegisterSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
   dateOfBirth: z.string().optional(),
   newsletter: z.boolean().optional(),
-  newletter: z.boolean().optional(),
 });
 
-export const registerSchema = baseRegisterSchema.extend({
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+export const registerSchema = baseRegisterSchema
+  .extend({
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
 export const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
