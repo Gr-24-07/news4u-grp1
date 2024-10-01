@@ -28,7 +28,7 @@ export default async function ProfilePage() {
     <AuthBackground>
       <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
         <div className="px-6 py-8">
-          <h1 className="text-center text-3xl font-extrabold text-white mb-6">
+          <h1 className="text-center text-3xl font-extrabold text-white mb-10 mt-8">
             Your Profile
           </h1>
           <div className="space-y-8">
