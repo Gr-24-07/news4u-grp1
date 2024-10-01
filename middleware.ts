@@ -33,6 +33,11 @@ export default withAuth(
       return NextResponse.next();
     }
 
+    // Allow access to profile-newsletter-preference API route
+    if (req.nextUrl.pathname === "/api/user/profile-newsletter-preference") {
+      return NextResponse.next();
+    }
+
     // Role-based access control
     const token = req.nextauth.token;
 
@@ -56,6 +61,12 @@ export default withAuth(
         if (req.nextUrl.pathname === "/api/verify-email") {
           return true;
         }
+        // Allow access to profile-newsletter-preference API route
+        if (
+          req.nextUrl.pathname === "/api/user/profile-newsletter-preference"
+        ) {
+          return true;
+        }
         // Require authentication for all other protected routes
         return !!token;
       },
@@ -66,6 +77,7 @@ export default withAuth(
 export const config = {
   matcher: [
     "/api/verify-email",
+    "/api/user/profile-newsletter-preference",
     "/admin/:path*",
     "/profile/:path*",
     "/api/protected/:path*",
