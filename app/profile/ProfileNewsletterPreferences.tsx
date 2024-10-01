@@ -61,7 +61,6 @@ export default function ProfileNewsletterPreferences({
           checked={isSubscribed}
           onCheckedChange={handleToggle}
           disabled={isUpdating}
-          className="bg-indigo-600"
         />
       </div>
     </div>
