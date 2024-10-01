@@ -28,9 +28,16 @@ export default async function ProfilePage() {
     <AuthBackground>
       <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
         <div className="px-6 py-8">
-          <h1 className="text-center text-3xl font-extrabold text-white mb-10 mt-8">
-            Your Profile
-          </h1>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-indigo-600 text-2xl font-extrabold mb-8 mt-8" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="text-3xl font-extrabold mb-10 mt-8 px-2 text-white bg-opacity-100 backdrop-filter backdrop-blur-lg z-10 relative">
+                Your Profile
+              </span>
+            </div>
+          </div>
           <div className="space-y-8">
             <ProfilePersonalInfoForm
               userId={user.id}
@@ -42,6 +49,7 @@ export default async function ProfilePage() {
                   : null,
               }}
             />
+
             <ProfileResetPasswordForm />
             <ProfileSubscriptionInfo subscription={user.subscription} />
             <ProfileNewsletterPreferences
