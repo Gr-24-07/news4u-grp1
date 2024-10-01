@@ -210,11 +210,13 @@ export default function SignUpForm() {
                       Newsletter Preferences
                     </FormLabel>
                     <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        disabled={isSubmitting}
-                      />
+                      <div className="mr-4">
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={isSubmitting}
+                        />
+                      </div>
                     </FormControl>
                   </div>
                   <FormDescription className="mt-1 text-sm text-gray-300">

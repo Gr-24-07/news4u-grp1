@@ -29,12 +29,9 @@ export default async function ProfilePage() {
       <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
         <div className="px-6 py-8">
           <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-indigo-600 text-2xl font-extrabold mb-8 mt-8" />
-            </div>
             <div className="relative flex justify-center">
               <span className="text-3xl font-extrabold mb-10 mt-8 px-2 text-white bg-opacity-100 backdrop-filter backdrop-blur-lg z-10 relative">
-                Your Profile
+                Profile
               </span>
             </div>
           </div>

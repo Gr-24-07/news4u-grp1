@@ -57,11 +57,13 @@ export default function ProfileNewsletterPreferences({
       </h2>
       <div className="flex items-center justify-between">
         <span className="text-white">Receive personalized newsletter</span>
+        <div className="mr-32">
         <Switch
           checked={isSubscribed}
           onCheckedChange={handleToggle}
           disabled={isUpdating}
         />
+        </div>
       </div>
     </div>
   );
