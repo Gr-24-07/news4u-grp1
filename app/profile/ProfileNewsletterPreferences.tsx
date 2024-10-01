@@ -28,7 +28,6 @@ export default function ProfileNewsletterPreferences({
 
       if (response.ok) {
         setIsSubscribed(!isSubscribed);
-        // Success toast removed from here
       } else {
         const errorData = await response.json();
         console.error("Failed to update newsletter preference:", errorData);
