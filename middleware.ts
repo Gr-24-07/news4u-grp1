@@ -7,39 +7,34 @@ const WINDOW = 60 * 1000; // Time window in milliseconds (1 minute)
 const ipRequests = new Map<string, number[]>();
 
 export default withAuth(
-  function middleware(req: NextRequestWithAuth) {
-    // Rate limiting logic for verify-email
-    if (req.nextUrl.pathname === "/api/verify-email") {
-      const ip = req.ip ?? "127.0.0.1";
-      const now = Date.now();
-      const windowStart = now - WINDOW;
+    function middleware(req: NextRequestWithAuth) {
+        // Rate limiting logic for verify-email
+        if (req.nextUrl.pathname === "/api/verify-email") {
+            const ip = req.ip ?? "127.0.0.1";
+            const now = Date.now();
+            const windowStart = now - WINDOW;
 
-      const requestTimestamps = ipRequests.get(ip) || [];
-      const requestsInWindow = requestTimestamps.filter(
-        (timestamp) => timestamp > windowStart
-      );
+            const requestTimestamps = ipRequests.get(ip) || [];
+            const requestsInWindow = requestTimestamps.filter(
+                (timestamp) => timestamp > windowStart
+            );
 
-      if (requestsInWindow.length >= LIMIT) {
-        return NextResponse.json(
-          { error: "Too many requests" },
-          { status: 429 }
-        );
-      }
+            if (requestsInWindow.length >= LIMIT) {
+                return NextResponse.json(
+                    { error: "Too many requests" },
+                    { status: 429 }
+                );
+            }
 
-      requestsInWindow.push(now);
-      ipRequests.set(ip, requestsInWindow);
+            requestsInWindow.push(now);
+            ipRequests.set(ip, requestsInWindow);
 
       // Allow the request to proceed without authentication for /api/verify-email
       return NextResponse.next();
     }
 
-    // Allow access to profile-newsletter-preference API route
-    if (req.nextUrl.pathname === "/api/user/profile-newsletter-preference") {
-      return NextResponse.next();
-    }
-
-    // Role-based access control
-    const token = req.nextauth.token;
+        // Role-based access control
+        const token = req.nextauth.token;
 
     if (token) {
       if (
@@ -61,12 +56,6 @@ export default withAuth(
         if (req.nextUrl.pathname === "/api/verify-email") {
           return true;
         }
-        // Allow access to profile-newsletter-preference API route
-        if (
-          req.nextUrl.pathname === "/api/user/profile-newsletter-preference"
-        ) {
-          return true;
-        }
         // Require authentication for all other protected routes
         return !!token;
       },
@@ -77,7 +66,6 @@ export default withAuth(
 export const config = {
   matcher: [
     "/api/verify-email",
-    "/api/user/profile-newsletter-preference",
     "/admin/:path*",
     "/profile/:path*",
     "/api/protected/:path*",
