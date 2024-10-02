@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { sendSubConfirmation } from "@/utils/email";
 import { z } from "zod";
 
 const CreateSubSchema = z.object({
@@ -80,7 +81,7 @@ export async function createSubscription(
         new Date().getTime() + subType?.durationInSeconds * 1000
     );
 
-    await prisma.subscription.create({
+    const sub = await prisma.subscription.create({
         data: {
             expiresAt: expireDate,
             priceInCents: subType.priceInCents,
@@ -96,4 +97,6 @@ export async function createSubscription(
             },
         },
     });
+
+    sendSubConfirmation("test@test.se", sub);
 }

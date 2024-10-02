@@ -108,9 +108,10 @@ model Subscription {
     expiresAt    DateTime
     user         User     @relation(fields: [userId], references: [id])
     userId       String   @unique
+    autoRenew    Boolean  @default(true)
 
-    subscriptionType   SubscriptionType? @relation(fields: [subscriptionTypeId], references: [id])
-    subscriptionTypeId String?
+    subscriptionType   SubscriptionType @relation(fields: [subscriptionTypeId], references: [id])
+    subscriptionTypeId String
 }
 
 model SubscriptionType {
