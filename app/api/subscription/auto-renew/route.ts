@@ -1,7 +1,13 @@
 import prisma from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
+    const apiKey = req.headers.get("api-key");
+
+    if (apiKey !== process.env.RENEW_API_KEY) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const currentDate = new Date();
     const renewWindowDate = new Date(
         currentDate.getTime() + 24 * 60 * 60 * 1000
