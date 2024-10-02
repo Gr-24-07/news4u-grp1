@@ -37,7 +37,7 @@ export default function CurrencySelect({ selectedCurrency, handleCurrency }: Cur
             />
             <select
                 onChange={handleCurrency}
-                className=" text-gray-700 outline-none bg-green-50"
+                className=" text-gray-700 outline-none bg-transparent"
                 value={selectedCurrency}
             >
                 {currencyCodes.map(currency => (
