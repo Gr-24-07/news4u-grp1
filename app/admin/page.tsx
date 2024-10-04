@@ -16,8 +16,24 @@ export default async function AdminPage() {
                             <h1 className="font-bold text-lg">
                                 {subTypeStats.name}
                             </h1>
-                            <p>Active: {subTypeStats.active}</p>
-                            <p>Expired: {subTypeStats.expired}</p>
+                            <div className="grid grid-cols-2">
+                                <div className="flex justify-between w-4/5">
+                                    <div>Total:</div>
+                                    <div>{subTypeStats.total}</div>
+                                </div>
+                                <div className="flex justify-between w-4/5">
+                                    <div>Auto-renew:</div>
+                                    <div>{subTypeStats.autoRenew}</div>
+                                </div>
+                                <div className="flex justify-between w-4/5">
+                                    <div>Active:</div>
+                                    <div>{subTypeStats.active}</div>
+                                </div>
+                                <div className="flex justify-between w-4/5">
+                                    <div>Expired:</div>
+                                    <div>{subTypeStats.expired}</div>
+                                </div>
+                            </div>
                         </div>
                     );
                 })}

@@ -30,10 +30,19 @@ export async function getSubscriptionCountsByType() {
                 },
             });
 
+            const autoRenewCount = await prisma.subscription.count({
+                where: {
+                    subscriptionTypeId: subType.id,
+                    autoRenew: true,
+                },
+            });
+
             return {
                 name: subType?.name,
+                total: expiredCount + activeCount,
                 expired: expiredCount,
                 active: activeCount,
+                autoRenew: autoRenewCount,
             };
         })
     );
