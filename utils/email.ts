@@ -47,3 +47,23 @@ export async function sendPasswordResetEmail(email: string) {
     `,
   });
 }
+
+export async function sendEmailChangeVerification(
+  email: string,
+  token: string
+) {
+  const verificationLink = `${process.env.NEXTAUTH_URL}/api/profile-change-email-verification?token=${token}`;
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: email,
+    subject: "Verify Your New Email Address",
+    html: `
+      <h1>Email Change Verification</h1>
+      <p>Hello,</p>
+      <p>You've requested to change your email address. Click the link below to verify your new email address:</p>
+      <a href="${verificationLink}">${verificationLink}</a>
+      <p>If you didn't request this change, please ignore this email and contact support if you have any concerns.</p>
+    `,
+  });
+}

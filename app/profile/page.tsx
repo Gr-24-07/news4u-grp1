@@ -7,6 +7,7 @@ import ProfileSubscriptionInfo from "./ProfileSubscriptionInfo";
 import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
 import AuthBackground from "../my-components/AuthBackground";
 import ProfilePersonalInfoForm from "./ProfilePersonalInfoForm";
+import ProfileChangeEmailForm from "./ProfileChangeEmailForm";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -46,7 +47,7 @@ export default async function ProfilePage() {
                   : null,
               }}
             />
-
+            <ProfileChangeEmailForm />
             <ProfileResetPasswordForm />
             <ProfileSubscriptionInfo subscription={user.subscription} />
             <ProfileNewsletterPreferences
