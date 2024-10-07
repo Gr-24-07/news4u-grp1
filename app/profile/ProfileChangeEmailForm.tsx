@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
@@ -16,10 +16,34 @@ type MessageType = {
 } | null;
 
 export default function ProfileChangeEmailForm() {
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<MessageType>(null);
+
+  useEffect(() => {
+    const fetchCurrentEmail = async () => {
+      try {
+        console.log("Fetching current email...");
+        const response = await fetch("/api/user/profile-current-email");
+        console.log("Response status:", response.status);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Received data:", data);
+          setCurrentEmail(data.email);
+        } else {
+          console.error("Failed to fetch current email");
+          const errorData = await response.json();
+          console.error("Error data:", errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching current email:", error);
+      }
+    };
+
+    fetchCurrentEmail();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +86,16 @@ export default function ProfileChangeEmailForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4">Change Email</h2>
+      <h2 className="text-2xl font-bold text-white mb-4">Email</h2>
+
+      {currentEmail !== null && (
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-white">
+            Current Email
+          </label>
+          <p className="text-white">{currentEmail}</p>
+        </div>
+      )}
 
       {message && (
         <div
@@ -111,7 +144,7 @@ export default function ProfileChangeEmailForm() {
         disabled={isSubmitting}
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        {isSubmitting ? "Submitting..." : "Change Email"}
+        {isSubmitting ? "Submitting..." : "Update Email"}
       </Button>
     </form>
   );

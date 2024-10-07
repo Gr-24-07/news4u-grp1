@@ -37,6 +37,13 @@ export default function ProfilePersonalInfoForm({
     text: string;
   } | null>(null);
 
+  // Format the date to YYYY-MM-DD for the input field
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0];
+  };
+
   const {
     register,
     handleSubmit,
@@ -46,7 +53,7 @@ export default function ProfilePersonalInfoForm({
     defaultValues: {
       firstName: initialData.firstName || "",
       lastName: initialData.lastName || "",
-      dateOfBirth: initialData.dateOfBirth || "",
+      dateOfBirth: formatDate(initialData.dateOfBirth),
     },
   });
 

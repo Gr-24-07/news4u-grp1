@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { Prisma } from "@prisma/client";
+import { validateAndConsumeResetToken } from "@/utils/token";
 
 export async function POST(req: Request) {
   try {
@@ -12,36 +12,56 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "INVALID_TOKEN" }, { status: 400 });
     }
 
+    // Check if it's an email change token
+    try {
+      const { email: tokenData, isValid } = await validateAndConsumeResetToken(
+        token
+      );
+
+      if (isValid) {
+        console.log("API: Valid email change token");
+        const [userId, newEmail] = tokenData.split(":");
+
+        if (!userId || !newEmail) {
+          console.log("API: Invalid email change token data");
+          return NextResponse.json({ error: "INVALID_TOKEN" }, { status: 400 });
+        }
+
+        const updatedUser = await prisma.user.update({
+          where: { id: userId },
+          data: {
+            email: newEmail,
+            emailVerified: new Date(),
+          },
+        });
+
+        console.log(
+          "API: Updated user's email and verified status:",
+          updatedUser.email,
+          updatedUser.emailVerified
+        );
+        return NextResponse.json(
+          { message: "EMAIL_CHANGED_AND_VERIFIED" },
+          { status: 200 }
+        );
+      }
+    } catch (error) {
+      console.log(
+        "API: Not an email change token, proceeding with regular verification"
+      );
+    }
+
+    // Regular verification process
     const verificationToken = await prisma.verificationToken.findFirst({
       where: { token },
     });
-    console.log("API: Found verification token:", verificationToken);
 
     if (!verificationToken) {
-      console.log(
-        "API: No verification token found in database. Checking for verified user..."
+      console.log("API: Invalid or expired token");
+      return NextResponse.json(
+        { error: "INVALID_OR_EXPIRED_TOKEN" },
+        { status: 400 }
       );
-      const verifiedUser = await prisma.user.findFirst({
-        where: { emailVerified: { not: null } },
-      });
-
-      if (verifiedUser) {
-        console.log(
-          "API: Found a verified user. Email likely already verified."
-        );
-        return NextResponse.json(
-          { message: "EMAIL_ALREADY_VERIFIED" },
-          { status: 200 }
-        );
-      } else {
-        console.log(
-          "API: No verified user found. Token may be invalid or expired."
-        );
-        return NextResponse.json(
-          { error: "INVALID_OR_EXPIRED_TOKEN" },
-          { status: 400 }
-        );
-      }
     }
 
     if (new Date() > verificationToken.expires) {
@@ -60,53 +80,27 @@ export async function POST(req: Request) {
     const user = await prisma.user.findUnique({
       where: { email: verificationToken.identifier },
     });
-    console.log("API: Found user:", user);
 
     if (!user) {
-      console.log(
-        "API: No user found with the email associated with the token"
-      );
+      console.log("API: User not found");
       return NextResponse.json({ error: "USER_NOT_FOUND" }, { status: 400 });
     }
 
-    if (user.emailVerified) {
-      console.log("API: User's email is already verified");
-      return NextResponse.json(
-        { message: "EMAIL_ALREADY_VERIFIED" },
-        { status: 200 }
-      );
-    }
-
-    const updatedUser = await prisma.user.update({
+    await prisma.user.update({
       where: { id: user.id },
       data: { emailVerified: new Date() },
     });
-    console.log(
-      "API: Updated user's emailVerified status:",
-      updatedUser.emailVerified
-    );
 
-    try {
-      await prisma.verificationToken.delete({
-        where: {
-          identifier_token: {
-            identifier: verificationToken.identifier,
-            token: verificationToken.token,
-          },
+    await prisma.verificationToken.delete({
+      where: {
+        identifier_token: {
+          identifier: verificationToken.identifier,
+          token: verificationToken.token,
         },
-      });
-      console.log("API: Deleted verification token");
-    } catch (deleteError) {
-      if (
-        deleteError instanceof Prisma.PrismaClientKnownRequestError &&
-        deleteError.code === "P2025"
-      ) {
-        console.log("API: Verification token already deleted");
-      } else {
-        throw deleteError;
-      }
-    }
+      },
+    });
 
+    console.log("API: Email verified successfully");
     return NextResponse.json({ message: "EMAIL_VERIFIED" }, { status: 200 });
   } catch (error) {
     console.error("API: Verification error:", error);

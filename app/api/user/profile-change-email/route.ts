@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
-import { generateResetToken } from "@/utils/token";
+import { createResetToken } from "@/utils/token";
 import { sendEmailChangeVerification } from "@/utils/email";
 
 export async function POST(req: Request) {
@@ -15,7 +15,6 @@ export async function POST(req: Request) {
 
   const { newEmail, password } = await req.json();
 
-  // Validate input
   if (!newEmail || !password) {
     return NextResponse.json(
       { error: "Missing required fields" },
@@ -32,13 +31,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Verify current password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
-    // Check if new email is already in use
     const existingUser = await prisma.user.findUnique({
       where: { email: newEmail },
     });
@@ -50,10 +47,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Generate and store verification token
-    const token = await generateResetToken(`${user.id}:${newEmail}`);
-
-    // Send verification email
+    const token = await createResetToken(`${user.id}:${newEmail}`);
     await sendEmailChangeVerification(newEmail, token);
 
     return NextResponse.json({ message: "Verification email sent" });

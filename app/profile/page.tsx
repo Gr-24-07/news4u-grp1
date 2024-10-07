@@ -9,7 +9,11 @@ import AuthBackground from "../my-components/AuthBackground";
 import ProfilePersonalInfoForm from "./ProfilePersonalInfoForm";
 import ProfileChangeEmailForm from "./ProfileChangeEmailForm";
 
-export default async function ProfilePage() {
+export default async function ProfilePage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -25,6 +29,9 @@ export default async function ProfilePage() {
     throw new Error("User not found");
   }
 
+  const emailChanged = searchParams.emailChanged === "true";
+  const error = searchParams.error as string | undefined;
+
   return (
     <AuthBackground>
       <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
@@ -36,6 +43,23 @@ export default async function ProfilePage() {
               </span>
             </div>
           </div>
+          {emailChanged && (
+            <div className="mb-4 p-4 bg-green-500 text-white rounded-md">
+              Your email has been successfully changed.
+            </div>
+          )}
+          {error && (
+            <div className="mb-4 p-4 bg-red-500 text-white rounded-md">
+              {error === "invalid_token" && "Invalid or expired token."}
+              {error === "invalid_token_data" && "Invalid token data."}
+              {error === "verification_failed" && "Email verification failed."}
+              {![
+                "invalid_token",
+                "invalid_token_data",
+                "verification_failed",
+              ].includes(error) && "An error occurred."}
+            </div>
+          )}
           <div className="space-y-8">
             <ProfilePersonalInfoForm
               userId={user.id}
@@ -52,7 +76,7 @@ export default async function ProfilePage() {
             <ProfileSubscriptionInfo subscription={user.subscription} />
             <ProfileNewsletterPreferences
               userId={user.id}
-              currentPreference={user.newsletter}
+              initialPreference={user.newsletter}
             />
           </div>
         </div>
