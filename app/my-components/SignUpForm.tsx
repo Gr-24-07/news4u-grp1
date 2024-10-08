@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/validators/auth";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import Link from "next/link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Switch } from "@/components/ui/switch";
 
 type FormData = z.infer<typeof registerSchema>;
 
@@ -204,22 +204,24 @@ export default function SignUpForm() {
               control={form.control}
               name="newsletter"
               render={({ field }) => (
-                <FormItem className="flex items-start space-x-5 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="h-6 w-6 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
-                  </FormControl>
-                  <div className="flex-grow pt-1">
+                <FormItem>
+                  <div className="flex items-center justify-between">
                     <FormLabel className="text-sm font-medium text-white">
-                      Subscribe to our newsletter
+                      Newsletter Preferences
                     </FormLabel>
-                    <FormDescription className="mt-1 text-sm text-gray-300">
-                      Receive updates about our latest news and events.
-                    </FormDescription>
+                    <FormControl>
+                      <div className="mr-4">
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={isSubmitting}
+                        />
+                      </div>
+                    </FormControl>
                   </div>
+                  <FormDescription className="mt-1 text-sm text-gray-300">
+                    Receive updates about our latest news and events.
+                  </FormDescription>
                 </FormItem>
               )}
             />
@@ -233,7 +235,7 @@ export default function SignUpForm() {
             </div>
           </form>
         </Form>
-        <div className="mt-6">
+        <div className="mt-8">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-indigo-600" />

@@ -133,30 +133,27 @@ export default function SignInForm() {
             </div>
           </form>
         </Form>
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 opacity-" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-transparent text-white"></span>
-            </div>
-          </div>
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <Link
-              href="/sign-up"
-              className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
-            >
-              Register
-            </Link>
-            <Link
-              href="/forgot-password"
-              className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
-            >
-              Forgot password
-            </Link>
-          </div>
-        </div>
+        <div className="mt-8">
+  <div className="flex items-center w-full">
+    <div className="flex-grow border-t border-indigo-600"></div>
+    <div className="mx-4 text-white text-sm font-light">OR</div>
+    <div className="flex-grow border-t border-indigo-600"></div>
+  </div>
+  <div className="mt-8 grid grid-cols-2 gap-4">
+    <Link
+      href="/sign-up"
+      className="w-full inline-flex justify-center py-2.5 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-30 hover:border-opacity-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Register
+    </Link>
+    <Link
+      href="/forgot-password"
+      className="w-full inline-flex justify-center py-2.5 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-30 hover:border-opacity-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Forgot password
+    </Link>
+  </div>
+</div>
       </div>
     </div>
   );

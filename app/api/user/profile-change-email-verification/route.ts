@@ -41,7 +41,7 @@ export async function POST(req: Request) {
           updatedUser.emailVerified
         );
         return NextResponse.json(
-          { message: "EMAIL_CHANGED_AND_VERIFIED" },
+          { message: "EMAIL_CHANGED_AND_VERIFIED", redirectTo: "/profile" },
           { status: 200 }
         );
       }
@@ -101,7 +101,10 @@ export async function POST(req: Request) {
     });
 
     console.log("API: Email verified successfully");
-    return NextResponse.json({ message: "EMAIL_VERIFIED" }, { status: 200 });
+    return NextResponse.json(
+      { message: "EMAIL_VERIFIED", redirectTo: "/sign-in" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("API: Verification error:", error);
     return NextResponse.json({ error: "VERIFICATION_FAILED" }, { status: 500 });
