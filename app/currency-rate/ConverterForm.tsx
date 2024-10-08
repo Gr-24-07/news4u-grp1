@@ -16,7 +16,7 @@ export default function ConverterForm() {
     };
 
     const getExchangeRate = async () => {
-        const API_KEY = "5914c3c816df22348fdea0c6";
+        const API_KEY = "cd9ad038b7a306b5c61dd5a8";
         const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${fromCurrency}/${toCurrency}/${amount}`;
 
         setIsLoading(true);

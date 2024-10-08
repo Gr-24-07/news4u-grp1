@@ -1,54 +1,45 @@
 import { PrismaClient } from '@prisma/client';
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from './front-page/ArticleCard';
-import { Articles } from './front-page/types';
-import Link from 'next/link';
 import CurrencyConverter from './currency-rate/page';
 
 const prisma = new PrismaClient();
 
 export default async function HomePage() {
-    // Fetch Latest News in Live Category
-    const latestLiveNews: Articles[] = await prisma.article.findMany({
+    const latestLiveNews = await prisma.article.findMany({
         where: { category: { some: { name: 'Live' } } },
         orderBy: { createdAt: 'desc' },
     });
 
     const liveNewsIds = latestLiveNews.map(article => article.id);
 
-    // Fetch Latest News
-    const latestNews: Articles[] = await prisma.article.findMany({  
-      where: {
-        id: { notIn: liveNewsIds }, 
-      },
-      orderBy: { createdAt: 'desc' },
+    const latestNews = await prisma.article.findMany({  
+        where: {
+            id: { notIn: liveNewsIds },
+        },
+        orderBy: { createdAt: 'desc' },
         take: 10,
     });
 
-    // Fetch Editor's Choice
-    const editorsChoice: Articles[] = await prisma.article.findMany({
-      where: {
-        id: { notIn: liveNewsIds }, // Exclude Live News articles
-        editorsChoice: true,
-      },
+    const editorsChoice = await prisma.article.findMany({
+        where: {
+            id: { notIn: liveNewsIds },
+            editorsChoice: true,
+        },
         take: 10,
     });
 
-    // Fetch Most Popular
-    const mostPopular: Articles[] = await prisma.article.findMany({
-      where: {
-        id: { notIn: liveNewsIds }, 
-      },
+    const mostPopular = await prisma.article.findMany({
+        where: {
+            id: { notIn: liveNewsIds },
+        },
         orderBy: { views: 'desc' },
         take: 10,
     });
 
-    // Fetch other category views
     const otherCategories = await prisma.category.findMany({
-      where: {
-        id: { notIn: liveNewsIds }, 
-      },
         include: {
             articles: {
+                where: { id: { notIn: liveNewsIds } },
                 orderBy: { createdAt: 'desc' },
                 take: 1,
             },
@@ -57,62 +48,39 @@ export default async function HomePage() {
 
     return (
         <main className="w-full p-5">
-
             <div className="flex flex-col md:flex-row justify-center">
                 <div className="max-w-screen-lg w-full flex flex-col md:flex-row">
 
-                    {/* Left Column (Main Content) */}
                     <div className="w-full md:w-3/4 p-4 space-y-6">
-
-                        {/* First Row: Live News */}
                         <section className="p-2 rounded-lg mx-auto">
                             <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
-                                <Link href={"/categories/live"}>Live</Link>
+                                Live News
                             </h2>
                             <div className="space-y-3">
                                 {latestLiveNews.map((article) => (
-                                    <div key={article.id}>
-                                        <Link href={`/article-page/${article.id}`}>
-                                            <h3 className="font-bold text-xl text-black hover:underline">{article.headline}</h3>
-                                            <img
-                                                src={article.image}
-                                                alt={article.headline}
-                                                className="w-full object-cover mt-2"
-                                            />
-                                        <p className="text-sm text-gray-800 whitespace-normal break-words pt-3">
-                                            {article.summary}
-                                        </p>
-                                        </Link>
-                                    </div>
+                                    <ArticleCardLatestNews key={article.id} article={article} />
                                 ))}
                             </div>
                         </section>
 
-                        {/* Second Row: Two Columns (Most Popular News & Latest News) */}
                         <div className="flex flex-col md:flex-row space-x-0 md:space-x-4">
-                            {/* Left Column: Most Popular News */}
                             <div className="w-full md:w-1/3 p-2">
                                 <section className="p-2 rounded-lg">
                                     <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
                                     <div className="space-y-3">
                                         {mostPopular.map((article) => (
-                                            <Link href={`/article-page/${article.id}`}>
-                                                <ArticleCardPopularNews key={article.id} article={article} />
-                                            </Link>
+                                            <ArticleCardPopularNews key={article.id} article={article} />
                                         ))}
                                     </div>
                                 </section>
                             </div>
 
-                            {/* Right Column: Latest News */}
                             <div className="w-full md:w-2/3 p-2">
                                 <section className="p-2 rounded-lg">
                                     <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
                                     <div className="space-y-3">
                                         {latestNews.map((article) => (
-                                             <Link href={`/article-page/${article.id}`}>
-                                                <ArticleCardLatestNews key={article.id} article={article} />
-                                            </Link>
+                                            <ArticleCardLatestNews key={article.id} article={article} />
                                         ))}
                                     </div>
                                 </section>
@@ -120,16 +88,13 @@ export default async function HomePage() {
                         </div>
                     </div>
 
-                    {/* Right Column: Editor's Choice News */}
                     <div className="w-full md:w-1/4 p-4">
                         <section className="p-2 rounded-lg">
                             <CurrencyConverter />
                             <h2 className="text-sm font-bold mb-2 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
                             <div className="space-y-3">
                                 {editorsChoice.map((article) => (
-                                     <Link href={`/article-page/${article.id}`}>
-                                        <ArticleCardEditorChoice key={article.id} article={article} />
-                                    </Link>
+                                    <ArticleCardEditorChoice key={article.id} article={article} />
                                 ))}
                             </div>
                         </section>
@@ -149,19 +114,7 @@ export default async function HomePage() {
                           <div className="space-y-2">
                               {category.articles && category.articles.length > 0 ? (
                                   category.articles.map((article) => (
-                                      <div key={article.id} className="pb-2 mb-2">
-                                         <Link href={`/article-page/${article.id}`}>
-                                          <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
-                                          <div className="relative">
-                                              <img
-                                                  src={article.image}
-                                                  alt={article.headline}
-                                                  className="w-auto object-cover mt-2"
-                                              />
-                                          </div>
-                                          <p className="text-xs text-gray-600 pt-2">{article.summary}</p>
-                                          </Link>
-                                      </div>
+                                      <ArticleCardLatestNews key={article.id} article={article} />
                                   ))
                               ) : null}
                           </div>
