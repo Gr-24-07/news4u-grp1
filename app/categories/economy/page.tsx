@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Articles } from '@/app/front-page/types'; 
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from '@/app/front-page/ArticleCard';
-import Link from 'next/link';
 import CurrencyConverter from '@/app/currency-rate/page';
 
 const prisma = new PrismaClient();
@@ -47,9 +46,7 @@ export default async function EconomyNews() {
               <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
               <div className="space-y-3">
                 {latestNews.map((article) => (
-                  <Link href={`/article-page/${article.id}`}>
                     <ArticleCardLatestNews key={article.id} article={article} />
-                  </Link>
                 ))}
               </div>
             </section>
@@ -59,9 +56,7 @@ export default async function EconomyNews() {
               <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
               <div className="space-y-3">
                 {mostPopular.map((article) => (
-                  <Link href={`/article-page/${article.id}`}>
                     <ArticleCardPopularNews key={article.id} article={article} />
-                  </Link>
                 ))}
               </div>
             </section>
@@ -72,9 +67,7 @@ export default async function EconomyNews() {
               <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
               <div className="space-y-3">
                 {editorsChoice.map((article) => (
-                  <Link href={`/article-page/${article.id}`}>
                     <ArticleCardEditorChoice key={article.id} article={article} />
-                  </Link>
                 ))}
               </div>
             </section>
@@ -93,19 +86,7 @@ export default async function EconomyNews() {
                           <div className="space-y-2">
                               {category.articles && category.articles.length > 0 ? (
                                   category.articles.map((article) => (
-                                      <div key={article.id} className="pb-2 mb-2">
-                                        <Link href={`/article-page/${article.id}`}>
-                                            <h4 className="text-sm font-semibold text-gray-900 hover:underline">{article.headline}</h4>
-                                            <div className="relative">
-                                                <img
-                                                    src={article.image}
-                                                    alt={article.headline}
-                                                    className="w-auto object-cover mt-2"
-                                                />
-                                            </div>
-                                          <p className="text-xs text-gray-600 pt-3">{article.summary}</p>
-                                          </Link>
-                                      </div>
+                                      <ArticleCardLatestNews key={article.id} article={article} />
                                   ))
                               ) : null}
                           </div>
