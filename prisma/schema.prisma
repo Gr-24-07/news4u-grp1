@@ -24,16 +24,15 @@ model User {
     firstName     String?
     lastName      String?
     dateOfBirth   DateTime?
-    newletter     Boolean       @default(false)
+    newsletter    Boolean       @default(false)
     subscription  Subscription?
     articles      Article[]
     accounts      Account[]
     sessions      Session[]
     // Optional for WebAuthn support
 
-    createdAt      DateTime @default(now())
-    updatedAt      DateTime @updatedAt
-    subscriptionId String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -109,15 +108,17 @@ model Subscription {
     expiresAt    DateTime
     user         User     @relation(fields: [userId], references: [id])
     userId       String   @unique
+    autoRenew    Boolean  @default(true)
 
-    SubscriptionType   SubscriptionType? @relation(fields: [subscriptionTypeId], references: [id])
-    subscriptionTypeId String?
+    subscriptionType   SubscriptionType @relation(fields: [subscriptionTypeId], references: [id])
+    subscriptionTypeId String
 }
 
 model SubscriptionType {
     id                String         @id @default(uuid())
     name              String
     description       String
+    slug              String         @unique
     priceInCents      Int
     durationInSeconds Int
     subscriptions     Subscription[]

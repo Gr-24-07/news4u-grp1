@@ -13,10 +13,9 @@ CREATE TABLE "User" (
     "firstName" TEXT,
     "lastName" TEXT,
     "dateOfBirth" TIMESTAMP(3),
-    "newletter" BOOLEAN NOT NULL DEFAULT false,
+    "newsletter" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "subscriptionId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -67,6 +66,7 @@ CREATE TABLE "Article" (
     "views" INTEGER NOT NULL DEFAULT 0,
     "image" TEXT NOT NULL,
     "paid" BOOLEAN NOT NULL DEFAULT true,
+    "editorsChoice" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
@@ -99,6 +99,7 @@ CREATE TABLE "SubscriptionType" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
     "priceInCents" INTEGER NOT NULL,
     "durationInSeconds" INTEGER NOT NULL,
 
@@ -122,6 +123,9 @@ CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Subscription_userId_key" ON "Subscription"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "SubscriptionType_slug_key" ON "SubscriptionType"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_ArticleToCategory_AB_unique" ON "_ArticleToCategory"("A", "B");

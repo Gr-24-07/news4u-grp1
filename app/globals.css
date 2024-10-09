@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -65,15 +66,10 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  .navbar {
-  }
-  body {
-    @apply bg-background text-foreground;
-
-    background: rgb(107, 164, 177);
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }

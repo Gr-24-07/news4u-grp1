@@ -5,6 +5,8 @@ import { z, ZodFormattedError } from "zod";
 import { getCategories } from "../data/categories";
 import { revalidatePath } from "next/cache";
 import xss from "xss";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 const CreateArticleSchema = z.object({
     headline: z.string().min(1, "Headline is required"),
@@ -51,6 +53,12 @@ export type CreateArticleFail = {
 export async function createArticle(
     formData: FormData
 ): Promise<CreateArticleFail | undefined> {
+    const session = await getServerSession(authOptions);
+
+    if (session?.user.role !== "ADMIN" && session?.user.role !== "EDITOR") {
+        throw new Error("Not authenticated");
+    }
+
     const result = Object.fromEntries(formData.entries());
 
     const parsedResult = await CreateArticleSchema.safeParseAsync(result);
@@ -68,8 +76,7 @@ export async function createArticle(
 
     data.content = xss(data.content);
 
-    //TODO replace with real author
-    const author = "cm16g8qds000011a22psj5pvs";
+    const author = session.user.id;
 
     await prisma.article.create({
         data: {
@@ -142,6 +149,12 @@ export type UpdateArticleFail = {
 export async function updateArticle(
     formData: FormData
 ): Promise<UpdateArticleFail | undefined> {
+    const session = await getServerSession(authOptions);
+
+    if (session?.user.role !== "ADMIN" && session?.user.role !== "EDITOR") {
+        throw new Error("Not authenticated");
+    }
+
     const result = Object.fromEntries(formData.entries());
 
     const parsedResult = await UpdateArticleSchema.safeParseAsync(result);
@@ -161,9 +174,6 @@ export async function updateArticle(
 
     data.content = xss(data.content);
 
-    //TODO replace with real author
-    const author = "cm16g8qds000011a22psj5pvs";
-
     await prisma.article.update({
         where: {
             id: data.id,
@@ -175,11 +185,6 @@ export async function updateArticle(
             image: data.image,
             paid: data.paid,
             editorsChoice: data.editorsChoice,
-            author: {
-                connect: {
-                    id: author,
-                },
-            },
             category: {
                 disconnect: categories,
                 connect: data.categories.map((category) => ({
@@ -193,6 +198,12 @@ export async function updateArticle(
 }
 
 export async function deleteArticle(id: string) {
+    const session = await getServerSession(authOptions);
+
+    if (session?.user.role !== "ADMIN" && session?.user.role !== "EDITOR") {
+        throw new Error("Not authenticated");
+    }
+
     await prisma.article.delete({
         where: {
             id: id,

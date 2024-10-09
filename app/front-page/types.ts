@@ -1,5 +1,4 @@
-
-export interface Article {
+export interface Articles {
   id: string;          
   headline: string;
   image: string;
@@ -7,5 +6,4 @@ export interface Article {
   createdAt: Date;
   views?: number;       
   paid?: boolean;   
-   
 }

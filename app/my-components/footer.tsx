@@ -3,13 +3,14 @@ import Link from "next/link";
 
 export default function Footer() {
   const links = [
-    { name: "Local", href: "/" },
-    { name: "National", href: "/sweden" },
-    { name: "International", href: "/international" },
-    { name: "Economy", href: "/economy" },
-    { name: "Business", href: "/business" },
-    { name: "Sports", href: "/sports" },
-    { name: "Live", href: "/live" },
+    { name: "Local", href: "/categories/local" },
+    { name: "National", href: "/categories/sweden" },
+    { name: "International", href: "/categories/international" },
+    { name: "Economy", href: "/categories/economy" },
+    { name: "Business", href: "/categories/business" },
+    { name: "Sports", href: "/categories/sports" },
+    { name: "Entertainment", href:"/categories/entertainment"},
+    { name: "Live", href: "/categories/live" },
   ];
 
   return (
