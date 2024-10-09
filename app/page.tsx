@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from './front-page/ArticleCard';
-import CurrencyConverter from './currency-rate/page';
+import CurrencyConverter from './currency-conveter/page';
 
 const prisma = new PrismaClient();
 
