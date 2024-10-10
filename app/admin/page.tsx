@@ -7,9 +7,9 @@ import NewSubsChart from "./new-sub-chart";
 
 export default async function AdminPage() {
     const subStats = await getSubscriptionCountsByType();
-    const subChartData = await getNewSubscribersData();
+    // const subChartData = await getNewSubscribersData();
 
-    const testChartData = [
+    const subChartData = [
         { date: "2024-01-01", "12 Months": 300, "1 Month": 100 },
         { date: "2024-01-02", "12 Months": 250, "1 Month": 120 },
         { date: "2024-01-03", "12 Months": 280, "1 Month": 150 },
