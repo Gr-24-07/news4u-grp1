@@ -302,7 +302,9 @@ export default async function AdminPage() {
 
     return (
         <div className="container max-w-screen-lg space-y-4">
-            <h1 className="text-center text-3xl font-bold">Dashboard</h1>
+            <h1 className="text-center text-3xl font-bold">
+                Subscriber Statistics
+            </h1>
             <div className="flex gap-4">
                 {subStats.map((subTypeStats) => {
                     return (
