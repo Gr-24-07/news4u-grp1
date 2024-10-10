@@ -301,7 +301,7 @@ export default async function AdminPage() {
     } satisfies ChartConfig;
 
     return (
-        <div className="container max-w-screen-lg space-y-4">
+        <div className="container max-w-screen-lg space-y-10">
             <h1 className="text-center text-3xl font-bold">
                 Subscriber Statistics
             </h1>
