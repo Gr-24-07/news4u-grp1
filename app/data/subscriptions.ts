@@ -49,3 +49,22 @@ export async function getSubscriptionCountsByType() {
 
     return result;
 }
+
+export async function getNewSubscribersPerDay() {
+    const result = await prisma.subscription.groupBy({
+        by: ["createdAt", "subscriptionTypeId"], // Group by date and subscription type
+        _count: {
+            id: true, // Count new subscriptions
+        },
+        orderBy: {
+            createdAt: "asc", // Order by date
+        },
+    });
+
+    // Map the result to return data in the desired format
+    return result.map((entry) => ({
+        date: entry.createdAt.toISOString().split("T")[0], // Format date as YYYY-MM-DD
+        subscriptionTypeId: entry.subscriptionTypeId,
+        newSubscribers: entry._count.id,
+    }));
+}
