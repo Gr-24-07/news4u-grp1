@@ -50,21 +50,40 @@ export async function getSubscriptionCountsByType() {
     return result;
 }
 
-export async function getNewSubscribersPerDay() {
-    const result = await prisma.subscription.groupBy({
-        by: ["createdAt", "subscriptionTypeId"], // Group by date and subscription type
-        _count: {
-            id: true, // Count new subscriptions
+export async function getNewSubscribersData() {
+    const subscriptions = await prisma.subscription.findMany({
+        include: {
+            subscriptionType: true,
         },
         orderBy: {
-            createdAt: "asc", // Order by date
+            createdAt: "asc",
         },
     });
 
-    // Map the result to return data in the desired format
-    return result.map((entry) => ({
-        date: entry.createdAt.toISOString().split("T")[0], // Format date as YYYY-MM-DD
-        subscriptionTypeId: entry.subscriptionTypeId,
-        newSubscribers: entry._count.id,
-    }));
+    interface FormattedDataEntry {
+        date: string;
+        [subscriptionType: string]: number | string;
+    }
+
+    const formattedData = subscriptions.reduce((acc, sub) => {
+        const date = sub.createdAt.toISOString().split("T")[0];
+        const subscriptionName = sub.subscriptionType.name;
+        const existingDateEntry = acc.find((entry) => entry.date === date);
+
+        if (existingDateEntry) {
+            existingDateEntry[subscriptionName] =
+                ((existingDateEntry[subscriptionName] as number) || 0) + 1;
+        } else {
+            acc.push({
+                date,
+                [subscriptionName]: 1,
+            });
+        }
+
+        return acc;
+    }, [] as FormattedDataEntry[]);
+
+    console.log(formattedData);
+
+    return formattedData;
 }

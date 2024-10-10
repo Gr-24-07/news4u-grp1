@@ -1,15 +1,15 @@
 import { ChartConfig } from "@/components/ui/chart";
 import {
-    getNewSubscribersPerDay,
+    getNewSubscribersData,
     getSubscriptionCountsByType,
 } from "../data/subscriptions";
 import NewSubsChart from "./new-sub-chart";
 
 export default async function AdminPage() {
     const subStats = await getSubscriptionCountsByType();
-    // const subs = await getNewSubscribersPerDay();
+    const subChartData = await getNewSubscribersData();
 
-    const chartData = [
+    const testChartData = [
         { date: "2024-01-01", "12 Months": 300, "1 Month": 100 },
         { date: "2024-01-02", "12 Months": 250, "1 Month": 120 },
         { date: "2024-01-03", "12 Months": 280, "1 Month": 150 },
@@ -339,7 +339,7 @@ export default async function AdminPage() {
                 <h1 className="text-center font-bold text-2xl">
                     New Subscribers
                 </h1>
-                <NewSubsChart data={chartData} config={chartConfig} />
+                <NewSubsChart data={subChartData} config={chartConfig} />
             </div>
         </div>
     );

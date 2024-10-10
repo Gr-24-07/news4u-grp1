@@ -35,7 +35,7 @@ export default function NewSubsChart({ data, config }: NewSubsChartProps) {
                     <YAxis></YAxis>
                     <ChartTooltip
                         cursor={false}
-                        content={<ChartTooltipContent />}
+                        content={<ChartTooltipContent className="bg-white" />}
                     />
                     <Line
                         dataKey={"12 Months"}
