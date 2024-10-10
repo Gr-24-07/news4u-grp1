@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 
 interface ProfileNewsletterPreferencesProps {
@@ -15,29 +15,11 @@ export default function ProfileNewsletterPreferences({
   const [isSubscribed, setIsSubscribed] = useState(initialPreference);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchPreference = async () => {
-      try {
-        const response = await fetch(
-          `/api/user/profile-newsletter-preference?userId=${userId}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setIsSubscribed(data.newsletter);
-        }
-      } catch (error) {
-        console.error("Error fetching newsletter preference:", error);
-      }
-    };
-
-    fetchPreference();
-  }, [userId]);
-
   const handleToggle = async () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/user/profile-newsletter-preference", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,8 +27,14 @@ export default function ProfileNewsletterPreferences({
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setIsSubscribed(data.newsletter);
+        const updatedUserData = await response.json();
+        setIsSubscribed(updatedUserData.newsletter);
+      } else {
+        const errorData = await response.json();
+        console.error(
+          "Failed to update newsletter preference:",
+          errorData.error
+        );
       }
     } catch (error) {
       console.error("Error updating newsletter preference:", error);
@@ -56,13 +44,19 @@ export default function ProfileNewsletterPreferences({
   };
 
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-white">Subscribe to newsletter</span>
-      <Switch
-        checked={isSubscribed}
-        onCheckedChange={handleToggle}
-        disabled={isLoading}
-      />
+    <div className="flex flex-col items-start space-y-2">
+      <div className="flex items-center justify-between w-full">
+        <span className="text-2xl font-bold text-white">
+          {isSubscribed
+            ? "You are subscribed to our newsletter"
+            : "You are not subscribed to our newsletter"}
+        </span>
+        <Switch
+          checked={isSubscribed}
+          onCheckedChange={handleToggle}
+          disabled={isLoading}
+        />
+      </div>
     </div>
   );
 }

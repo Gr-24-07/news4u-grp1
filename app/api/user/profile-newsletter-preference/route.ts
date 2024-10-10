@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/db";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -15,6 +15,11 @@ export async function GET(req: Request) {
 
   if (!userId) {
     return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+  }
+
+  // Ensure the logged-in user is only accessing their own data
+  if (session.user.id !== userId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   try {
@@ -37,17 +42,23 @@ export async function GET(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
+export async function PATCH(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { userId, newsletter } = await req.json();
+  const body = await req.json();
+  const { userId, newsletter } = body;
 
   if (!userId || typeof newsletter !== "boolean") {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+  }
+
+  // Ensure the logged-in user is only modifying their own data
+  if (session.user.id !== userId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   try {
@@ -66,7 +77,12 @@ export async function POST(req: Request) {
   }
 }
 
-// Add this to handle OPTIONS requests
-export async function OPTIONS(req: Request) {
-  return NextResponse.json({}, { status: 200 });
+// Handle OPTIONS requests
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      Allow: "GET, PATCH, OPTIONS",
+    },
+  });
 }
