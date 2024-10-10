@@ -73,7 +73,7 @@ export default function ProfileResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4">Reset Password</h2>
+      <h2 className="text-2xl font-bold text-white mb-4">Password</h2>
 
       {message && (
         <div
