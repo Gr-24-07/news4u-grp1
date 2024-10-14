@@ -6,6 +6,7 @@ import CurrencyConverter from './currency-conveter/page';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { getWeather } from './weather/actions';
+import SmallWeatherCard from './weather/smallweathercard';
 
 const prisma = new PrismaClient();
 
@@ -74,7 +75,7 @@ export default async function HomePage() {
                         {/* First Row: Live News */}
                         <section className="p-2 rounded-lg mx-auto">
                             <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
-                                <Link href={"/categories/live"}>Live</Link>
+                                <Link href={"/categories/live"}>Live News</Link>
                             </h2>
                             <div className="space-y-3">
                                 {latestLiveNews.map((article) => (

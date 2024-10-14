@@ -54,7 +54,7 @@ export default function CurrencyConverter() {
 
   return (
     <form>
-      <div className="w-56 h-auto mx-auto my-auto mt-2 mb-2 p-4 rounded-lg outline outline-1 border border-blue-500">
+      <div className="w-56 h-auto mx-auto my-auto mt-2 mb-2 p-4 rounded-lg outline outline-1 border border-black">
 
         <div className="text-center">
           <h2 className="text-sm font-bold mb-2">Currency Converter</h2>
