@@ -26,10 +26,10 @@ export default function ProfileSubscriptionInfo({
   if (!subscription) {
     return (
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">
+        <h2 className="text-2xl font-bold text-white mb-4 text-center">
           Your Subscription
         </h2>
-        <p className="text-white">You don't have an active subscription.</p>
+        <p className="text-white text-center">You don't have an active subscription.</p>
       </div>
     );
   }
