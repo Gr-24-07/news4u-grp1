@@ -8,14 +8,6 @@ export default function SmallWeatherCard({
 }: {
   current: SmallWeatherData;
 }) {
-  //   const router = useRouter();
-  //   const searchParams = useSearchParams();
-  //   const [query, setQuery] = useState(searchParams.get("q") ?? "");
-
-  //   if (!current) {
-  //     return null;
-  //   }
-
   return (
     <div className="w-56 border border-zinc-700 rounded-lg p-4 mx-auto">
       <div className="w-56 flex flex-col sm:flex-row items-center gap-4">
