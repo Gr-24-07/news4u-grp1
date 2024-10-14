@@ -64,15 +64,15 @@ export default function ArticleTable({
                                 )}
                             </TableCell>
                             <TableCell>
-                                <div className="text-yellow-500">
-                                    <Star
-                                        fill={
-                                            article.editorsChoice
-                                                ? "#fcd703"
-                                                : "#fff"
-                                        }
-                                    />
-                                </div>
+                                {article.editorsChoice ? (
+                                    <div className="text-green-800">
+                                        <Check />
+                                    </div>
+                                ) : (
+                                    <div className="text-red-800">
+                                        <X />
+                                    </div>
+                                )}
                             </TableCell>
                             <TableCell>{`${article.author.firstName} ${article.author.lastName}`}</TableCell>
                             <TableCell>
