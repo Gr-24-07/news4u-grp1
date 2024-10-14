@@ -339,7 +339,7 @@ export default async function AdminPage() {
             </div>
             <div>
                 <h1 className="text-center font-bold text-2xl">
-                    New Subscribers
+                    Daily New Subscribers
                 </h1>
                 <NewSubsChart data={subChartData} config={chartConfig} />
             </div>
