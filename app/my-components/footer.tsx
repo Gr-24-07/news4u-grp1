@@ -1,7 +1,11 @@
+"use client";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Footer() {
+  const { data: session } = useSession();
+
   const links = [
     { name: "Local", href: "/categories/local" },
     { name: "National", href: "/categories/sweden" },
@@ -9,27 +13,43 @@ export default function Footer() {
     { name: "Economy", href: "/categories/economy" },
     { name: "Business", href: "/categories/business" },
     { name: "Sports", href: "/categories/sports" },
-    { name: "Entertainment", href:"/categories/entertainment"},
+    { name: "Entertainment", href: "/categories/entertainment" },
+    { name: "Weather", href: "/weather" },
     { name: "Live", href: "/categories/live" },
   ];
 
   return (
-    <div className="container mx-auto bg-slate-200">
+    <div className=" bg-slate-200 p-2">
       <footer className="md:py-12">
         <div className="flex flex-1">
-          <Link className="font-bold text-3xl my-5" href="/">
+          <Link className="font-bold text-3xl" href="/">
             News4U
           </Link>
         </div>
 
-        <div className="flex w-full items-center gap-4">
+        {session?.user?.role === "ADMIN" ? (
+          <div className="px-4 h-6 items-center justify-end sm:flex hidden border-b border-slate-500">
+            <Link
+              className="text-muted-foreground hover:text-foreground text-sm"
+              href="/admin"
+            >
+              Admin Dashboard
+            </Link>
+          </div>
+        ) : (
+          []
+        )}
+
+        <div className=" hidden sm:flex w-full items-center gap-4 mt-5">
           <div>
-            <ul className="text-blue-500 flex flex-1 space-x-10">
-              {links.map((link) => (
-                <Link key={link.name} href={link.href}>
-                  {link.name}
-                </Link>
-              ))}
+            <ul className="text-blue-500 flex flex-1 space-x-10 ">
+              <li className="text-blue-500 flex flex-1 space-x-10 ">
+                {links.map((link) => (
+                  <Link key={link.name} href={link.href}>
+                    {link.name}
+                  </Link>
+                ))}
+              </li>
             </ul>
           </div>
         </div>
@@ -70,7 +90,9 @@ export default function Footer() {
           </ul>
         </div>
 
-        <p>Copyright 2024 News4U. All rights reserved.</p>
+        <p className="text-sm mt-5">
+          Copyright 2024 News4U. All rights reserved.
+        </p>
       </footer>
     </div>
   );
