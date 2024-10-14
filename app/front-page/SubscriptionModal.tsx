@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; // For programmatic navigation
-import SubscribeButton from "../my-components/subscribe-button";
 
 export default function SubscriptionModal({ articleUrl, children }: { articleUrl: string, children: React.ReactNode }) {
     const [show, setShow] = useState(false);
@@ -40,13 +38,18 @@ export default function SubscriptionModal({ articleUrl, children }: { articleUrl
                             <p className="text-lg font-semibold">Subscribe to Our News4U!</p>
                             <p>Get updates, articles, and exclusive content directly to your inbox.</p>
                             <div className="flex space-x-4">
-                                <SubscribeButton />
-                                <Button
+                                <button
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded"
+                                    onClick={handleDismiss} // Redirects to homepage
+                                >
+                                    Subscribe
+                                </button>
+                                <button
                                     className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded"
                                     onClick={handleDismiss} // Redirects to homepage
                                 >
                                     No Thanks
-                                </Button>
+                                </button>
                             </div>
                         </div>
                     </div>
