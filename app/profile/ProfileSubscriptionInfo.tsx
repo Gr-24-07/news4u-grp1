@@ -66,33 +66,53 @@ export default function ProfileSubscriptionInfo({
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-white mb-4">Your Subscription</h2>
-      <div className="space-y-2">
-        <p className="text-white">
-          Status:{" "}
-          <span className={isActive ? "text-green-400" : "text-red-400"}>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold text-white mb-4 text-center">
+        Your Subscription
+      </h2>
+      <div className="space-y-4 bg-white bg-opacity-20 p-6 rounded-md">
+        <p className="text-white flex justify-between">
+          <span>Status:</span>
+          <span
+            className={
+              isActive
+                ? "text-green-400 font-semibold"
+                : "text-red-400 font-semibold"
+            }
+          >
             {isActive ? "Active" : "Expired"}
           </span>
         </p>
-        <p className="text-white">Subscribed on: {formatDate(startedAt)}</p>
-        <p className="text-white">Expires on: {formatDate(expiresAt)}</p>
-        <p className="text-white">
-          Duration: {subscriptionDuration} days remaining
+        <p className="text-white flex justify-between">
+          <span>Subscribed on:</span>
+          <span className="font-semibold">{formatDate(startedAt)}</span>
         </p>
-        <p className="text-white">
-          Price: ${(subscription.priceInCents / 100).toFixed(2)}
+        <p className="text-white flex justify-between">
+          <span>Expires on:</span>
+          <span className="font-semibold">{formatDate(expiresAt)}</span>
         </p>
-        {isActive && (
-          <Button
-            onClick={handleCancelSubscription}
-            variant="destructive"
-            disabled={isLoading}
-          >
-            {isLoading ? "Cancelling..." : "Cancel Subscription"}
-          </Button>
-        )}
+        <p className="text-white flex justify-between">
+          <span>Duration:</span>
+          <span className="font-semibold">
+            {subscriptionDuration} days remaining
+          </span>
+        </p>
+        <p className="text-white flex justify-between">
+          <span>Price:</span>
+          <span className="font-semibold">
+            ${(subscription.priceInCents / 100).toFixed(2)}
+          </span>
+        </p>
       </div>
+      {isActive && (
+        <Button
+          onClick={handleCancelSubscription}
+          disabled={isLoading}
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        >
+          {isLoading ? "Cancelling..." : "Cancel Subscription"}
+        </Button>
+      )}
     </div>
   );
 }

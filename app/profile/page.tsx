@@ -85,6 +85,15 @@ export default async function ProfilePage({
             </div>
           )}
           <div className="space-y-8">
+            <SubscriptionInfoWrapper
+              subscription={user.subscription}
+              userId={user.id}
+              onCancelSubscription={cancelSubscription}
+            />
+            <ProfileNewsletterPreferences
+              userId={user.id}
+              initialPreference={user.newsletter}
+            />
             <ProfilePersonalInfoForm
               userId={user.id}
               initialData={{

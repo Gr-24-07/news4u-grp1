@@ -90,7 +90,7 @@ export default function ProfilePersonalInfoForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4">
+      <h2 className="text-2xl font-bold text-white mb-4 text-center">
         Personal Information
       </h2>
 
