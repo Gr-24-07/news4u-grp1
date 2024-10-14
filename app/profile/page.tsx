@@ -90,10 +90,7 @@ export default async function ProfilePage({
               userId={user.id}
               onCancelSubscription={cancelSubscription}
             />
-            <ProfileNewsletterPreferences
-              userId={user.id}
-              initialPreference={user.newsletter}
-            />
+
             <ProfilePersonalInfoForm
               userId={user.id}
               initialData={{
@@ -106,6 +103,10 @@ export default async function ProfilePage({
             />
             <ProfileChangeEmailForm />
             <ProfileResetPasswordForm />
+            <ProfileNewsletterPreferences
+              userId={user.id}
+              initialPreference={user.newsletter}
+            />
           </div>
         </div>
       </div>
