@@ -5,10 +5,13 @@ import Link from 'next/link';
 import CurrencyConverter from './currency-conveter/page';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
+import { getWeather } from './weather/actions';
 
 const prisma = new PrismaClient();
 
 export default async function HomePage() {
+    const WeatherToday = await getWeather ("Linköping");
+
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id || ''; // Assuming this is the subscription ID
 
@@ -112,6 +115,7 @@ export default async function HomePage() {
                     {/* Right Column: Editor's Choice News */}
                     <div className="w-full md:w-1/4 p-4">
                         <section className="p-2 rounded-lg">
+                            <SmallWeatherCard current = {WeatherToday} />
                             <CurrencyConverter />
                             <h2 className="text-sm font-bold mb-2 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
                             <div className="space-y-3">
