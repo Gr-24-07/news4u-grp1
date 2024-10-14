@@ -16,8 +16,8 @@ import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const inputRef = React.useRef<HTMLInputElement>(null);
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const links = [
     { name: "Local", href: "/categories/local" },
     { name: "National", href: "/categories/sweden" },

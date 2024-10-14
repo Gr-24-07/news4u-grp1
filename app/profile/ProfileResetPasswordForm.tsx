@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
+import Link from "next/link";
 
 const resetPasswordSchema = z
   .object({
@@ -73,7 +74,7 @@ export default function ProfileResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4">Reset Password</h2>
+      <h2 className="text-2xl font-bold text-white mb-4 text-center">Change Password</h2>
 
       {message && (
         <div
@@ -140,6 +141,17 @@ export default function ProfileResetPasswordForm() {
       >
         {isSubmitting ? "Updating..." : "Update Password"}
       </Button>
+      <div className="flex items-center w-full">
+        <div className="flex-grow border-t border-indigo-600"></div>
+        <div className="mx-4 text-white text-sm font-light">OR</div>
+        <div className="flex-grow border-t border-indigo-600"></div>
+      </div>
+      <Link
+        href="/forgot-password"
+        className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
+      >
+        Forgot password?
+      </Link>
     </form>
   );
 }
