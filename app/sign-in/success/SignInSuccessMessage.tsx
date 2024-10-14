@@ -21,8 +21,8 @@ export default function SuccessMessage() {
       <div className="flex min-h-screen flex-col items-center justify-center py-2">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <CheckCircle className="mb-6 h-16 w-16 text-green-400" />
-          <h1 className="text-4xl font-bold mb-4">You are now signed in</h1>
-          <p>Redirecting to home page...</p>
+          <h1 className="text-white text-4xl font-bold mb-4">You are now signed in</h1>
+          <p className="text-white">Redirecting to home page...</p>
         </main>
       </div>
     </AuthBackground>
