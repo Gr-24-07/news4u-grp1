@@ -106,15 +106,6 @@ export default async function ProfilePage({
             />
             <ProfileChangeEmailForm />
             <ProfileResetPasswordForm />
-            <SubscriptionInfoWrapper
-              subscription={user.subscription}
-              userId={user.id}
-              onCancelSubscription={cancelSubscription}
-            />
-            <ProfileNewsletterPreferences
-              userId={user.id}
-              initialPreference={user.newsletter}
-            />
           </div>
         </div>
       </div>
