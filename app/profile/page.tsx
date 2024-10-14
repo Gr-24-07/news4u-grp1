@@ -2,12 +2,36 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
-import ProfileResetPasswordForm from "./ProfileResetPasswordForm";
-import ProfileSubscriptionInfo from "./ProfileSubscriptionInfo";
-import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
+import { revalidatePath } from "next/cache";
+import dynamic from "next/dynamic";
+
 import AuthBackground from "../my-components/AuthBackground";
 import ProfilePersonalInfoForm from "./ProfilePersonalInfoForm";
 import ProfileChangeEmailForm from "./ProfileChangeEmailForm";
+import ProfileResetPasswordForm from "./ProfileResetPasswordForm";
+import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
+
+const SubscriptionInfoWrapper = dynamic(
+  () => import("./SubscriptionInfoWrapper").then((mod) => mod.default),
+  { ssr: false }
+) as any;
+
+async function cancelSubscription(userId: string) {
+  "use server";
+
+  try {
+    await prisma.subscription.update({
+      where: { userId: userId },
+      data: { expiresAt: new Date() },
+    });
+
+    revalidatePath("/profile");
+    return { success: true };
+  } catch (error) {
+    console.error("Error cancelling subscription:", error);
+    return { success: false, error: "Failed to cancel subscription" };
+  }
+}
 
 export default async function ProfilePage({
   searchParams,
@@ -73,7 +97,11 @@ export default async function ProfilePage({
             />
             <ProfileChangeEmailForm />
             <ProfileResetPasswordForm />
-            <ProfileSubscriptionInfo subscription={user.subscription} />
+            <SubscriptionInfoWrapper
+              subscription={user.subscription}
+              userId={user.id}
+              onCancelSubscription={cancelSubscription}
+            />
             <ProfileNewsletterPreferences
               userId={user.id}
               initialPreference={user.newsletter}

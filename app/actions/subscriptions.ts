@@ -5,98 +5,113 @@ import { sendSubConfirmation } from "@/utils/email";
 import { z } from "zod";
 
 const CreateSubSchema = z.object({
-    userId: z.string().min(1),
-    subId: z.string().min(1),
-    cardnumber: z.string().length(16, "Invalid card number"),
-    cvc: z.string().length(3, "Required, 3 digits"),
-    date: z
-        .string()
-        .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Invalid date, use MM/YY"),
+  userId: z.string().min(1),
+  subId: z.string().min(1),
+  cardnumber: z.string().length(16, "Invalid card number"),
+  cvc: z.string().length(3, "Required, 3 digits"),
+  date: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Invalid date, use MM/YY"),
 });
 
 export type CreateSubFailValidate = {
-    error: "validation";
-    errors: z.ZodFormattedError<
-        {
-            userId: string;
-            subId: string;
-            cardnumber: string;
-            cvc: string;
-            date: string;
-        },
-        string
-    >;
+  error: "validation";
+  errors: z.ZodFormattedError<
+    {
+      userId: string;
+      subId: string;
+      cardnumber: string;
+      cvc: string;
+      date: string;
+    },
+    string
+  >;
 };
 
 export type CreateSubFailDb = {
-    error: "database";
-    errorMessage: string;
+  error: "database";
+  errorMessage: string;
 };
 
 export async function createSubscription(
-    formData: FormData
+  formData: FormData
 ): Promise<CreateSubFailValidate | CreateSubFailDb | undefined> {
-    const result = Object.fromEntries(formData.entries());
+  const result = Object.fromEntries(formData.entries());
 
-    const parsedResult = await CreateSubSchema.safeParseAsync(result);
+  const parsedResult = await CreateSubSchema.safeParseAsync(result);
 
-    if (!parsedResult.success) {
-        const formattedErrors = parsedResult.error.format();
+  if (!parsedResult.success) {
+    const formattedErrors = parsedResult.error.format();
 
-        return {
-            error: "validation",
-            errors: formattedErrors,
-        };
-    }
+    return {
+      error: "validation",
+      errors: formattedErrors,
+    };
+  }
 
-    console.log(parsedResult.data);
+  console.log(parsedResult.data);
 
-    const subType = await prisma.subscriptionType.findUnique({
-        where: {
-            id: parsedResult.data.subId,
+  const subType = await prisma.subscriptionType.findUnique({
+    where: {
+      id: parsedResult.data.subId,
+    },
+  });
+
+  if (!subType) {
+    return {
+      error: "database",
+      errorMessage: "Subscription Type not found",
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: parsedResult.data.userId },
+    include: { subscription: true },
+  });
+
+  if (!user) {
+    return {
+      error: "database",
+      errorMessage: "User not found",
+    };
+  }
+
+  const now = new Date();
+  const expireDate = new Date(now.getTime() + subType.durationInSeconds * 1000);
+
+  let sub;
+
+  if (user.subscription) {
+    // User has an existing subscription, update it
+    sub = await prisma.subscription.update({
+      where: { id: user.subscription.id },
+      data: {
+        expiresAt: expireDate,
+        priceInCents: subType.priceInCents,
+        subscriptionType: {
+          connect: {
+            id: subType.id,
+          },
         },
+      },
     });
-
-    if (!subType) {
-        return {
-            error: "database",
-            errorMessage: "Subscription Type not found",
-        };
-    }
-
-    const existingSub = await prisma.subscription.findUnique({
-        where: {
-            userId: parsedResult.data.userId,
+  } else {
+    // User doesn't have a subscription, create a new one
+    sub = await prisma.subscription.create({
+      data: {
+        expiresAt: expireDate,
+        priceInCents: subType.priceInCents,
+        user: {
+          connect: {
+            id: parsedResult.data.userId,
+          },
         },
-    });
-
-    if (existingSub) {
-        return {
-            error: "database",
-            errorMessage: "User is already subscribed",
-        };
-    }
-
-    const expireDate = new Date(
-        new Date().getTime() + subType?.durationInSeconds * 1000
-    );
-
-    const sub = await prisma.subscription.create({
-        data: {
-            expiresAt: expireDate,
-            priceInCents: subType.priceInCents,
-            user: {
-                connect: {
-                    id: parsedResult.data.userId,
-                },
-            },
-            subscriptionType: {
-                connect: {
-                    id: subType.id,
-                },
-            },
+        subscriptionType: {
+          connect: {
+            id: subType.id,
+          },
         },
+      },
     });
+  }
 
-    sendSubConfirmation("test@test.se", sub);
+  sendSubConfirmation("test@test.se", sub);
 }

@@ -16,6 +16,7 @@ import Link from "next/link";
 
 interface SubscriptionTypeProps {
     subscriptionType: SubscriptionType;
+    onSubscribe: () => void;
 }
 
 export function NewsSubscriptionCardGradient({
