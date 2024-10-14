@@ -20,6 +20,7 @@ export default async function HomePage() {
     const latestLiveNews: Articles[] = await prisma.article.findMany({
         where: { category: { some: { name: 'Live' } } },
         orderBy: { createdAt: 'desc' },
+        take: 1,
     });
 
     const liveNewsIds = latestLiveNews.map(article => article.id);
