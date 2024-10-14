@@ -2,6 +2,27 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 async function main() {
+    await prisma.subscriptionType.createMany({
+        data: [
+            {
+                description: "Subscribe for 1 month",
+                durationInSeconds: 2.628e6,
+                name: "1 Month",
+                slug: "1-month",
+                priceInCents: 999,
+            },
+            {
+                description: "Subscribe for 12 months",
+                durationInSeconds: 3.154e7,
+                name: "12 Months",
+                slug: "12-months",
+                priceInCents: 9999,
+            },
+        ],
+    });
+
+    const sub = await prisma.subscriptionType.findFirst();
+
     const hashedPassword = await bcrypt.hash("12345678", 10);
     const user = await prisma.user.create({
         data: {
@@ -11,6 +32,18 @@ async function main() {
             lastName: "Eriksson",
             role: "ADMIN",
             emailVerified: new Date(),
+            subscription: {
+                create: {
+                    expiresAt: new Date("2025-12-12"),
+                    priceInCents: 999,
+                    autoRenew: true,
+                    subscriptionType: {
+                        connect: {
+                            id: sub?.id,
+                        },
+                    },
+                },
+            },
         },
     });
 
@@ -47,27 +80,6 @@ async function main() {
 
     await prisma.category.createMany({
         data: categories,
-    });
-
-    //SubType
-
-    await prisma.subscriptionType.createMany({
-        data: [
-            {
-                description: "Subscribe for 1 month",
-                durationInSeconds: 2.628e6,
-                name: "1 Month",
-                slug: "1-month",
-                priceInCents: 999,
-            },
-            {
-                description: "Subscribe for 12 months",
-                durationInSeconds: 3.154e7,
-                name: "12 Months",
-                slug: "12-months",
-                priceInCents: 9999,
-            },
-        ],
     });
 
     //Business
