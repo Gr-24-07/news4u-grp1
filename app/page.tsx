@@ -1,3 +1,4 @@
+
 import { PrismaClient } from "@prisma/client";
 import {
   ArticleCardEditorChoice,
@@ -8,15 +9,26 @@ import CurrencyConverter from "./currency-rate/page";
 import SmallWeatherCard from "./weather/smallweathercard";
 import { getWeather } from "./weather/actions";
 
+import { Articles } from './front-page/types';
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+
+
 const prisma = new PrismaClient();
 
 export default async function HomePage() {
+
   const WeatherToday = await getWeather("Linköping");
 
-  const latestLiveNews = await prisma.article.findMany({
-    where: { category: { some: { name: "Live" } } },
-    orderBy: { createdAt: "desc" },
-  });
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id || ''; // Assuming this is the subscription ID
+
+    // Fetch Latest News in Live Category
+    const latestLiveNews: Articles[] = await prisma.article.findMany({
+        where: { category: { some: { name: 'Live' } } },
+        orderBy: { createdAt: 'desc' },
+    });
 
   const liveNewsIds = latestLiveNews.map((article) => article.id);
 
@@ -42,7 +54,21 @@ export default async function HomePage() {
     },
     orderBy: { views: "desc" },
     take: 10,
-  });
+  }); 
+
+    // Fetch other category views
+    const otherCategories = await prisma.category.findMany({
+        where: {
+            id: { notIn: liveNewsIds },
+        },
+        include: {
+            articles: {
+                orderBy: { createdAt: 'desc' },
+                take: 1,
+            },
+        },
+    });
+
 
   const otherCategories = await prisma.category.findMany({
     include: {
@@ -53,6 +79,7 @@ export default async function HomePage() {
       },
     },
   });
+
 
   return (
     <main className="w-full p-5">
@@ -102,8 +129,50 @@ export default async function HomePage() {
                   </div>
                 </section>
               </div>
-            </div>
-          </div>
+
+                    {/* Left Column (Main Content) */}
+                    <div className="w-full md:w-3/4 p-4 space-y-6">
+
+                        {/* First Row: Live News */}
+                        <section className="p-2 rounded-lg mx-auto">
+                            <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
+                                <Link href={"/categories/live"}>Live</Link>
+                            </h2>
+                            <div className="space-y-3">
+                                {latestLiveNews.map((article) => (
+                                    <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Second Row: Two Columns (Most Popular News & Latest News) */}
+                        <div className="flex flex-col md:flex-row space-x-0 md:space-x-4">
+                            {/* Left Column: Most Popular News */}
+                            <div className="w-full md:w-1/3 p-2">
+                                <section className="p-2 rounded-lg">
+                                    <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
+                                    <div className="space-y-3">
+                                        {mostPopular.map((article) => (
+                                            <ArticleCardPopularNews key={article.id} article={article} userId={userId} />
+                                        ))}
+                                    </div>
+                                </section>
+                            </div>
+
+                            {/* Right Column: Latest News */}
+                            <div className="w-full md:w-2/3 p-2">
+                                <section className="p-2 rounded-lg">
+                                    <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
+                                    <div className="space-y-3">
+                                        {latestNews.map((article) => (
+                                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                                        ))}
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                
 
           <div className="w-full md:w-1/4 p-4">
             <section className="p-2 rounded-lg">
@@ -146,4 +215,5 @@ export default async function HomePage() {
       </section>
     </main>
   );
+
 }
