@@ -13,3 +13,14 @@ export interface WeatherData {
     code: string;
   };
 }
+
+export interface SmallWeatherData {
+  city: string;
+  temperatureC: number;
+  summary: string;
+
+  icon: {
+    url: string;
+    code: string;
+  };
+}
