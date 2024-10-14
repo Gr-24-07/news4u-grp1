@@ -150,7 +150,7 @@ export default function SignInForm() {
       href="/forgot-password"
       className="w-full inline-flex justify-center py-2.5 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-30 hover:border-opacity-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
-      Forgot password
+      Forgot password?
     </Link>
   </div>
 </div>
