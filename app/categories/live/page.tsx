@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { Articles } from '@/app/front-page/types';
 import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice } from '@/app/front-page/ArticleCard';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import CurrentDate from '@/app/current-date/page';
 
 const prisma = new PrismaClient();
 
@@ -30,25 +31,24 @@ export default async function LiveNews() {
       });
 
     return (
-        <main className="w-full p-5">
-            <h1 className='mt-5 font-bold text-3xl text-red-600'> Live</h1>
+      <main className="w-full p-10">
+        <div>
+          <CurrentDate />
+        </div>
+        <h1 className='mt-5 mx-2 font-bold text-3xl text-red-600'> Live</h1>
         <hr className="mt-5 border-gray-500" />
         <hr className="my-1 border-gray-500" />
 
-        <div className="flex justify-center">
-            <div className="max-w-screen-lg w-full flex">
+
 
                 {/* Left Column - Latest Live News */}
-                <div className="w-3/4 p-4">
-                <section className="p-2 rounded-lg mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 p-5">            
+                <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-3 lg:col-span-3 ">
         
-                    <div className="space-y-3">
-                    {latestLiveNews.map((article) => (
-                        <div key={article.id}>
+                <div className="space-y-3">
+                        {latestLiveNews.map((article) => (
                             <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
-
-                        </div>
-                    ))}
+                        ))}
                     </div>
                 </section>
                 </div>
@@ -57,8 +57,6 @@ export default async function LiveNews() {
                 <div className="w-1/4 p-4">
                 {/* This section is intentionally left blank */}
                 </div>
-            </div>
-        </div>
 
         
         <hr className="my-1 border-gray-500" /> 
