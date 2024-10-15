@@ -7,8 +7,8 @@ export default async function ArticlesPage() {
     const articles = await getArticles();
 
     return (
-        <div className="container max-w-screen-lg flex flex-col gap-6">
-            <h1 className="text-center text-3xl font-bold">Articles</h1>
+        <div className="flex flex-col gap-6">
+            <h1 className="text-3xl font-bold">Articles</h1>
             <Button asChild className="w-36 self-end">
                 <Link href="/admin/articles/create">Create New Article</Link>
             </Button>

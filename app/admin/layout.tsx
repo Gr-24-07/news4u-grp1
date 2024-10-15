@@ -1,4 +1,5 @@
 import AdminNav from "./admin-nav";
+import DropdownAdminNav from "./dropdown-admin-nav";
 
 export default function RootLayout({
     children,
@@ -6,12 +7,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex gap-6">
-            <aside className="w-64 h-56 p-6 mt-20 border border-border rounded-md">
-                <h2 className="font-bold text-lg">Admin Pages:</h2>
+        <div className="w-full flex flex-col lg:flex-row gap-6 my-0 lg:my-6 ">
+            <nav className="w-1/6 px-6 hidden lg:block">
                 <AdminNav />
-            </aside>
-            {children}
+            </nav>
+            <DropdownAdminNav></DropdownAdminNav>
+            <div className="flex-1 max-w-screen-lg px-6">{children}</div>
         </div>
     );
 }
