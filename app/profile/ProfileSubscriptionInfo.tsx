@@ -3,10 +3,14 @@
 import React from "react";
 import { Subscription } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 
 interface ProfileSubscriptionInfoProps {
   subscription: Subscription | null;
   onCancelSubscription: () => Promise<{ success: boolean; error?: string }>;
+  onUpdateAutoRenew: (
+    autoRenew: boolean
+  ) => Promise<{ success: boolean; error?: string }>;
   isLoading: boolean;
   error: string | null;
 }
@@ -18,6 +22,7 @@ function formatDate(date: Date): string {
 export default function ProfileSubscriptionInfo({
   subscription,
   onCancelSubscription,
+  onUpdateAutoRenew,
   isLoading,
   error,
 }: ProfileSubscriptionInfoProps) {
@@ -43,6 +48,10 @@ export default function ProfileSubscriptionInfo({
     if (window.confirm("Are you sure you want to cancel your subscription?")) {
       await onCancelSubscription();
     }
+  };
+
+  const handleAutoRenewToggle = async () => {
+    await onUpdateAutoRenew(!subscription.autoRenew);
   };
 
   return (
@@ -85,6 +94,14 @@ export default function ProfileSubscriptionInfo({
             ${(subscription.priceInCents / 100).toFixed(2)}
           </span>
         </p>
+        <div className="flex items-center justify-between">
+          <span className="text-white">Auto-renew</span>
+          <Switch
+            checked={subscription.autoRenew}
+            onCheckedChange={handleAutoRenewToggle}
+            disabled={!isActive}
+          />
+        </div>
       </div>
       {isActive && (
         <Button

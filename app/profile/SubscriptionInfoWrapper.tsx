@@ -3,7 +3,10 @@
 import { Subscription } from "@prisma/client";
 import ProfileSubscriptionInfo from "./ProfileSubscriptionInfo";
 import { useRouter } from "next/navigation";
-import { useCancelSubscription } from "@/hooks/useSubscription";
+import {
+  useCancelSubscription,
+  useUpdateAutoRenew,
+} from "@/hooks/useSubscription";
 
 interface SubscriptionInfoWrapperProps {
   subscription: Subscription | null;
@@ -15,10 +18,27 @@ export default function SubscriptionInfoWrapper({
   userId,
 }: SubscriptionInfoWrapperProps) {
   const router = useRouter();
-  const { cancelSubscription, isLoading, error } = useCancelSubscription();
+  const {
+    cancelSubscription,
+    isLoading: isCancelling,
+    error: cancelError,
+  } = useCancelSubscription();
+  const {
+    updateAutoRenew,
+    isLoading: isUpdating,
+    error: updateError,
+  } = useUpdateAutoRenew();
 
   const handleCancelSubscription = async () => {
     const result = await cancelSubscription(userId);
+    if (result.success) {
+      router.refresh();
+    }
+    return result;
+  };
+
+  const handleUpdateAutoRenew = async (autoRenew: boolean) => {
+    const result = await updateAutoRenew(userId, autoRenew);
     if (result.success) {
       router.refresh();
     }
@@ -29,8 +49,9 @@ export default function SubscriptionInfoWrapper({
     <ProfileSubscriptionInfo
       subscription={subscription}
       onCancelSubscription={handleCancelSubscription}
-      isLoading={isLoading}
-      error={error}
+      onUpdateAutoRenew={handleUpdateAutoRenew}
+      isLoading={isCancelling || isUpdating}
+      error={cancelError || updateError}
     />
   );
 }
