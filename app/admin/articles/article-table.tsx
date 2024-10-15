@@ -133,25 +133,6 @@ export default function ArticleTable({
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </TableCell>
-                            {/* <TableCell>
-                                <button
-                                    onClick={async () => {
-                                        const doDelete = confirm(
-                                            `Are you sure you want to delete article titled "${article.headline}"`
-                                        );
-                                        if (doDelete) {
-                                            deleteArticle(article.id);
-                                            toast({
-                                                title: "Article successfully deleted",
-                                                className: "bg-secondary",
-                                            });
-                                        }
-                                    }}
-                                    className="text-destructive animate-pulse border p-1 border-destructive hover:bg-red-200"
-                                >
-                                    <Trash></Trash>
-                                </button>
-                            </TableCell> */}
                         </TableRow>
                     );
                 })}
