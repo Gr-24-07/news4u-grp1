@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import SubscribeClientWrapper from "./SubscribeClientWrapper";
 
-
 export default async function SubscribePage() {
   const session = await getServerSession(authOptions);
 
@@ -30,7 +29,9 @@ export default async function SubscribePage() {
 
   const now = new Date();
   const hasActiveSubscription =
-    user.subscription && user.subscription.expiresAt > now;
+    user.subscription &&
+    user.subscription.status === "ACTIVE" &&
+    new Date(user.subscription.expiresAt) > now;
 
   return (
     <div className="container max-w-screen-lg mx-auto space-y-6 mb-6 mt-2">
@@ -45,6 +46,7 @@ export default async function SubscribePage() {
           subscriptionTypes={subscriptionTypes}
           userId={user.id}
           isResubscribing={!!user.subscription}
+          subscriptionStatus={user.subscription?.status}
         />
       )}
     </div>
