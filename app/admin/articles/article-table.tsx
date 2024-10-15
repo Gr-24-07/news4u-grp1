@@ -3,6 +3,14 @@
 import { deleteArticle } from "@/app/actions/articles";
 import { ArticleWithCategoryAuthor } from "@/app/data/articles";
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
     Table,
     TableBody,
     TableCell,
@@ -11,7 +19,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { toast } from "@/hooks/use-toast";
-import { Check, Pencil, Star, Trash, X } from "lucide-react";
+import { Check, EllipsisVertical, X } from "lucide-react";
 import Link from "next/link";
 
 export default function ArticleTable({
@@ -31,8 +39,7 @@ export default function ArticleTable({
                     <TableHead>Author</TableHead>
                     <TableHead>Created</TableHead>
                     <TableHead>Updated</TableHead>
-                    <TableHead>Edit</TableHead>
-                    <TableHead>Delete</TableHead>
+                    <TableHead></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -64,15 +71,15 @@ export default function ArticleTable({
                                 )}
                             </TableCell>
                             <TableCell>
-                                <div className="text-yellow-500">
-                                    <Star
-                                        fill={
-                                            article.editorsChoice
-                                                ? "#fcd703"
-                                                : "#fff"
-                                        }
-                                    />
-                                </div>
+                                {article.editorsChoice ? (
+                                    <div className="text-green-800">
+                                        <Check />
+                                    </div>
+                                ) : (
+                                    <div className="text-red-800">
+                                        <X />
+                                    </div>
+                                )}
                             </TableCell>
                             <TableCell>{`${article.author.firstName} ${article.author.lastName}`}</TableCell>
                             <TableCell>
@@ -82,31 +89,49 @@ export default function ArticleTable({
                                 {article.updatedAt.toLocaleDateString("sv")}
                             </TableCell>
                             <TableCell>
-                                <Link
-                                    href={`/admin/articles/edit/${article.id}`}
-                                    className="inline-block text-blue-800 animate-pulse border p-1 border-blue-800 hover:bg-blue-200"
-                                >
-                                    <Pencil />
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                <button
-                                    onClick={async () => {
-                                        const doDelete = confirm(
-                                            `Are you sure you want to delete article titled "${article.headline}"`
-                                        );
-                                        if (doDelete) {
-                                            deleteArticle(article.id);
-                                            toast({
-                                                title: "Article successfully deleted",
-                                                className: "bg-secondary",
-                                            });
-                                        }
-                                    }}
-                                    className="text-destructive animate-pulse border p-1 border-destructive hover:bg-red-200"
-                                >
-                                    <Trash></Trash>
-                                </button>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>
+                                        <EllipsisVertical></EllipsisVertical>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuLabel>
+                                            Options
+                                        </DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <Link
+                                                href={`/article-page/${article.id}`}
+                                            >
+                                                View
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Link
+                                                href={`/admin/articles/edit/${article.id}`}
+                                            >
+                                                Edit
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onClick={async () => {
+                                                const doDelete = confirm(
+                                                    `Are you sure you want to delete article titled "${article.headline}"`
+                                                );
+                                                if (doDelete) {
+                                                    deleteArticle(article.id);
+                                                    toast({
+                                                        title: "Article successfully deleted",
+                                                        className:
+                                                            "bg-secondary",
+                                                    });
+                                                }
+                                            }}
+                                            className="text-destructive focus:text-destructive focus:cursor-pointer"
+                                        >
+                                            Delete
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </TableCell>
                         </TableRow>
                     );
