@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { getWeather } from './weather/actions';
 import SmallWeatherCard from './weather/smallweathercard';
+import CurrentDate from './current-date/page';
 
 const prisma = new PrismaClient();
 
@@ -66,76 +67,67 @@ export default async function HomePage() {
     });
 
     return (
-        <main className="w-full p-5">
-            <div className="flex flex-col md:flex-row justify-center">
-                <div className="max-w-screen-lg w-full flex flex-col md:flex-row">
-
-                    {/* Left Column (Main Content) */}
-                    <div className="w-full md:w-3/4 p-4 space-y-6">
-
-                        {/* First Row: Live News */}
-                        <section className="p-2 rounded-lg mx-auto">
-                            <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
-                                <Link href={"/categories/live"}>Live News</Link>
-                            </h2>
-                            <div className="space-y-3">
-                                {latestLiveNews.map((article) => (
-                                    <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
-
-                                ))}
-                            </div>
-                        </section>
-
-                        {/* Second Row: Two Columns (Most Popular News & Latest News) */}
-                        <div className="flex flex-col md:flex-row space-x-0 md:space-x-4">
-                            {/* Left Column: Most Popular News */}
-                            <div className="w-full md:w-1/3 p-2">
-                                <section className="p-2 rounded-lg">
-                                    <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
-                                    <div className="space-y-3">
-                                        {mostPopular.map((article) => (
-                                            <ArticleCardPopularNews key={article.id} article={article} userId={userId} />
-                                        ))}
-                                    </div>
-                                </section>
-                            </div>
-
-                            {/* Right Column: Latest News */}
-                            <div className="w-full md:w-2/3 p-2">
-                                <section className="p-2 rounded-lg">
-                                    <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
-                                    <div className="space-y-3">
-                                        {latestNews.map((article) => (
-                                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
-                                        ))}
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
+        <main className="w-full p-10">
+            <div>
+                <CurrentDate />
+            </div>
+    
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 p-5">            
+                <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-3 lg:col-span-3 ">
+                    <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
+                        <Link href={"/categories/live"}>Live News</Link>
+                    </h2>
+                    <div className="space-y-3">
+                        {latestLiveNews.map((article) => (
+                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                        ))}
                     </div>
+                </section>
 
-                    {/* Right Column: Editor's Choice News */}
-                    <div className="w-full md:w-1/4 p-4">
-                        <section className="p-2 rounded-lg">
-                            <SmallWeatherCard current = {WeatherToday} />
-                            <CurrencyConverter />
-                            <h2 className="text-sm font-bold mb-2 text-blue-500 hover:text-blue-900 pt-5">Editor's Choice</h2>
-                            <div className="space-y-3">
-                                {editorsChoice.map((article) => (
-                                    <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />
-                                ))}
-                            </div>
-                        </section>
-                    </div>
+                <div className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-1 lg:col-span-1 p-2  mt-10">
+                    <SmallWeatherCard current = {WeatherToday} />        
+                    <CurrencyConverter/>
                 </div>
             </div>
+       
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">            
+                {/* Latest News Section */}
+                <section className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-2 lg:col-span-2 ">
+                    <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
+                    <div className="space-y-5 ">
+                        {latestNews.map((article) => (
+                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                        ))}
+                     </div>
+                </section>
 
-            <hr className="my-1 border-gray-500" />
-            <hr className="my-1 border-gray-500" />
+                {/* Most Popular Section */}
+                <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-1 lg:col-span-1 ">
+                    <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
+                    <div className="space-y-5 ">
+                        {mostPopular.map((article) => (
+                            <ArticleCardPopularNews key={article.id} article={article} userId={userId} />  
+                        ))}
+                    </div>
+                </section>
 
-            <section className="mt-12 p-5">
+                {/* Editor's Choice Section */}
+                <section className="order-3 md:order-3 lg:order-3 col-span-1 md:col-span-1 lg:col-span-1 ">
+                    <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+                    <div className="space-y-5 ">
+                        {editorsChoice.map((article) => (
+                            <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />  
+                        ))}
+                    </div>
+                </section>
+            </div>
+        
+            <hr className="my-1 border-gray-500" /> 
+            <hr className="my-1 border-gray-500" /> 
+
+            <section className="mt-12">
                 <h2 className="text-lg font-bold mb-6 text-gray-700">More</h2>
-                <div className="grid grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-3 gap-6">
                     {otherCategories.map((category) => (
                         <div key={category.id} className="p-4">
                             <h3 className="text-md font-bold text-gray-800 mb-2">{category.name}</h3>
@@ -153,3 +145,10 @@ export default async function HomePage() {
         </main>
     );
 }
+
+
+
+
+
+
+
