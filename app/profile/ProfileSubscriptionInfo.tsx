@@ -4,6 +4,7 @@ import React from "react";
 import { Subscription } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 
 interface ProfileSubscriptionInfoProps {
   subscription: Subscription | null;
@@ -35,10 +36,17 @@ export default function ProfileSubscriptionInfo({
         <p className="text-white text-center">
           You don't have an active subscription.
         </p>
+        <p className="text-white text-center mt-1">
+          Check out our subscription-plans by clicking{" "}
+          <Link href="/subscribe">
+            <span className="hover:text-blue-300 italic underline">here</span>
+          </Link>
+          .
+        </p>
       </div>
     );
   }
-
+// bg-indigo-600 hover:bg-indigo-700
   const now = new Date();
   const expiresAt = new Date(subscription.expiresAt);
   const startedAt = new Date(subscription.createdAt);
