@@ -106,6 +106,8 @@ model Subscription {
     priceInCents Int
     createdAt    DateTime @default(now())
     expiresAt    DateTime
+    cancelledAt  DateTime?
+    status       String   @default("ACTIVE")
     user         User     @relation(fields: [userId], references: [id])
     userId       String   @unique
     autoRenew    Boolean  @default(true)

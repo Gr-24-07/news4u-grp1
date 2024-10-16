@@ -16,23 +16,6 @@ const SubscriptionInfoWrapper = dynamic(
   { ssr: false }
 ) as any;
 
-async function cancelSubscription(userId: string) {
-  "use server";
-
-  try {
-    await prisma.subscription.update({
-      where: { userId: userId },
-      data: { expiresAt: new Date() },
-    });
-
-    revalidatePath("/profile");
-    return { success: true };
-  } catch (error) {
-    console.error("Error cancelling subscription:", error);
-    return { success: false, error: "Failed to cancel subscription" };
-  }
-}
-
 export default async function ProfilePage({
   searchParams,
 }: {
@@ -88,9 +71,7 @@ export default async function ProfilePage({
             <SubscriptionInfoWrapper
               subscription={user.subscription}
               userId={user.id}
-              onCancelSubscription={cancelSubscription}
             />
-
             <ProfilePersonalInfoForm
               userId={user.id}
               initialData={{

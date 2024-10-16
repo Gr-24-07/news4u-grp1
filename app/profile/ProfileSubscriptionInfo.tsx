@@ -1,68 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Subscription } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 
 interface ProfileSubscriptionInfoProps {
   subscription: Subscription | null;
   onCancelSubscription: () => Promise<{ success: boolean; error?: string }>;
+  onUpdateAutoRenew: (
+    autoRenew: boolean
+  ) => Promise<{ success: boolean; error?: string }>;
+  isLoading: boolean;
+  error: string | null;
 }
 
-// Helper function for consistent date formatting
 function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return date.toISOString().split("T")[0];
 }
 
 export default function ProfileSubscriptionInfo({
   subscription,
   onCancelSubscription,
+  onUpdateAutoRenew,
+  isLoading,
+  error,
 }: ProfileSubscriptionInfoProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
   if (!subscription) {
     return (
       <div>
         <h2 className="text-2xl font-bold text-white mb-4 text-center">
           Your Subscription
         </h2>
-        <p className="text-white text-center">You don't have an active subscription.</p>
+        <p className="text-white text-center">
+          You don't have an active subscription.
+        </p>
+        <p className="text-white text-center mt-1">
+          Check out our subscription-plans by clicking{" "}
+          <Link href="/subscribe">
+            <span className="hover:text-blue-300 italic underline">here</span>
+          </Link>
+          .
+        </p>
       </div>
     );
   }
-
+// bg-indigo-600 hover:bg-indigo-700
+  const now = new Date();
   const expiresAt = new Date(subscription.expiresAt);
   const startedAt = new Date(subscription.createdAt);
-  const isActive = expiresAt > new Date();
-  const subscriptionDuration = Math.ceil(
-    (expiresAt.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-  );
+  const isActive = subscription.status === "ACTIVE" && expiresAt > now;
 
   const handleCancelSubscription = async () => {
     if (window.confirm("Are you sure you want to cancel your subscription?")) {
-      setIsLoading(true);
-      try {
-        const result = await onCancelSubscription();
-        if (result.success) {
-          alert("Your subscription has been cancelled successfully.");
-        } else {
-          alert(
-            result.error ||
-              "There was an error cancelling your subscription. Please try again."
-          );
-        }
-      } catch (error) {
-        console.error("Error cancelling subscription:", error);
-        alert(
-          "There was an error cancelling your subscription. Please try again."
-        );
-      } finally {
-        setIsLoading(false);
-      }
+      await onCancelSubscription();
     }
+  };
+
+  const handleAutoRenewToggle = async () => {
+    await onUpdateAutoRenew(!subscription.autoRenew);
   };
 
   return (
@@ -80,7 +77,7 @@ export default function ProfileSubscriptionInfo({
                 : "text-red-400 font-semibold"
             }
           >
-            {isActive ? "Active" : "Expired"}
+            {subscription.status}
           </span>
         </p>
         <p className="text-white flex justify-between">
@@ -91,18 +88,28 @@ export default function ProfileSubscriptionInfo({
           <span>Expires on:</span>
           <span className="font-semibold">{formatDate(expiresAt)}</span>
         </p>
-        <p className="text-white flex justify-between">
-          <span>Duration:</span>
-          <span className="font-semibold">
-            {subscriptionDuration} days remaining
-          </span>
-        </p>
+        {subscription.cancelledAt && (
+          <p className="text-white flex justify-between">
+            <span>Cancelled on:</span>
+            <span className="font-semibold">
+              {formatDate(subscription.cancelledAt)}
+            </span>
+          </p>
+        )}
         <p className="text-white flex justify-between">
           <span>Price:</span>
           <span className="font-semibold">
             ${(subscription.priceInCents / 100).toFixed(2)}
           </span>
         </p>
+        <div className="flex items-center justify-between">
+          <span className="text-white">Auto-renew</span>
+          <Switch
+            checked={subscription.autoRenew}
+            onCheckedChange={handleAutoRenewToggle}
+            disabled={!isActive}
+          />
+        </div>
       </div>
       {isActive && (
         <Button
@@ -113,6 +120,7 @@ export default function ProfileSubscriptionInfo({
           {isLoading ? "Cancelling..." : "Cancel Subscription"}
         </Button>
       )}
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 }
