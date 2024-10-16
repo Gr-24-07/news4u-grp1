@@ -21,7 +21,7 @@ export default function CookieModal({ showModal }: { showModal: boolean }) {
         <>
             {show && (
                 <div
-                    className="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0
+                    className="bg-black bg-opacity-50 z-[100] w-full h-full fixed top-0 left-0
         flex justify-center items-center"
                 >
                     <div className="fixed bottom-0 left-0 w-full p-6 bg-gray-800 text-white text-center shadow-lg z-50">
