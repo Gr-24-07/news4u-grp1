@@ -46,7 +46,6 @@ export default function ProfileSubscriptionInfo({
       </div>
     );
   }
-// bg-indigo-600 hover:bg-indigo-700
   const now = new Date();
   const expiresAt = new Date(subscription.expiresAt);
   const startedAt = new Date(subscription.createdAt);
