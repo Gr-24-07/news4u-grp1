@@ -17,7 +17,29 @@ interface ProfileSubscriptionInfoProps {
 }
 
 function formatDate(date: Date): string {
-  return date.toISOString().split("T")[0];
+  return new Date(date).toISOString().split("T")[0];
+}
+
+function getStatusClass(status: string, expiresAt: Date): string {
+  const now = new Date();
+  if (status === "ACTIVE") {
+    return "text-green-400 font-semibold";
+  } else if (status === "CANCELLED" && expiresAt > now) {
+    return "text-yellow-400 font-semibold";
+  } else {
+    return "text-red-400 font-semibold";
+  }
+}
+
+function getStatusText(status: string, expiresAt: Date): string {
+  const now = new Date();
+  if (status === "ACTIVE") {
+    return "ACTIVE";
+  } else if (status === "CANCELLED" && expiresAt > now) {
+    return "CANCELLED (Still Active)";
+  } else {
+    return status;
+  }
 }
 
 export default function ProfileSubscriptionInfo({
@@ -34,10 +56,10 @@ export default function ProfileSubscriptionInfo({
           Your Subscription
         </h2>
         <p className="text-white text-center">
-          You don't have an active subscription.
+          You don't have an active Subscription.
         </p>
         <p className="text-white text-center mt-1">
-          Check out our subscription-plans by clicking{" "}
+          Check out our Subscription-plans by clicking{" "}
           <Link href="/subscribe">
             <span className="hover:text-blue-300 italic underline">here</span>
           </Link>
@@ -46,13 +68,20 @@ export default function ProfileSubscriptionInfo({
       </div>
     );
   }
+
   const now = new Date();
   const expiresAt = new Date(subscription.expiresAt);
   const startedAt = new Date(subscription.createdAt);
-  const isActive = subscription.status === "ACTIVE" && expiresAt > now;
+  const isActive =
+    subscription.status === "ACTIVE" ||
+    (subscription.status === "CANCELLED" && expiresAt > now);
 
   const handleCancelSubscription = async () => {
-    if (window.confirm("Are you sure you want to cancel your subscription?")) {
+    if (
+      window.confirm(
+        "Are you sure you want to cancel your subscription? You'll still have access until the end of your current billing period."
+      )
+    ) {
       await onCancelSubscription();
     }
   };
@@ -69,14 +98,8 @@ export default function ProfileSubscriptionInfo({
       <div className="space-y-4 bg-white bg-opacity-20 p-6 rounded-md">
         <p className="text-white flex justify-between">
           <span>Status:</span>
-          <span
-            className={
-              isActive
-                ? "text-green-400 font-semibold"
-                : "text-red-400 font-semibold"
-            }
-          >
-            {subscription.status}
+          <span className={getStatusClass(subscription.status, expiresAt)}>
+            {getStatusText(subscription.status, expiresAt)}
           </span>
         </p>
         <p className="text-white flex justify-between">
@@ -106,11 +129,11 @@ export default function ProfileSubscriptionInfo({
           <Switch
             checked={subscription.autoRenew}
             onCheckedChange={handleAutoRenewToggle}
-            disabled={!isActive}
+            disabled={!isActive || subscription.status === "CANCELLED"}
           />
         </div>
       </div>
-      {isActive && (
+      {subscription.status === "ACTIVE" && (
         <Button
           onClick={handleCancelSubscription}
           disabled={isLoading}
