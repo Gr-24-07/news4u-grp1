@@ -18,8 +18,8 @@ export default async function EditArticlePage({
     }
 
     return (
-        <div className="container  max-w-screen-lg p-4">
-            <h1 className="text-center text-3xl font-bold">Edit Article</h1>
+        <div>
+            <h1 className="text-3xl font-bold">Edit Article</h1>
             <ArticleForm
                 article={article}
                 categories={categories}

@@ -301,11 +301,9 @@ export default async function AdminPage() {
     } satisfies ChartConfig;
 
     return (
-        <div className="container max-w-screen-lg space-y-10">
-            <h1 className="text-center text-3xl font-bold">
-                Subscriber Statistics
-            </h1>
-            <div className="flex gap-4">
+        <div className="space-y-10">
+            <h1 className="text-3xl font-bold">Subscriber Statistics</h1>
+            <div className="flex gap-4 md:flex-row flex-col">
                 {subStats.map((subTypeStats) => {
                     return (
                         <div
