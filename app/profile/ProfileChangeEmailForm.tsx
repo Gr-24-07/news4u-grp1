@@ -21,6 +21,7 @@ export default function ProfileChangeEmailForm() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<MessageType>(null);
+  const [emailChanged, setEmailChanged] = useState(false);
 
   useEffect(() => {
     const fetchCurrentEmail = async () => {
@@ -49,6 +50,7 @@ export default function ProfileChangeEmailForm() {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage(null);
+    setEmailChanged(false);
 
     try {
       changeEmailSchema.parse({ newEmail, password });
@@ -66,6 +68,7 @@ export default function ProfileChangeEmailForm() {
         });
         setNewEmail("");
         setPassword("");
+        setEmailChanged(true);
       } else {
         const data = await response.json();
         setMessage({
@@ -86,7 +89,9 @@ export default function ProfileChangeEmailForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4 text-center">Change Email</h2>
+      <h2 className="text-2xl font-bold text-white mb-4 text-center">
+        Change Email
+      </h2>
 
       {currentEmail !== null && (
         <div className="mb-4">
@@ -94,6 +99,12 @@ export default function ProfileChangeEmailForm() {
             Current Email
           </label>
           <p className="text-white">{currentEmail}</p>
+        </div>
+      )}
+
+      {emailChanged && (
+        <div className="mb-4 p-4 bg-green-500 text-white rounded-md">
+          Your email has been successfully changed.
         </div>
       )}
 

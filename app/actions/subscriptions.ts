@@ -125,16 +125,17 @@ export async function cancelSubscription(userId: string) {
     const updatedSubscription = await prisma.subscription.update({
       where: {
         userId: userId,
+        status: "ACTIVE",
       },
       data: {
         status: "CANCELLED",
         cancelledAt: now,
-        expiresAt: now, // Set expiration date to cancellation date
+        autoRenew: false,
       },
     });
 
     if (!updatedSubscription) {
-      throw new Error("Subscription not found");
+      throw new Error("Active subscription not found");
     }
 
     return { success: true };
