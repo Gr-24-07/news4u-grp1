@@ -44,5 +44,16 @@ export async function getArticle(
         },
     });
 
+    if (result) {
+        await prisma.article.update({
+            where: {
+                id: result.id,
+            },
+            data: {
+                views: result.views + 1,
+            },
+        });
+    }
+
     return result;
 }
