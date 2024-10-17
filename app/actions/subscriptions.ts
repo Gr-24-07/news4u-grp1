@@ -84,6 +84,7 @@ export async function createSubscription(
     sub = await prisma.subscription.update({
       where: { id: user.subscription.id },
       data: {
+        status: "ACTIVE",
         expiresAt: expireDate,
         priceInCents: subType.priceInCents,
         subscriptionType: {
@@ -91,12 +92,14 @@ export async function createSubscription(
             id: subType.id,
           },
         },
+        cancelledAt: null,
       },
     });
   } else {
     // User doesn't have a subscription, create a new one
     sub = await prisma.subscription.create({
       data: {
+        status: "ACTIVE",
         expiresAt: expireDate,
         priceInCents: subType.priceInCents,
         user: {
@@ -114,4 +117,30 @@ export async function createSubscription(
   }
 
   sendSubConfirmation("test@test.se", sub);
+}
+
+export async function cancelSubscription(userId: string) {
+  try {
+    const now = new Date();
+    const updatedSubscription = await prisma.subscription.update({
+      where: {
+        userId: userId,
+        status: "ACTIVE",
+      },
+      data: {
+        status: "CANCELLED",
+        cancelledAt: now,
+        autoRenew: false,
+      },
+    });
+
+    if (!updatedSubscription) {
+      throw new Error("Active subscription not found");
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error cancelling subscription:", error);
+    return { success: false, error: "Failed to cancel subscription" };
+  }
 }

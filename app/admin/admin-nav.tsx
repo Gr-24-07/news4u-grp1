@@ -18,7 +18,7 @@ export default function AdminNav() {
                         )}
                         href={"/admin"}
                     >
-                        Dashboard
+                        Statistics
                     </Link>
                 </li>
                 <li>
@@ -29,7 +29,7 @@ export default function AdminNav() {
                         )}
                         href={"/admin/articles"}
                     >
-                        Manage Articles
+                        Articles
                     </Link>
                 </li>
                 <li>
@@ -40,7 +40,7 @@ export default function AdminNav() {
                         )}
                         href={"/admin/users"}
                     >
-                        Manage Users
+                        Users
                     </Link>
                 </li>
             </ul>

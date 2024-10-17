@@ -11,7 +11,7 @@ export default function AuthStatus() {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    router.push("/"); // Redirect to home page after sign out
+    router.push("/");
   };
 
   if (status === "loading") {
@@ -20,16 +20,16 @@ export default function AuthStatus() {
 
   if (status === "authenticated") {
     return (
-      <div className="flex ml-2 justify-end space-x-2">
+      <div className="flex flex-row space-x-2">
         <Button
           asChild
-          className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <Link href="/profile">Profile</Link>
         </Button>
         <Button
           onClick={handleSignOut}
-          className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Sign Out
         </Button>
@@ -38,16 +38,16 @@ export default function AuthStatus() {
   }
 
   return (
-    <div className="flex ml-2 justify-end space-x-2">
+    <div className="flex flex-row space-x-2">
       <Button
         asChild
-        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         <Link href="/sign-up">Register</Link>
       </Button>
       <Button
         asChild
-        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         <Link href="/sign-in">Sign In</Link>
       </Button>

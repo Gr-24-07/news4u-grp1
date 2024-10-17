@@ -5,8 +5,8 @@ export default async function CreateArticlePage() {
     const categories = await getCategories();
 
     return (
-        <div className="container max-w-screen-lg p-4">
-            <h1 className="text-center text-3xl font-bold">Create Article</h1>
+        <div>
+            <h1 className="text-3xl font-bold">Create Article</h1>
             <ArticleForm categories={categories}></ArticleForm>
         </div>
     );

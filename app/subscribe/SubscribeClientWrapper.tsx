@@ -11,26 +11,24 @@ interface SubscribeClientWrapperProps {
   subscriptionTypes: SubscriptionType[];
   userId: string;
   isResubscribing: boolean;
+  subscriptionStatus?: string;
 }
 
 export default function SubscribeClientWrapper({
   subscriptionTypes,
   userId,
   isResubscribing,
+  subscriptionStatus,
 }: SubscribeClientWrapperProps) {
   const router = useRouter();
-
-  const handleSubscriptionComplete = () => {
-    router.refresh();
-    router.push("/profile");
-  };
 
   return (
     <>
       {isResubscribing && (
         <p className="text-center">
-          Your previous subscription has expired. You can choose a new
-          subscription below.
+          {subscriptionStatus === "CANCELLED"
+            ? "Your previous subscription has been cancelled. You can choose a new subscription below."
+            : "Your previous subscription has expired. You can choose a new subscription below."}
         </p>
       )}
       <div className="flex justify-center gap-2">

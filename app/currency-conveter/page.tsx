@@ -54,7 +54,7 @@ export default function CurrencyConverter() {
 
   return (
     <form>
-      <div className="w-56 h-auto mx-auto my-auto mt-2 mb-2 p-4 rounded-lg outline outline-1 border border-black">
+      <div className="w-56 h-auto mx-auto my-auto mt-2 mb-2 p-4 rounded-lg outline outline-1 border border-gray-50">
 
         <div className="text-center">
           <h2 className="text-sm font-bold mb-2">Currency Converter</h2>
@@ -70,7 +70,7 @@ export default function CurrencyConverter() {
         </div>
 
         {/* From and To section in one line */}
-        <div className="flex text-xs mt-2 mb-4">
+        <div className="flex text-xs mt-2 ">
           <div>
             <label className="text-xs">From</label>
             <CurrencySelect
@@ -81,7 +81,7 @@ export default function CurrencyConverter() {
             />
           </div>
 
-          <div className="mx-1 my-3">
+          <div className="mx-1 mt-3">
             <button
               type="button"
               className="border border-black rounded-full hover:bg-gray-300 mt-2 p-1"
@@ -112,7 +112,7 @@ export default function CurrencyConverter() {
           </div>
         </div>
 
-        <button
+        {/* <button
           type="button"
           className={`w-full py-2 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-800 transition duration-200 
             ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -120,10 +120,10 @@ export default function CurrencyConverter() {
             onClick={convert}
           >
           {isLoading ? "Getting Rate..." : "Get Exchange Rate"}
-        </button>
+        </button> */}
 
         {result && (
-          <p className="mt-4 p-2 bg-black text-white text-center rounded-md text-sm">
+          <p className=" p-2 bg-black text-white text-center rounded-md text-sm">
             {result}
           </p>
         )}

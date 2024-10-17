@@ -53,7 +53,6 @@ export default function VerifyEmail() {
         );
       }
     };
-
     verifyEmail();
   }, [searchParams, router]);
 
