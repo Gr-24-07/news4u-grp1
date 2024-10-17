@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews } from './front-page/ArticleCard';
+import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardLiveNews, ArticleCardPopularNews } from './front-page/ArticleCard';
 import { Articles } from './front-page/types';
 import Link from 'next/link';
 import CurrencyConverter from './currency-conveter/page';
@@ -17,7 +17,7 @@ export default async function HomePage() {
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id || ''; // Assuming this is the subscription ID
 
-    // Fetch Latest News in Live Category
+    // Fetch Latest Live News
     const latestLiveNews: Articles[] = await prisma.article.findMany({
         where: { category: { some: { name: 'Live' } } },
         orderBy: { createdAt: 'desc' },
@@ -41,6 +41,7 @@ export default async function HomePage() {
             id: { notIn: liveNewsIds },
             editorsChoice: true,
         },
+        orderBy: { createdAt: 'desc' },
         take: 10,
     });
 
@@ -68,29 +69,31 @@ export default async function HomePage() {
 
     return (
         <main className="w-full p-10">
-            <div>
+            <div >
                 <CurrentDate />
             </div>
-    
-            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 p-5">            
-                <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-3 lg:col-span-3 ">
+            
+            {/* Latest Live News Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 p-5">            
+                <section className="order-2  lg:order-1 col-span-1  lg:col-span-3 ">
                     <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
                         <Link href={"/categories/live"}>Live News</Link>
                     </h2>
                     <div className="space-y-3">
                         {latestLiveNews.map((article) => (
-                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                            <ArticleCardLiveNews key={article.id} article={article} userId={userId} />
                         ))}
                     </div>
                 </section>
 
-                <div className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-1 lg:col-span-1 p-2  mt-10">
+                <div className="order-1 lg:order-2 col-span-1 lg:col-span-1 p-2  mt-5 ml-10">
                     <SmallWeatherCard current = {WeatherToday} />        
                     <CurrencyConverter/>
                 </div>
             </div>
        
-            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">            
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">    
+
                 {/* Latest News Section */}
                 <section className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-2 lg:col-span-2 ">
                     <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
@@ -122,14 +125,15 @@ export default async function HomePage() {
                 </section>
             </div>
         
-            <hr className="my-1 border-gray-500" /> 
-            <hr className="my-1 border-gray-500" /> 
+            <hr className="my-1 border-gray-800" /> 
+            <hr className="my-1 border-gray-800" /> 
 
-            <section className="mt-12">
-                <h2 className="text-lg font-bold mb-6 text-gray-700">More</h2>
-                <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {/* all category Section */}
+            <section className="mt-5">
+                <h2 className="text-md font-bold mb-2 text-black">More</h2>
+                <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-3 gap-3">
                     {otherCategories.map((category) => (
-                        <div key={category.id} className="p-4">
+                        <div key={category.id} className="pr-5 pl-5">
                             <h3 className="text-md font-bold text-gray-800 mb-2">{category.name}</h3>
                             <div className="space-y-2">
                                 {category.articles && category.articles.length > 0 ? (
