@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { Articles } from '@/app/front-page/types';
-import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice } from '@/app/front-page/ArticleCard';
+import { ArticleCardLatestNews } from '@/app/front-page/ArticleCard';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CurrentDate from '@/app/current-date/page';
 

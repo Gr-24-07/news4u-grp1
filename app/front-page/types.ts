@@ -1,9 +1,10 @@
 export interface Articles {
-  id: string;          
+  id: string;
   headline: string;
   image: string;
   summary: string;
+  views?: number;
+  paid?: boolean;
   createdAt: Date;
-  views?: number;       
-  paid?: boolean;   
+  updatedAt: Date; 
 }
