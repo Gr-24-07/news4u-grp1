@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import AuthBackground from "@/app/my-components/AuthBackground";
 import { CheckCircle } from "lucide-react";
 
-
 export default function VerificationSuccessMessage() {
   const router = useRouter();
 
@@ -19,22 +18,22 @@ export default function VerificationSuccessMessage() {
 
   return (
     <AuthBackground>
-  <div className="w-full max-w-md">
-    <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
-      <div className="px-6 py-8 flex flex-col items-center">
-        <CheckCircle className="mb-6 h-16 w-16 text-green-400" />
-        <h1 className="text-3xl font-extrabold text-white text-center mb-6">
-          Successful Verification
-        </h1>
-        <p className="text-sm text-gray-200 text-center mb-2">
-          Your email has been successfully verified.
-        </p>
-        <p className="text-sm text-gray-300 text-center">
-          Redirecting to sign-in page...
-        </p>
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="px-6 py-8 flex flex-col items-center">
+            <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
+            <h1 className="text-3xl font-extrabold text-black text-center mb-6">
+              Successful Verification
+            </h1>
+            <p className="text-sm text-gray-700 text-center mb-2">
+              Your email has been successfully verified.
+            </p>
+            <p className="text-sm text-gray-500 text-center">
+              Redirecting to sign-in page...
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</AuthBackground>
+    </AuthBackground>
   );
 }

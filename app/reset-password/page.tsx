@@ -79,12 +79,12 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md">
-        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden border border-black">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="px-6 py-8">
             {!isSuccess ? (
               <>
-                <h2 className="text-center text-3xl font-extrabold text-white mb-6">
+                <h2 className="text-center text-3xl font-extrabold text-black mb-6">
                   Reset your password
                 </h2>
                 <Form {...form}>
@@ -97,17 +97,17 @@ export default function ResetPasswordPage() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="block text-sm font-medium text-white">
+                          <FormLabel className="block text-sm font-medium text-gray-700">
                             New Password
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type="password"
-                              className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                             />
                           </FormControl>
-                          <FormMessage className="text-red-400" />
+                          <FormMessage className="text-red-600" />
                         </FormItem>
                       )}
                     />
@@ -116,38 +116,38 @@ export default function ResetPasswordPage() {
                       name="confirmPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="block text-sm font-medium text-white">
+                          <FormLabel className="block text-sm font-medium text-gray-700">
                             Confirm New Password
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type="password"
-                              className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                             />
                           </FormControl>
-                          <FormMessage className="text-red-400" />
+                          <FormMessage className="text-red-600" />
                         </FormItem>
                       )}
                     />
                     <Button
                       type="submit"
-                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="w-full flex justify-center"
                     >
                       Reset Password
                     </Button>
                   </form>
                 </Form>
                 {message && (
-                  <p className="mt-2 text-sm text-red-400">{message}</p>
+                  <p className="mt-2 text-sm text-red-600">{message}</p>
                 )}
               </>
             ) : (
               <div className="flex flex-col items-center">
-                <CheckCircle className="mb-4 h-12 w-12 text-green-400" />
+                <CheckCircle className="mb-4 h-12 w-12 text-green-500" />
                 <div className="text-center">
-                  <p className="text-sm font-medium text-white">{message}</p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="text-sm font-medium text-black">{message}</p>
+                  <p className="mt-2 text-sm text-gray-600">
                     Redirecting to sign-in page...
                   </p>
                 </div>

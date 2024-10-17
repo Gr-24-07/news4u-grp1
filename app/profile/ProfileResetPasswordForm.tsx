@@ -73,24 +73,27 @@ export default function ProfileResetPasswordForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4 text-center">Change Password</h2>
-
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 text-black bg-white border border-black p-6 rounded-md"
+    >
+      <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
+        <h2 className="text-2xl font-bold mb-4 text-center">Change Password</h2>
+      </div>
       {message && (
         <div
           className={`p-4 rounded-md ${
-            message.type === "success" ? "bg-green-500" : "bg-red-500"
+            message.type === "success"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
           }`}
         >
-          <p className="text-white">{message.text}</p>
+          <p>{message.text}</p>
         </div>
       )}
 
       <div>
-        <label
-          htmlFor="currentPassword"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="currentPassword" className="block text-sm font-medium">
           Current Password
         </label>
         <Input
@@ -98,15 +101,12 @@ export default function ProfileResetPasswordForm() {
           type="password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className="mt-1 bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+          className="mt-1 bg-white border border-gray-300 focus:ring-2 focus:ring-black"
           required
         />
       </div>
       <div>
-        <label
-          htmlFor="newPassword"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="newPassword" className="block text-sm font-medium">
           New Password
         </label>
         <Input
@@ -114,14 +114,14 @@ export default function ProfileResetPasswordForm() {
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="mt-1 bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+          className="mt-1 bg-white border border-gray-300 focus:ring-2 focus:ring-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="confirmNewPassword"
-          className="block text-sm font-medium text-white"
+          className="block text-sm font-medium"
         >
           Confirm New Password
         </label>
@@ -130,25 +130,25 @@ export default function ProfileResetPasswordForm() {
           type="password"
           value={confirmNewPassword}
           onChange={(e) => setConfirmNewPassword(e.target.value)}
-          className="mt-1 bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+          className="mt-1 bg-white border border-gray-300 focus:ring-2 focus:ring-black"
           required
         />
       </div>
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full flex justify-center"
       >
         {isSubmitting ? "Updating..." : "Update Password"}
       </Button>
       <div className="flex items-center w-full">
-        <div className="flex-grow border-t border-indigo-600"></div>
-        <div className="mx-4 text-white text-sm font-light">OR</div>
-        <div className="flex-grow border-t border-indigo-600"></div>
+        <div className="flex-grow border-t border-gray-400"></div>
+        <div className="mx-4 text-sm font-light text-gray-600">OR</div>
+        <div className="flex-grow border-t border-gray-400"></div>
       </div>
       <Link
         href="/forgot-password"
-        className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
+        className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-black text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
       >
         Forgot password?
       </Link>

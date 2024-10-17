@@ -65,9 +65,9 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden w-full max-w-md">
+    <div className="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-md border border-black my-8">
       <div className="px-6 py-8">
-        <h2 className="text-center text-3xl font-extrabold text-white mb-6">
+        <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-400">
           Create your account
         </h2>
         <Form {...form}>
@@ -82,7 +82,7 @@ export default function SignUpForm() {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     First Name (Optional)
                   </FormLabel>
                   <FormControl>
@@ -90,10 +90,10 @@ export default function SignUpForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your first name"
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -102,7 +102,7 @@ export default function SignUpForm() {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Last Name (Optional)
                   </FormLabel>
                   <FormControl>
@@ -110,10 +110,10 @@ export default function SignUpForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your last name"
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -122,7 +122,7 @@ export default function SignUpForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Email
                   </FormLabel>
                   <FormControl>
@@ -131,10 +131,10 @@ export default function SignUpForm() {
                       type="email"
                       placeholder="Enter your email"
                       required
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -143,7 +143,7 @@ export default function SignUpForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Password
                   </FormLabel>
                   <FormControl>
@@ -152,10 +152,10 @@ export default function SignUpForm() {
                       type="password"
                       placeholder="********"
                       required
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -164,7 +164,7 @@ export default function SignUpForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
@@ -173,10 +173,10 @@ export default function SignUpForm() {
                       type="password"
                       placeholder="********"
                       required
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -185,7 +185,7 @@ export default function SignUpForm() {
               name="dateOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Date of Birth (Optional)
                   </FormLabel>
                   <FormControl>
@@ -193,10 +193,10 @@ export default function SignUpForm() {
                       type="date"
                       {...field}
                       value={field.value || ""}
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -206,7 +206,7 @@ export default function SignUpForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center justify-between">
-                    <FormLabel className="text-sm font-medium text-white">
+                    <FormLabel className="text-sm font-medium text-gray-700">
                       Newsletter Preferences
                     </FormLabel>
                     <FormControl>
@@ -219,17 +219,14 @@ export default function SignUpForm() {
                       </div>
                     </FormControl>
                   </div>
-                  <FormDescription className="mt-1 text-sm text-gray-300">
+                  <FormDescription className="mt-1 text-sm text-gray-500">
                     Receive updates about our latest news and events.
                   </FormDescription>
                 </FormItem>
               )}
             />
             <div>
-              <Button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
+              <Button type="submit" className="w-full flex justify-center">
                 {isSubmitting ? "Registering..." : "Register"}
               </Button>
             </div>
@@ -238,10 +235,10 @@ export default function SignUpForm() {
         <div className="mt-8">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-indigo-600" />
+              <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-white bg-opacity-100 backdrop-filter backdrop-blur-lg z-10 relative">
+              <span className="px-2 text-gray-500 bg-white">
                 Already have an account?
               </span>
             </div>
@@ -249,13 +246,13 @@ export default function SignUpForm() {
           <div className="mt-6 grid grid-cols-2 gap-3">
             <Link
               href="/sign-in"
-              className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
+              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300"
             >
               Sign in
             </Link>
             <Link
               href="/forgot-password"
-              className="w-full inline-flex justify-center py-2 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-20 transition duration-300"
+              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300"
             >
               Forgot password?
             </Link>

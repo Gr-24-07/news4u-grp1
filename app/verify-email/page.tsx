@@ -58,28 +58,28 @@ export default function VerifyEmail() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md">
-        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full max-w-md rounded-lg shadow-md border border-black">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="px-6 py-8">
-            <h1 className="text-3xl font-extrabold text-white text-center mb-6">
+            <h1 className="text-3xl font-extrabold text-black text-center mb-6">
               Email Verification
             </h1>
             {status === "loading" && (
               <div className="text-center">
-                <Loader2 className="h-12 w-12 text-white animate-spin mx-auto mb-4" />
-                <p className="text-white">Verifying your email...</p>
+                <Loader2 className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
+                <p className="text-gray-700">Verifying your email...</p>
               </div>
             )}
             {status === "success" && (
               <div className="text-center">
-                <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
-                <p className="text-green-400">Email verified successfully!</p>
+                <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                <p className="text-green-600">Email verified successfully!</p>
               </div>
             )}
             {status === "error" && (
               <div className="text-center">
-                <XCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-                <p className="text-red-400">{error}</p>
+                <XCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
+                <p className="text-red-600">{error}</p>
               </div>
             )}
           </div>

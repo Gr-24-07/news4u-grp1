@@ -43,17 +43,19 @@ export default async function ProfilePage({ searchParams }: PageProps) {
 
   return (
     <AuthBackground>
-      <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-black my-8">
         <div className="px-6 py-8">
-          <div className="relative">
-            <div className="relative flex justify-center">
-              <span className="text-3xl font-extrabold mb-10 mt-8 px-2 text-white bg-opacity-100 backdrop-filter backdrop-blur-lg z-10 relative">
-                Profile
-              </span>
-            </div>
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 text-center">
+              Profile
+            </h1>
+            <p className="mt-2 text-sm text-gray-600 text-center">
+              Manage your account information and preferences.
+            </p>
           </div>
+
           {props.error && (
-            <div className="mb-4 p-4 bg-red-500 text-white rounded-md">
+            <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
               {props.error === "invalid_token" && "Invalid or expired token."}
               {props.error === "invalid_token_data" && "Invalid token data."}
               {props.error === "verification_failed" &&
@@ -65,10 +67,15 @@ export default async function ProfilePage({ searchParams }: PageProps) {
               ].includes(props.error) && "An error occurred."}
             </div>
           )}
+
           <div className="space-y-8">
             <SubscriptionInfoWrapper
               subscription={user.subscription}
               userId={user.id}
+            />
+            <ProfileNewsletterPreferences
+              userId={user.id}
+              initialPreference={user.newsletter}
             />
             <ProfilePersonalInfoForm
               userId={user.id}
@@ -80,12 +87,8 @@ export default async function ProfilePage({ searchParams }: PageProps) {
                   : null,
               }}
             />
-            <ProfileChangeEmailForm />
             <ProfileResetPasswordForm />
-            <ProfileNewsletterPreferences
-              userId={user.id}
-              initialPreference={user.newsletter}
-            />
+            <ProfileChangeEmailForm />
           </div>
         </div>
       </div>

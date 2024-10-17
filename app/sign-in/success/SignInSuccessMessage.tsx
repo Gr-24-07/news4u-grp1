@@ -18,11 +18,13 @@ export default function SuccessMessage() {
 
   return (
     <AuthBackground>
-      <div className="flex min-h-screen flex-col items-center justify-center py-2">
+      <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-white">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <CheckCircle className="mb-6 h-16 w-16 text-green-400" />
-          <h1 className="text-white text-4xl font-bold mb-4">You are now signed in</h1>
-          <p className="text-white">Redirecting to home page...</p>
+          <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
+          <h1 className="text-black text-4xl font-bold mb-4">
+            You are now signed in
+          </h1>
+          <p className="text-gray-600">Redirecting to home page...</p>
         </main>
       </div>
     </AuthBackground>
