@@ -16,8 +16,8 @@ import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-
   const inputRef = React.useRef<HTMLInputElement>(null);
+
   const links = [
     { name: "Local", href: "/categories/local" },
     { name: "National", href: "/categories/sweden" },
@@ -114,7 +114,9 @@ export default function Navbar() {
           <div className="gap-2 flex items-center">
             <div className="gap-2 flex">
               <Button size="icon" variant="ghost" onClick={handleSearchClick}>
-                <Search size="icon " className="w-6 h-6" />
+                <Link href={`/search`}>
+                  <Search size="icon " className="w-6 h-6" />
+                </Link>
               </Button>
             </div>
           </div>
