@@ -97,7 +97,7 @@ export default function ProfileChangeEmailForm() {
         <div className="pb-4 mb-4 border-b border-gray-400">
           <div className="flex justify-center items-center">
             <div className="flex items-center mb-3">
-              <label className="text-sm font-medium mr-2">Current Email:</label>
+              <label className="text-sm font-medium mr-1">Current Email:</label>
               <p>{currentEmail}</p>
             </div>
           </div>

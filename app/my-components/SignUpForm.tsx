@@ -67,7 +67,7 @@ export default function SignUpForm() {
   return (
     <div className="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-md border border-black my-8">
       <div className="px-6 py-8">
-        <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-200">
+        <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-400">
           Create your account
         </h2>
         <Form {...form}>
@@ -90,7 +90,7 @@ export default function SignUpForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your first name"
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />
@@ -110,7 +110,7 @@ export default function SignUpForm() {
                       {...field}
                       type="text"
                       placeholder="Enter your last name"
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />
@@ -131,7 +131,7 @@ export default function SignUpForm() {
                       type="email"
                       placeholder="Enter your email"
                       required
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />
@@ -152,7 +152,7 @@ export default function SignUpForm() {
                       type="password"
                       placeholder="********"
                       required
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />
@@ -173,7 +173,7 @@ export default function SignUpForm() {
                       type="password"
                       placeholder="********"
                       required
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />
@@ -193,7 +193,7 @@ export default function SignUpForm() {
                       type="date"
                       {...field}
                       value={field.value || ""}
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                     />
                   </FormControl>
                   <FormMessage className="mt-2 text-sm text-red-600" />

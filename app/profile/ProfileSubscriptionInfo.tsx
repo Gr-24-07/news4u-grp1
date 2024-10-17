@@ -20,25 +20,19 @@ function formatDate(date: Date): string {
   return new Date(date).toISOString().split("T")[0];
 }
 
-function getStatusClass(status: string, expiresAt: Date): string {
+function getStatusDisplay(status: string, expiresAt: Date) {
   const now = new Date();
   if (status === "ACTIVE") {
-    return "text-green-400 font-semibold";
+    return <span className="text-green-600 font-semibold">ACTIVE</span>;
   } else if (status === "CANCELLED" && expiresAt > now) {
-    return "text-yellow-400 font-semibold";
+    return (
+      <span>
+        <span className="text-red-600 font-semibold">CANCELLED</span>{" "}
+        <span className="text-green-600 font-semibold">(Still Active)</span>
+      </span>
+    );
   } else {
-    return "text-red-400 font-semibold";
-  }
-}
-
-function getStatusText(status: string, expiresAt: Date): string {
-  const now = new Date();
-  if (status === "ACTIVE") {
-    return "ACTIVE";
-  } else if (status === "CANCELLED" && expiresAt > now) {
-    return "CANCELLED (Still Active)";
-  } else {
-    return status;
+    return <span className="text-red-600 font-semibold">{status}</span>;
   }
 }
 
@@ -92,16 +86,14 @@ export default function ProfileSubscriptionInfo({
     <div className="space-y-4 text-black">
       <div className="bg-white border border-black p-6 rounded-md">
         <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Your Subscription
-        </h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">
+            Your Subscription
+          </h2>
         </div>
         <div className="space-y-4">
-          <p className="flex justify-between">
+          <p className="flex justify-between items-center">
             <span>Status:</span>
-            <span className={getStatusClass(subscription.status, expiresAt)}>
-              {getStatusText(subscription.status, expiresAt)}
-            </span>
+            {getStatusDisplay(subscription.status, expiresAt)}
           </p>
           <p className="flex justify-between">
             <span>Subscribed on:</span>

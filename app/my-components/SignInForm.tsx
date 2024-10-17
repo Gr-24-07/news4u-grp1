@@ -71,84 +71,91 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-black">
-      <div className="px-6 py-8">
-        <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-200">
-          Sign in to your account
-        </h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium text-gray-700">
-                    Email
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="Enter your email"
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-600" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium text-gray-700">
-                    Password
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter your password"
-                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-600" />
-                </FormItem>
-              )}
-            />
-            <div>
-              <Button type="submit" className="w-full flex justify-center">
-                {isSubmitting ? "Signing In..." : "Sign In"}
-              </Button>
+    <div className="container mx-auto -mt-16 sm:-mt-24 mb-auto">
+      <div className="max-w-md mx-auto">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-black">
+          <div className="px-6 py-8">
+            <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-400">
+              Sign in to your account
+            </h2>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block text-sm font-medium text-gray-700">
+                        Email
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Enter your email"
+                          className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
+                        />
+                      </FormControl>
+                      <FormMessage className="mt-2 text-sm text-red-600" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block text-sm font-medium text-gray-700">
+                        Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="Enter your password"
+                          className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
+                        />
+                      </FormControl>
+                      <FormMessage className="mt-2 text-sm text-red-600" />
+                    </FormItem>
+                  )}
+                />
+                <div>
+                  <Button type="submit" className="w-full flex justify-center">
+                    {isSubmitting ? "Signing In..." : "Sign In"}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+            <div className="mt-8">
+              <div className="flex items-center w-full">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <div className="mx-4 text-gray-500 text-sm font-light">OR</div>
+                <div className="flex-grow border-t border-gray-300"></div>
+              </div>
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                <Link
+                  href="/sign-up"
+                  className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Register
+                </Link>
+                <Link
+                  href="/forgot-password"
+                  className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Forgot password?
+                </Link>
+              </div>
             </div>
-          </form>
-        </Form>
-        <div className="mt-8">
-          <div className="flex items-center w-full">
-            <div className="flex-grow border-t border-gray-300"></div>
-            <div className="mx-4 text-gray-500 text-sm font-light">OR</div>
-            <div className="flex-grow border-t border-gray-300"></div>
-          </div>
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            <Link
-              href="/sign-up"
-              className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Register
-            </Link>
-            <Link
-              href="/forgot-password"
-              className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Forgot password?
-            </Link>
           </div>
         </div>
       </div>

@@ -142,9 +142,9 @@ export default function ProfileResetPasswordForm() {
         {isSubmitting ? "Updating..." : "Update Password"}
       </Button>
       <div className="flex items-center w-full">
-        <div className="flex-grow border-t border-gray-300"></div>
+        <div className="flex-grow border-t border-gray-400"></div>
         <div className="mx-4 text-sm font-light text-gray-600">OR</div>
-        <div className="flex-grow border-t border-gray-300"></div>
+        <div className="flex-grow border-t border-gray-400"></div>
       </div>
       <Link
         href="/forgot-password"

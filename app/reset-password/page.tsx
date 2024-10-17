@@ -104,7 +104,7 @@ export default function ResetPasswordPage() {
                             <Input
                               {...field}
                               type="password"
-                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                             />
                           </FormControl>
                           <FormMessage className="text-red-600" />
@@ -123,7 +123,7 @@ export default function ResetPasswordPage() {
                             <Input
                               {...field}
                               type="password"
-                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
                             />
                           </FormControl>
                           <FormMessage className="text-red-600" />
