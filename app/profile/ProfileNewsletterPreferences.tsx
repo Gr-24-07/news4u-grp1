@@ -44,9 +44,9 @@ export default function ProfileNewsletterPreferences({
   };
 
   return (
-    <div className="flex flex-col items-start space-y-2">
+    <div className="flex flex-col items-start space-y-2 text-black bg-white border border-black p-6 rounded-md">
       <div className="flex items-center justify-between w-full">
-        <span className="text-2xl font-bold text-white">
+        <span className="text-2xl font-bold">
           {isSubscribed
             ? "You are subscribed to our newsletter"
             : "You are not subscribed to our newsletter"}

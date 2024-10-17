@@ -71,9 +71,9 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-xl overflow-hidden">
+    <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-black">
       <div className="px-6 py-8">
-        <h2 className="text-center text-3xl font-extrabold text-white mb-6">
+        <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-200">
           Sign in to your account
         </h2>
         <Form {...form}>
@@ -88,7 +88,7 @@ export default function SignInForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Email
                   </FormLabel>
                   <FormControl>
@@ -96,10 +96,10 @@ export default function SignInForm() {
                       {...field}
                       type="email"
                       placeholder="Enter your email"
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
@@ -108,7 +108,7 @@ export default function SignInForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium text-white">
+                  <FormLabel className="block text-sm font-medium text-gray-700">
                     Password
                   </FormLabel>
                   <FormControl>
@@ -116,44 +116,41 @@ export default function SignInForm() {
                       {...field}
                       type="password"
                       placeholder="Enter your password"
-                      className="bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+                      className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </FormControl>
-                  <FormMessage className="mt-2 text-sm text-red-400" />
+                  <FormMessage className="mt-2 text-sm text-red-600" />
                 </FormItem>
               )}
             />
             <div>
-              <Button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
+              <Button type="submit" className="w-full flex justify-center">
                 {isSubmitting ? "Signing In..." : "Sign In"}
               </Button>
             </div>
           </form>
         </Form>
         <div className="mt-8">
-  <div className="flex items-center w-full">
-    <div className="flex-grow border-t border-indigo-600"></div>
-    <div className="mx-4 text-white text-sm font-light">OR</div>
-    <div className="flex-grow border-t border-indigo-600"></div>
-  </div>
-  <div className="mt-8 grid grid-cols-2 gap-4">
-    <Link
-      href="/sign-up"
-      className="w-full inline-flex justify-center py-2.5 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-30 hover:border-opacity-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Register
-    </Link>
-    <Link
-      href="/forgot-password"
-      className="w-full inline-flex justify-center py-2.5 px-4 border border-white border-opacity-20 rounded-md shadow-sm bg-white bg-opacity-10 text-sm font-medium text-white hover:bg-opacity-30 hover:border-opacity-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Forgot password?
-    </Link>
-  </div>
-</div>
+          <div className="flex items-center w-full">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <div className="mx-4 text-gray-500 text-sm font-light">OR</div>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-4">
+            <Link
+              href="/sign-up"
+              className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Register
+            </Link>
+            <Link
+              href="/forgot-password"
+              className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Forgot password?
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -23,13 +23,13 @@ export default function AuthStatus() {
       <div className="flex flex-row space-x-2">
         <Button
           asChild
-          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
         >
           <Link href="/profile">Profile</Link>
         </Button>
         <Button
           onClick={handleSignOut}
-          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
         >
           Sign Out
         </Button>
@@ -41,13 +41,13 @@ export default function AuthStatus() {
     <div className="flex flex-row space-x-2">
       <Button
         asChild
-        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
       >
         <Link href="/sign-up">Register</Link>
       </Button>
       <Button
         asChild
-        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
       >
         <Link href="/sign-in">Sign In</Link>
       </Button>

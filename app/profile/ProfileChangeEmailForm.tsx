@@ -21,7 +21,6 @@ export default function ProfileChangeEmailForm() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<MessageType>(null);
-  const [emailChanged, setEmailChanged] = useState(false);
 
   useEffect(() => {
     const fetchCurrentEmail = async () => {
@@ -50,7 +49,6 @@ export default function ProfileChangeEmailForm() {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage(null);
-    setEmailChanged(false);
 
     try {
       changeEmailSchema.parse({ newEmail, password });
@@ -68,7 +66,6 @@ export default function ProfileChangeEmailForm() {
         });
         setNewEmail("");
         setPassword("");
-        setEmailChanged(true);
       } else {
         const data = await response.json();
         setMessage({
@@ -88,41 +85,39 @@ export default function ProfileChangeEmailForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-4 text-center">
-        Change Email
-      </h2>
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 text-black bg-white border border-black p-6 rounded-md"
+    >
+      <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
+        <h2 className="text-2xl font-bold mb-4 text-center">Change Email</h2>
+      </div>
 
       {currentEmail !== null && (
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-white">
-            Current Email
-          </label>
-          <p className="text-white">{currentEmail}</p>
-        </div>
-      )}
-
-      {emailChanged && (
-        <div className="mb-4 p-4 bg-green-500 text-white rounded-md">
-          Your email has been successfully changed.
+        <div className="pb-4 mb-4 border-b border-gray-400">
+          <div className="flex justify-center items-center">
+            <div className="flex items-center mb-3">
+              <label className="text-sm font-medium mr-2">Current Email:</label>
+              <p>{currentEmail}</p>
+            </div>
+          </div>
         </div>
       )}
 
       {message && (
         <div
           className={`p-4 rounded-md ${
-            message.type === "success" ? "bg-green-500" : "bg-red-500"
+            message.type === "success"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
           }`}
         >
-          <p className="text-white">{message.text}</p>
+          <p>{message.text}</p>
         </div>
       )}
 
       <div>
-        <label
-          htmlFor="newEmail"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="newEmail" className="block text-sm font-medium">
           New Email
         </label>
         <Input
@@ -130,15 +125,13 @@ export default function ProfileChangeEmailForm() {
           type="email"
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
-          className="mt-1 bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+          className="mt-1 bg-white border border-gray-300 focus:ring-2 focus:ring-black"
           required
         />
       </div>
+
       <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="password" className="block text-sm font-medium">
           Current Password
         </label>
         <Input
@@ -146,14 +139,15 @@ export default function ProfileChangeEmailForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 bg-white bg-opacity-20 border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-white"
+          className="mt-1 bg-white border border-gray-300 focus:ring-2 focus:ring-black"
           required
         />
       </div>
+
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full flex justify-center"
       >
         {isSubmitting ? "Submitting..." : "Update Email"}
       </Button>
