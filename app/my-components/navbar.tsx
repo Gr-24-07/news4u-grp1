@@ -114,7 +114,6 @@ export default function Navbar() {
               </Button>
             </div>
           </div>
-
         </div>
 
         <div className="flex items-center justify-center text-center">
