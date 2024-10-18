@@ -1,4 +1,4 @@
-import { getArticle } from "@/app/data/articles";
+import { getArticleEditor } from "@/app/data/articles";
 import { getCategories } from "@/app/data/categories";
 import ArticleForm from "@/app/my-components/article-form";
 import { notFound } from "next/navigation";
@@ -11,7 +11,7 @@ export default async function EditArticlePage({
     };
 }) {
     const categories = await getCategories();
-    const article = await getArticle(params.articleId);
+    const article = await getArticleEditor(params.articleId);
 
     if (!article) {
         notFound();

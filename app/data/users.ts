@@ -1,5 +1,7 @@
 import prisma from "@/lib/db";
 import { User } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export type UserBasicInfo = Pick<
     User,
@@ -7,6 +9,12 @@ export type UserBasicInfo = Pick<
 >;
 
 export default async function getUsersBasicInfo(): Promise<UserBasicInfo[]> {
+    const session = await getServerSession(authOptions);
+
+    if (session?.user.role !== "ADMIN" && session?.user.role !== "EDITOR") {
+        throw new Error("Not authenticated");
+    }
+
     const result = await prisma.user.findMany({
         select: {
             id: true,
