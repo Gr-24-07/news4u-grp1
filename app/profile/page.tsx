@@ -11,6 +11,7 @@ import ProfileResetPasswordForm from "./ProfileResetPasswordForm";
 import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
 
 import { User, ProfilePageProps } from "@/types/user";
+import ProfileDeleteAccount from "./ProfileDeleteAccount";
 
 const SubscriptionInfoWrapper = dynamic(
   () => import("./SubscriptionInfoWrapper").then((mod) => mod.default),
@@ -36,6 +37,9 @@ export default async function ProfilePage({ searchParams }: PageProps) {
   if (!user) {
     throw new Error("User not found");
   }
+
+  const hasActiveSubscription =
+    !!user.subscription && new Date(user.subscription.expiresAt) > new Date();
 
   const error = searchParams.error as string | undefined;
 
@@ -89,6 +93,9 @@ export default async function ProfilePage({ searchParams }: PageProps) {
             />
             <ProfileResetPasswordForm />
             <ProfileChangeEmailForm />
+            <ProfileDeleteAccount
+              hasActiveSubscription={hasActiveSubscription}
+            />
           </div>
         </div>
       </div>

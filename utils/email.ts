@@ -27,6 +27,7 @@ export async function sendEmailChangeVerification(to: string, token: string) {
     `,
   });
 }
+
 export async function sendPasswordResetEmail(email: string) {
   const token = await createResetToken(email);
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
@@ -42,26 +43,66 @@ export async function sendPasswordResetEmail(email: string) {
     `,
   });
 }
+
+function createAccountDeletionEmail(verificationUrl: string) {
+  return {
+    subject: "Confirm Account Deletion",
+    html: `
+      <h1>Confirm Account Deletion</h1>
+      <p>We received a request to delete your account. If you did not make this request, please ignore this email.</p>
+      <p>If you want to proceed with account deletion, please click the link below:</p>
+      <a href="${verificationUrl}">${verificationUrl}</a>
+      <p>This link will expire in 1 hour for security reasons.</p>
+      <p>If you did not request account deletion, please contact our support team immediately.</p>
+    `,
+  };
+}
+
 export async function sendVerificationEmail(
   to: string,
   token: string,
-  email: string
+  email: string,
+  isEmailChange: boolean = false,
+  isAccountDeletion: boolean = false
 ) {
-  const verificationUrl = `${process.env.NEXTAUTH_URL}/verify-email?token=${token}`;
+  let subject: string;
+  let htmlContent: string;
+  let verificationUrl: string;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: to,
-    subject: "Verify your email",
-    html: `
+  if (isAccountDeletion) {
+    verificationUrl = `${process.env.NEXTAUTH_URL}/api/user/profile-delete-account-verification?token=${token}`;
+    const accountDeletionEmail = createAccountDeletionEmail(verificationUrl);
+    subject = accountDeletionEmail.subject;
+    htmlContent = accountDeletionEmail.html;
+  } else if (isEmailChange) {
+    subject = "Verify your new email address";
+    verificationUrl = `${process.env.NEXTAUTH_URL}/verify-email?token=${token}`;
+    htmlContent = `
+      <h1>Verify your new email address</h1>
+      <p>Click the link below to verify your new email address:</p>
+      <a href="${verificationUrl}">${verificationUrl}</a>
+      <p>If you did not request this change, please ignore this email.</p>
+    `;
+  } else {
+    subject = "Verify your email";
+    verificationUrl = `${process.env.NEXTAUTH_URL}/verify-email?token=${token}`;
+    htmlContent = `
       <h1>Verify your email</h1>
       <p>Hello ${email}, </p>
       <p>Please click the link below to verify your email:</p>
       <a href="${verificationUrl}">${verificationUrl}</a>
       <p>If you did not request this email, please ignore it.</p>
-    `,
+    `;
+  }
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: to,
+    subject: subject,
+    html: htmlContent,
   });
 }
+
 export async function sendSubConfirmation(email: string, sub: Subscription) {
   await transporter.sendMail({
     from: process.env.EMAIL_FROM,
@@ -78,5 +119,20 @@ export async function sendSubConfirmation(email: string, sub: Subscription) {
       hour: "2-digit",
     })}</p>
   `,
+  });
+}
+
+export async function sendAccountDeletionVerification(
+  to: string,
+  token: string
+) {
+  const verificationUrl = `${process.env.NEXTAUTH_URL}/api/user/profile-delete-account-verification?token=${token}`;
+  const { subject, html } = createAccountDeletionEmail(verificationUrl);
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: to,
+    subject: subject,
+    html: html,
   });
 }
