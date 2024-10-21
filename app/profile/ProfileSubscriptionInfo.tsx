@@ -46,9 +46,11 @@ export default function ProfileSubscriptionInfo({
   if (!subscription) {
     return (
       <div className="text-black rounded-lg shadow-md border border-black p-6">
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Your Subscription
-        </h2>
+        <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
+          <h2 className="text-2xl font-bold mb-4 text-center">
+            Your Subscription
+          </h2>
+        </div>
         <p className="text-center">You don't have an active Subscription.</p>
         <p className="text-center mt-1">
           Check out our Subscription-plans by clicking{" "}

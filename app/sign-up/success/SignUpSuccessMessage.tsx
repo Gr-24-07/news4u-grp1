@@ -32,7 +32,7 @@ export default function SignUpSuccessMessage() {
         <p className="font-semibold mb-2">
           Please check your email to verify your account.
         </p>
-        <p className="font-semibold underline mb-6 text-blue-600">
+        <p className="font-semibold underline mb-6">
           The verification-link will expire in 24 hours.
         </p>
         <p className="mb-2 text-gray-700">

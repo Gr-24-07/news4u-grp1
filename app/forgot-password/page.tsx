@@ -52,9 +52,11 @@ export default function ForgotPasswordPage() {
           <div className="px-6 py-8">
             {!isSuccess ? (
               <>
-                <h2 className="text-center text-3xl font-extrabold text-black mb-2">
-                  Forgot your password?
-                </h2>
+                <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
+                  <h2 className="text-center text-3xl font-extrabold text-black mb-2">
+                    Forgot your password?
+                  </h2>
+                </div>
                 <p className="text-center text-sm text-gray-600 mb-6">
                   Enter your email address and we'll send you a link to reset
                   your password.
