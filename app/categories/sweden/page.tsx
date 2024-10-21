@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { Articles } from '@/app/front-page/types';
 import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice } from '@/app/front-page/ArticleCard';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CurrentDate from '@/app/current-date/page';
-
-const prisma = new PrismaClient();
 
 export default async function NationalNews() {
   const session = await getServerSession(authOptions);
@@ -58,12 +56,12 @@ export default async function NationalNews() {
   });
 
   return (
-    <main className="w-full p-5">
+    <main className="w-full px-5">
       <div>
         <CurrentDate />
       </div>
       
-      <h1 className='mt-5 mx-2 font-bold text-3xl'> National</h1>
+      <h1 className='mx-2 font-bold text-3xl'> National</h1>
       <hr className="mt-5 border-gray-500" />
       <hr className="my-1 border-gray-500" />
 

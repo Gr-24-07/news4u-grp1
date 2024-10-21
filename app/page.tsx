@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardLiveNews, ArticleCardPopularNews } from './front-page/ArticleCard';
+import prisma from '@/lib/db';
+import { AllLatestNews, ArticleCardEditorChoice, ArticleCardLatestNews, ArticleCardPopularNews, LiveNewsCard } from './front-page/ArticleCard';
 import { Articles } from './front-page/types';
 import Link from 'next/link';
 import CurrencyConverter from './currency-conveter/page';
@@ -8,8 +8,6 @@ import { authOptions } from './api/auth/[...nextauth]/route';
 import { getWeather } from './weather/actions';
 import SmallWeatherCard from './weather/smallweathercard';
 import CurrentDate from './current-date/page';
-
-const prisma = new PrismaClient();
 
 export default async function HomePage() {
     const WeatherToday = await getWeather ("Linköping");
@@ -68,12 +66,12 @@ export default async function HomePage() {
     });
 
     return (
-        <main className="w-full p-10">
+        <main className="w-full pr-10 pl-10">
             <div >
                 <CurrentDate />
             </div>
             
-            {/* Latest Live News Section */}
+            {/* Latest Live News Section
             <div className="grid grid-cols-1 lg:grid-cols-4 p-5">            
                 <section className="order-2  lg:order-1 col-span-1  lg:col-span-3 ">
                     <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
@@ -81,27 +79,39 @@ export default async function HomePage() {
                     </h2>
                     <div className="space-y-3">
                         {latestLiveNews.map((article) => (
-                            <ArticleCardLiveNews key={article.id} article={article} userId={userId} />
+                            <LiveNewsCard key={article.id} article={article} userId={userId} />
                         ))}
                     </div>
                 </section>
 
-                <div className="order-1 lg:order-2 col-span-1 lg:col-span-1 p-2  mt-5 ml-10">
+                <div className=" hidden lg:block">
                     <SmallWeatherCard current = {WeatherToday} />        
                     <CurrencyConverter/>
                 </div>
-            </div>
+            </div> */}
        
-            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">    
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-2">    
 
                 {/* Latest News Section */}
                 <section className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-2 lg:col-span-2 ">
-                    <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
-                    <div className="space-y-5 ">
-                        {latestNews.map((article) => (
-                            <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
-                        ))}
-                     </div>
+                    <div>
+                        <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
+                            <Link href={"/categories/live"}>Live News</Link>
+                        </h2>
+                        <div className="space-y-3">
+                            {latestLiveNews.map((article) => (
+                                <LiveNewsCard key={article.id} article={article} userId={userId} />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
+                        <div className="space-y-5 ">
+                            {latestNews.map((article) => (
+                            <   ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                            ))}
+                        </div>
+                    </div>
                 </section>
 
                 {/* Most Popular Section */}
@@ -116,11 +126,17 @@ export default async function HomePage() {
 
                 {/* Editor's Choice Section */}
                 <section className="order-3 md:order-3 lg:order-3 col-span-1 md:col-span-1 lg:col-span-1 ">
-                    <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
-                    <div className="space-y-5 ">
-                        {editorsChoice.map((article) => (
-                            <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />  
-                        ))}
+                    <div className=" hidden lg:block">
+                        <SmallWeatherCard current = {WeatherToday} />        
+                        <CurrencyConverter/>
+                    </div>
+                    <div>
+                        <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+                        <div className="space-y-5 ">
+                            {editorsChoice.map((article) => (
+                                <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />  
+                            ))}
+                        </div>
                     </div>
                 </section>
             </div>
@@ -138,7 +154,7 @@ export default async function HomePage() {
                             <div className="space-y-2">
                                 {category.articles && category.articles.length > 0 ? (
                                     category.articles.map((article) => (
-                                        <ArticleCardLatestNews key={article.id} article={article} userId={userId} />
+                                        <AllLatestNews key={article.id} article={article} userId={userId} />
                                     ))
                                 ) : null}
                             </div>
@@ -149,10 +165,3 @@ export default async function HomePage() {
         </main>
     );
 }
-
-
-
-
-
-
-
