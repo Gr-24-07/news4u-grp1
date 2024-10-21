@@ -3,9 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React from "react";
 import { useEffect, useState } from "react";
 
-export default function ArticleSearch() {
+export default function ArticleSearch({
+  closeSheet,
+}: {
+  closeSheet: () => void;
+}) {
   // const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -36,6 +41,7 @@ export default function ArticleSearch() {
           onSubmit={(ev) => {
             ev.preventDefault();
             handleSearch(searchTerm);
+            closeSheet();
           }}
         >
           <Input

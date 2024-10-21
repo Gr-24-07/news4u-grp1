@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Menu, Search } from "lucide-react";
-import { HandCoins } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AuthStatus from "./AuthStatusClient";
 import {
@@ -12,8 +11,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import React from "react";
-import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
+import ArticleSearch from "../search/search";
+import Hamburger from "hamburger-react";
 
 export default function Navbar() {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -44,48 +44,38 @@ export default function Navbar() {
   }
 
   return (
-    <div className="sticky top-0 z-50 overflow-hidden bg-blue-100">
-      {subscribePath !== "/subscribe" && (
-        <div className="bg-orange-400 px-4 py-2 sm:py-0 sm:h-16 flex flex-col sm:flex-row items-center justify-between text-xs font-medium">
-          <div className="hidden sm:flex">October Offer!</div>
-          <div className="flex gap-0.5 items-center">
-            25% Off
-            <HandCoins className="w-4 h-4" />
-          </div>
-          <Button variant="ghost" className="gap-0.5 mt-2 sm:mt-0">
-            <Link className="flex gap-0.5 items-center" href={`/subscribe`}>
-              Subscribe Now!
-              <ArrowRight className="w-3 h-3" />
+    <div className="sticky top-0 z-50 overflow-hidden bg-white">
+      <div className="flex flex-1 mt-3 justify-end">
+        {subscribePath !== "/subscribe" && (
+          <Button className="gap-0.5 mt-2 sm:mt-0 bg-orange-400 hover:bg-orange-500 transition-colors">
+            <Link
+              className="flex gap-0.5 items-center text-xs"
+              href={`/subscribe`}
+            >
+              Subscribe Now for $9.99/Month
             </Link>
           </Button>
-        </div>
-      )}
+        )}
+      </div>
 
-      <div className="grid grid-cols-3 transition-colors px-4 py-2 gap-2 items-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 transition-colors px-4 py-2 gap-2 items-center">
         <div className="flex items-center">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button className="flex gap-2" size="icon" variant="ghost">
-                <Menu className="w-5 h-5" />
-              </Button>
+              <div>
+                <Hamburger size={26} toggled={open} toggle={setOpen} />
+              </div>
             </SheetTrigger>
             <SheetContent side="left">
               <SheetTitle className="text-lg font-semibold text-foreground mt-4">
-                <Link onClick={closeSheet} className="font-bold my-5" href="/">
+                <Link onClick={closeSheet} href="/" className="italic">
                   News4U
                 </Link>
-                <div className="flex flex-1 gap-1 items-center mb-4">
-                  <div className="flex flex-1 mt-4">
-                    <Input
-                      ref={inputRef}
-                      type="text"
-                      className="border border-zinc-300 flex rounded-r-none"
-                      placeholder="Search news, articles, and more..."
-                    />
-                    <Button size="icon" className="rounded-l-none min-w-9.5">
-                      <Search onClick={closeSheet} className="w-5 h-5" />
-                    </Button>
-                  </div>
+                <div>
+                  <ArticleSearch closeSheet={closeSheet} />
+                </div>
+                <div className="items-center px-20 md:hidden ">
+                  <AuthStatus />
                 </div>
               </SheetTitle>
               <div onClick={closeSheet} className="flex flex-col gap-2 mb-2">
@@ -105,32 +95,29 @@ export default function Navbar() {
             </SheetContent>
           </Sheet>
 
-          <div className="gap-2 flex items-center">
+          <div className="gap-2 flex items-center ">
             <div className="gap-2 flex">
               <Button size="icon" variant="ghost" onClick={handleSearchClick}>
                 <Link href={`/search`}>
-                  <Search size="icon " className="w-6 h-6" />
+                  <Search size={26} />
                 </Link>
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-center text-center">
-          <Link
-            className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl"
-            href="/"
-          >
+        <div className="font-bold sm:font-bold md:font-bold text-2xl md:text-3xl lg:text-4xl flex items-center justify-end md:justify-center lg:justify-center text-center italic">
+          <Link className="" href="/">
             News4U
           </Link>
         </div>
 
-        <div className="flex items-center justify-end">
+        <div className="md:flex items-center justify-end hidden">
           <AuthStatus />
         </div>
       </div>
 
-      <nav className="px-4 text-blue-500 bg-slate-100 hidden sm:block border-y border-slate-500">
+      <nav className="px-4 font-bold hidden sm:block border-y border-slate-500">
         <ul className="flex flex-wrap justify-center space-x-4 sm:space-x-6 md:space-x-8 py-2">
           {links.map((link) => (
             <li key={link.name}>
