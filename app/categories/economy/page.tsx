@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "@/lib/db"
 import { getServerSession } from 'next-auth';
 import { Articles } from '@/app/front-page/types';
 import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice } from '@/app/front-page/ArticleCard';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CurrentDate from '@/app/current-date/page';
-
-const prisma = new PrismaClient();
+import CurrencyConverter from '@/app/currency-conveter/page';
 
 export default async function EconomyNews() {
   const session = await getServerSession(authOptions);
@@ -58,13 +57,13 @@ export default async function EconomyNews() {
   });
 
   return (
-    <main className="w-full p-5">
+    <main className="w-full px-5">
       <div>
         <CurrentDate />
       </div>
 
-      <h1 className='mt-5 mx-2 font-bold text-3xl'> Economy</h1>
-      <hr className="mt-5 border-gray-500" />
+      <h1 className='mx-2 font-bold text-3xl'> Economy</h1>
+      <hr className="mt-3 border-gray-500" />
       <hr className="my-1 border-gray-500" />
 
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">            
@@ -90,12 +89,18 @@ export default async function EconomyNews() {
         
         {/* Editor's Choice Section */}
         <section className="order-3 md:order-3 lg:order-3 col-span-1 md:col-span-1 lg:col-span-1 ">
-          <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
-          <div className="space-y-5 ">
-            {editorsChoice.map((article) => (
-              <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />  
-            ))}
+          <div className=" hidden lg:block">
+            <CurrencyConverter/>
           </div>
+          <div>
+            <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+            <div className="space-y-5 ">
+              {editorsChoice.map((article) => (
+                <ArticleCardEditorChoice key={article.id} article={article} userId={userId} />  
+              ))}
+            </div>
+          </div>
+          
         </section>
       </div>
         

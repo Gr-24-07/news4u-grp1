@@ -11,7 +11,7 @@ export default function CurrentDate() {
     }, []);
 
     return (
-        <div className="text-sm lg:text-right mr-8">
+        <div className="text-sm text-right mr-10 mt-2">
             <p>
                {date.toLocaleDateString('en-US', { 
                     weekday: 'long', 

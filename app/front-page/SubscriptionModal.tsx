@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 
 type SubscriptionModalProps = {
   articleUrl: string;
-  onClose: () => void;
   onSubscribe: () => void;
 };
 
-export default function SubscriptionModal({ articleUrl, onClose, onSubscribe }: SubscriptionModalProps) {
+export default function SubscriptionModal({ onSubscribe }: SubscriptionModalProps) {
   const router = useRouter();
 
   return (
@@ -23,12 +22,6 @@ export default function SubscriptionModal({ articleUrl, onClose, onSubscribe }: 
               onClick={onSubscribe} // Redirect to subscription page
             >
               Subscribe Now
-            </button>
-            <button
-              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded"
-              onClick={onClose} // Close the modal
-            >
-              No, Thanks
             </button>
           </div>
         </div>

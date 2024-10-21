@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { Articles } from '@/app/front-page/types';
 import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice } from '@/app/front-page/ArticleCard';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CurrentDate from '@/app/current-date/page';
-
-const prisma = new PrismaClient();
 
 export default async function BusinessNewsPage() {
   const session = await getServerSession(authOptions);
@@ -58,12 +56,12 @@ export default async function BusinessNewsPage() {
   });
 
   return (
-    <main className="w-full p-5">
+    <main className="w-full px-5">
       <div>
         <CurrentDate />
       </div>
 
-      <h1 className='mt-5 mx-2 font-bold text-3xl'> Business</h1>
+      <h1 className='mx-2 font-bold text-3xl'> Business</h1>
       <hr className="mt-5 border-gray-500" />
       <hr className="my-1 border-gray-500" />
              
@@ -101,7 +99,7 @@ export default async function BusinessNewsPage() {
       <hr className="my-1 border-gray-500" /> 
       <hr className="my-1 border-gray-500" /> 
 
-      <section className="mt-12 p-5">
+      <section className="mt-12 ">
         <h2 className="text-lg font-bold mb-6 text-gray-700">More</h2>
         <div className="grid grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {otherCategories.map((category) => (
