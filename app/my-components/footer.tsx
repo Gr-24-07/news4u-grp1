@@ -22,7 +22,10 @@ export default function Footer() {
     <div className=" bg-slate-200 p-2">
       <footer className="md:py-12">
         <div className="flex flex-1">
-          <Link className="font-bold text-3xl" href="/">
+          <Link
+            className="font-bold italic sm:font-bold md:font-bold text-xl md:text-2xl lg:text-3xl"
+            href="/"
+          >
             News4U
           </Link>
         </div>
@@ -42,8 +45,8 @@ export default function Footer() {
 
         <div className=" hidden sm:flex w-full items-center gap-4 mt-5">
           <div>
-            <ul className="text-blue-500 flex flex-1 space-x-10 ">
-              <li className="text-blue-500 flex flex-1 space-x-10 ">
+            <ul className="flex flex-1 space-x-10 ">
+              <li className="flex flex-1 space-x-10 ">
                 {links.map((link) => (
                   <Link key={link.name} href={link.href}>
                     {link.name}
@@ -54,7 +57,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex font-bold my-3">
+        <div className="flex font-bold my-3 flex-wrap">
           <h3>Follow News4U On: </h3>
           <ul>
             <li className="flex items-center gap-4 space-x-4 px-4">
