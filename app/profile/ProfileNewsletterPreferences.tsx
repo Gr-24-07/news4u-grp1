@@ -48,8 +48,8 @@ export default function ProfileNewsletterPreferences({
       <div className="flex items-center justify-between w-full">
         <span className="text-2xl font-bold">
           {isSubscribed
-            ? "You are subscribed to our newsletter"
-            : "You are not subscribed to our newsletter"}
+            ? "You are subscribed to our newsletter!"
+            : "You are not subscribed to our newsletter."}
         </span>
         <Switch
           checked={isSubscribed}
