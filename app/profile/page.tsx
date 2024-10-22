@@ -11,6 +11,7 @@ import ProfileResetPasswordForm from "./ProfileResetPasswordForm";
 import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
 
 import { User, ProfilePageProps } from "@/types/user";
+import ProfileDeleteAccount from "./ProfileDeleteAccount";
 
 const SubscriptionInfoWrapper = dynamic(
   () => import("./SubscriptionInfoWrapper").then((mod) => mod.default),
@@ -28,18 +29,26 @@ export default async function ProfilePage({ searchParams }: PageProps) {
     redirect("/sign-in");
   }
 
-  const user = (await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    include: { subscription: true },
-  })) as User | null;
+    include: {
+      subscription: true,
+      articles: true,
+      accounts: true,
+      sessions: true,
+    },
+  });
 
   if (!user) {
-    throw new Error("User not found");
+    redirect("/sign-in?error=user_not_found");
   }
+
+  const hasActiveSubscription =
+    !!user.subscription && new Date(user.subscription.expiresAt) > new Date();
 
   const error = searchParams.error as string | undefined;
 
-  const props: ProfilePageProps = { user, error };
+  const props: ProfilePageProps = { user: user as User, error };
 
   return (
     <AuthBackground>
@@ -60,10 +69,13 @@ export default async function ProfilePage({ searchParams }: PageProps) {
               {props.error === "invalid_token_data" && "Invalid token data."}
               {props.error === "verification_failed" &&
                 "Email verification failed."}
+              {props.error === "user_not_found" &&
+                "User not found. Please sign in again."}
               {![
                 "invalid_token",
                 "invalid_token_data",
                 "verification_failed",
+                "user_not_found",
               ].includes(props.error) && "An error occurred."}
             </div>
           )}
@@ -89,6 +101,9 @@ export default async function ProfilePage({ searchParams }: PageProps) {
             />
             <ProfileResetPasswordForm />
             <ProfileChangeEmailForm />
+            <ProfileDeleteAccount
+              hasActiveSubscription={hasActiveSubscription}
+            />
           </div>
         </div>
       </div>

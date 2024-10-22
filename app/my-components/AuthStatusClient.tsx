@@ -18,7 +18,7 @@ export default function AuthStatus() {
     return <div>Loading...</div>;
   }
 
-  if (status === "authenticated") {
+  if (status === "authenticated" && session?.user) {
     return (
       <div className="flex flex-row space-x-2 justify-center">
         <Button
