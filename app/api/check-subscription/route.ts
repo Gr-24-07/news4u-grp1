@@ -1,5 +1,3 @@
-// app/api/check-subscription/route.ts
-
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -14,7 +12,8 @@ export async function GET(request: Request) {
   }
 
   try {
-    const subscription = await prisma.subscription.findMany({
+    // Query the database to check if the user has a valid subscription
+    const subscription = await prisma.subscription.findFirst({
       where: {
         userId: userId,
         expiresAt: {
@@ -22,6 +21,7 @@ export async function GET(request: Request) {
         },
       },
     });
+    
 
     const hasSubscription = !!subscription; // True if the user has a valid subscription
     return NextResponse.json({ hasSubscription }, { status: 200 });

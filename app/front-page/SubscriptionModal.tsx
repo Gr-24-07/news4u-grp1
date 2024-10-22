@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 type SubscriptionModalProps = {
-  articleUrl: string;
   onSubscribe: () => void;
 };
 
