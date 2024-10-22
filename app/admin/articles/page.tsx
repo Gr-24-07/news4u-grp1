@@ -1,10 +1,11 @@
 import { getArticles } from "@/app/data/articles";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ArticleTable from "./article-table";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export default async function ArticlesPage() {
-    const articles = await getArticles();
+    const data = await getArticles();
 
     return (
         <div className="flex flex-col gap-6">
@@ -12,7 +13,7 @@ export default async function ArticlesPage() {
             <Button asChild className="w-36 self-end">
                 <Link href="/admin/articles/create">Create New Article</Link>
             </Button>
-            <ArticleTable articles={articles}></ArticleTable>
+            <DataTable columns={columns} data={data} />
         </div>
     );
 }
