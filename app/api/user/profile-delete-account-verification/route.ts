@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { validateAndConsumeResetToken } from "@/utils/token";
+import {
+  validateAndConsumeResetToken,
+  cleanupExpiredTokens,
+} from "@/utils/token";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -58,6 +61,13 @@ export async function GET(req: Request) {
     console.log("Deleting user data...");
     try {
       await prisma.$transaction([
+        // First update verification tokens to expired
+        prisma.verificationToken.updateMany({
+          where: { identifier: user.email },
+          data: {
+            expires: new Date(Date.now() - 1000), // Set to 1 second ago
+          },
+        }),
         prisma.session.deleteMany({ where: { userId } }),
         prisma.account.deleteMany({ where: { userId } }),
         prisma.article.deleteMany({ where: { userId } }),
@@ -65,6 +75,9 @@ export async function GET(req: Request) {
         prisma.user.delete({ where: { id: userId } }),
       ]);
       console.log("User data deleted successfully");
+
+      // After the transaction completes successfully, clean up the expired tokens
+      await cleanupExpiredTokens();
     } catch (deleteError) {
       console.error("Error during data deletion:", deleteError);
       throw deleteError;
