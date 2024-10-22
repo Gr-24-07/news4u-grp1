@@ -58,11 +58,15 @@ export default function ProfileDeleteAccount({
       <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
         <h2 className="text-2xl font-bold mb-4 text-center">Delete Account</h2>
       </div>
-
-      <p className="text-black mb-4">
-        This action is irreversible. Please enter your password to initiate
-        account deletion.
-      </p>
+      <div>
+        <p className="text-black text-center">
+          This action is <a className="font-semibold">irreversible.</a>
+        </p>
+        <p className="text-black text-center">
+          Enter your password to initiate
+        </p>
+        <p className="mb-6 text-center font-semibold">account deletion.</p>
+      </div>
 
       {hasActiveSubscription && (
         <div

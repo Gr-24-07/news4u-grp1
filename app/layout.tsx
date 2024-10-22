@@ -7,6 +7,7 @@ import Navbar from "./my-components/navbar";
 import Footer from "./my-components/footer";
 import CookieConsent from "./my-components/cookie-consent";
 import { Providers } from "./my-components/Providers";
+import AccountDeletedHandler from "./profile/ProfileAccountDeleteHandler";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         )}
       >
         <Providers>
+          <AccountDeletedHandler />
           <Navbar />
           {children}
           <Footer />

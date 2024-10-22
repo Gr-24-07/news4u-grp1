@@ -11,48 +11,86 @@ export async function GET(req: Request) {
   }
 
   try {
+    console.log("Validating token...");
     const { email: userId, isValid } = await validateAndConsumeResetToken(
       token
     );
 
     if (!isValid) {
+      console.log("Token validation failed");
       return NextResponse.json(
         { error: "Invalid or expired token" },
         { status: 400 }
       );
     }
 
-    // Cancel subscription if it exists
+    console.log("Token validated successfully. User ID:", userId);
+
+    // Fetch user data
+    console.log("Fetching user data...");
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: { subscription: true },
     });
 
-    if (user?.subscription) {
-      // Here you would typically call your payment provider's API to cancel the subscription
-      // For this example, we'll just mark it as cancelled in our database
+    if (!user) {
+      console.log("User not found");
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    console.log("User found:", user.id);
+
+    // Cancel subscription if it exists
+    if (user.subscription) {
+      console.log("Cancelling subscription...");
       await prisma.subscription.update({
         where: { id: user.subscription.id },
-        data: { expiresAt: new Date() }, // Set expiration to now, effectively cancelling it
+        data: {
+          expiresAt: new Date(),
+          status: "CANCELLED",
+          cancelledAt: new Date(),
+        },
       });
+      console.log("Subscription cancelled");
     }
 
     // Delete user's data
-    await prisma.$transaction([
-      prisma.session.deleteMany({ where: { userId } }),
-      prisma.account.deleteMany({ where: { userId } }),
-      prisma.article.deleteMany({ where: { userId } }),
-      prisma.subscription.deleteMany({ where: { userId } }),
-      prisma.user.delete({ where: { id: userId } }),
-    ]);
+    console.log("Deleting user data...");
+    try {
+      await prisma.$transaction([
+        prisma.session.deleteMany({ where: { userId } }),
+        prisma.account.deleteMany({ where: { userId } }),
+        prisma.article.deleteMany({ where: { userId } }),
+        prisma.subscription.deleteMany({ where: { userId } }),
+        prisma.user.delete({ where: { id: userId } }),
+      ]);
+      console.log("User data deleted successfully");
+    } catch (deleteError) {
+      console.error("Error during data deletion:", deleteError);
+      throw deleteError;
+    }
 
-    return NextResponse.redirect(
+    // Set cookie to clear client-side session
+    const response = NextResponse.redirect(
       `${process.env.NEXTAUTH_URL}?accountDeleted=true`
     );
-  } catch (error) {
-    console.error("Account deletion error:", error);
+    response.cookies.set("next-auth.session-token", "", { maxAge: 0 });
+
+    console.log("Account deletion process completed successfully");
+    return response;
+  } catch (error: unknown) {
+    console.error("Detailed account deletion error:", error);
+
+    let errorMessage = "An error occurred during account deletion";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
     return NextResponse.json(
-      { error: "An error occurred during account deletion" },
+      {
+        error: "An error occurred during account deletion",
+        details: errorMessage,
+      },
       { status: 500 }
     );
   }

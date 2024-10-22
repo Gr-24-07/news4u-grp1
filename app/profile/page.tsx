@@ -29,13 +29,18 @@ export default async function ProfilePage({ searchParams }: PageProps) {
     redirect("/sign-in");
   }
 
-  const user = (await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    include: { subscription: true },
-  })) as User | null;
+    include: {
+      subscription: true,
+      articles: true,
+      accounts: true,
+      sessions: true,
+    },
+  });
 
   if (!user) {
-    throw new Error("User not found");
+    redirect("/sign-in?error=user_not_found");
   }
 
   const hasActiveSubscription =
@@ -43,7 +48,7 @@ export default async function ProfilePage({ searchParams }: PageProps) {
 
   const error = searchParams.error as string | undefined;
 
-  const props: ProfilePageProps = { user, error };
+  const props: ProfilePageProps = { user: user as User, error };
 
   return (
     <AuthBackground>
@@ -64,10 +69,13 @@ export default async function ProfilePage({ searchParams }: PageProps) {
               {props.error === "invalid_token_data" && "Invalid token data."}
               {props.error === "verification_failed" &&
                 "Email verification failed."}
+              {props.error === "user_not_found" &&
+                "User not found. Please sign in again."}
               {![
                 "invalid_token",
                 "invalid_token_data",
                 "verification_failed",
+                "user_not_found",
               ].includes(props.error) && "An error occurred."}
             </div>
           )}
