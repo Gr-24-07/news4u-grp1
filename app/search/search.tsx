@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function ArticleSearch({
   closeSheet,
 }: {
-  closeSheet: () => void;
+  closeSheet?: () => void;
 }) {
   // const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,13 +35,15 @@ export default function ArticleSearch({
 
   return (
     <div className="flex flex-1 gap1 items-center m-4">
-      <div className="flex flex-1 m-4">
+      <div className="flex flex-1">
         <form
           className="flex flex-1 items-center"
           onSubmit={(ev) => {
             ev.preventDefault();
             handleSearch(searchTerm);
-            closeSheet();
+            if (closeSheet) {
+              closeSheet();
+            }
           }}
         >
           <Input

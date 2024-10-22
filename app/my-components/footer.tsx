@@ -19,8 +19,8 @@ export default function Footer() {
   ];
 
   return (
-    <div className=" bg-slate-200 p-2">
-      <footer className="md:py-12">
+    <div className="bg-orange-50 p-2">
+      <footer className="md:py-5">
         <div className="flex flex-1">
           <Link
             className="font-bold italic sm:font-bold md:font-bold text-xl md:text-2xl lg:text-3xl"
@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
 
         {session?.user?.role === "ADMIN" ? (
-          <div className="px-4 h-6 items-center justify-end sm:flex hidden border-b border-slate-500">
+          <div className="px-4 h-6 items-center justify-end flex border-b border-slate-500">
             <Link
               className="text-muted-foreground hover:text-foreground text-sm"
               href="/admin"
@@ -43,12 +43,16 @@ export default function Footer() {
           []
         )}
 
-        <div className=" hidden sm:flex w-full items-center gap-4 mt-5">
+        <div className="font-bold text-sm hidden md:flex w-full items-center gap-4 mt-5">
           <div>
-            <ul className="flex flex-1 space-x-10 ">
-              <li className="flex flex-1 space-x-10 ">
+            <ul className="md:flex flex-1 space-x-10 hidden">
+              <li className="flex flex-1 space-x-10">
                 {links.map((link) => (
-                  <Link key={link.name} href={link.href}>
+                  <Link
+                    className="hover:underline"
+                    key={link.name}
+                    href={link.href}
+                  >
                     {link.name}
                   </Link>
                 ))}
@@ -57,10 +61,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex font-bold my-3 flex-wrap">
+        <div className="flex font-bold my-3 flex-wrap sm:space-y-2">
           <h3>Follow News4U On: </h3>
           <ul>
-            <li className="flex items-center gap-4 space-x-4 px-4">
+            <li className="flex items-center gap-4 space-x-4 sm:px-4">
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
@@ -93,7 +97,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <p className="text-sm mt-5">
+        <p className="text-sm mt-5 mb-1">
           Copyright 2024 News4U. All rights reserved.
         </p>
       </footer>

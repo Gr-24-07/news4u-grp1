@@ -44,8 +44,8 @@ export default function Navbar() {
   }
 
   return (
-    <div className="sticky top-0 z-50 overflow-hidden bg-white">
-      <div className="flex flex-1 mt-3 justify-end">
+    <div className="sticky top-0 z-50 bg-orange-50">
+      <div className="flex flex-1 mt-3 mr-4 sm:mr-3 justify-end">
         {subscribePath !== "/subscribe" && (
           <Button className="gap-0.5 mt-2 sm:mt-0 bg-orange-400 hover:bg-orange-500 transition-colors">
             <Link
@@ -68,22 +68,26 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="left">
               <SheetTitle className="text-lg font-semibold text-foreground mt-4">
-                <Link onClick={closeSheet} href="/" className="italic">
+                <Link
+                  onClick={closeSheet}
+                  href="/"
+                  className="italic font-bold mx-4"
+                >
                   News4U
                 </Link>
                 <div>
                   <ArticleSearch closeSheet={closeSheet} />
                 </div>
-                <div className="items-center px-20 md:hidden ">
+                <div className="items-center md:hidden ">
                   <AuthStatus />
                 </div>
               </SheetTitle>
-              <div onClick={closeSheet} className="flex flex-col gap-2 mb-2">
-                <ul className="space-y-1">
+              <div onClick={closeSheet} className="flex flex-col gap-2 m-4">
+                <ul className="space-y-2">
                   {links.map((link) => (
                     <li key={`${link.href}-sheet-link`}>
                       <Link
-                        className="flex items-center border border-slate-50 py-1 rounded text-center hover:bg-slate-100"
+                        className="flex items-center pl-2 border border-slate-200 py-1 rounded text-center hover:bg-slate-200 hover:underline underline-offset-1"
                         href={link.href}
                       >
                         {link.name}
@@ -117,11 +121,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className="px-4 font-bold hidden sm:block border-y border-slate-500">
-        <ul className="flex flex-wrap justify-center space-x-4 sm:space-x-6 md:space-x-8 py-2">
+      <nav className="px-4 font-bold hidden md:block border-y border-slate-500">
+        <ul className="md:flex justify-center space-x-4 sm:space-x-6 md:space-x-8 py-2 hidden">
           {links.map((link) => (
-            <li key={link.name}>
-              <Link href={link.href} className="hover:text-blue-700 text-sm">
+            <li className="hover:underline" key={link.name}>
+              <Link href={link.href} className="text-sm">
                 {link.name}
               </Link>
             </li>

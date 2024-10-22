@@ -40,7 +40,7 @@ export default async function SearchPage({
         Search Page
       </h1>
       <div>
-        <ArticleSearch closeSheet={close} />
+        <ArticleSearch />
       </div>
 
       <div className="px-4 gap-2">
