@@ -1,16 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { checkUserSubscription } from "@/app/front-page/checkUserSubscription";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 import SubscriptionModal from "@/app/front-page/SubscriptionModal";
+import { checkUserSubscription } from "@/app/front-page/checkUserSubscription";
 
-export default function ArticlePage({ params, userId }: { params: { id: string }; userId: string }) {
+export default function ArticlePage({ params }: { params: { id: string } }) {
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession(); // Use NextAuth session
+  
+  const userId = session?.user?.id; // Extract userId from session
 
   // Fetch the article details
   useEffect(() => {
@@ -26,28 +30,28 @@ export default function ArticlePage({ params, userId }: { params: { id: string }
       } catch (error) {
         console.error("Failed to fetch article:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchArticle();
   }, [params.id]);
 
-  // After showing the article, check the subscription status after 5 seconds
+  // Check subscription status after article is shown
   useEffect(() => {
     const checkSubscription = async () => {
-      const hasSubscription = await checkUserSubscription(userId);
-      if (hasSubscription) {
-        setShowModal(false); 
-      } else {
-        setShowModal(true); 
+      if (userId) {
+        const hasSubscription = await checkUserSubscription(userId);
+        console.log(userId)
+        console.log(hasSubscription)
+        setShowModal(!hasSubscription);
       }
     };
 
-    // Set a 5-second delay to check the subscription status
-    const timer = setTimeout(checkSubscription, 5000); 
+    // 5-second delay to check the subscription status
+    const timer = setTimeout(checkSubscription, 5000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [userId]);
 
   if (loading) return <div>Loading article...</div>;
@@ -77,7 +81,6 @@ export default function ArticlePage({ params, userId }: { params: { id: string }
       {/* Show the subscription modal if the user is not subscribed */}
       {showModal && (
         <SubscriptionModal
-          articleUrl={`/article-page/${article.id}`}
           onSubscribe={handleSubscribeRedirect}
         />
       )}
