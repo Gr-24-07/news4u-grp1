@@ -1,7 +1,7 @@
 "use client";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/session/sessionManager";
 
 export default function Footer() {
   const { data: session } = useSession();

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
+import { useUserEmail } from "@/lib/api/userEmailMangager";
 
 const changeEmailSchema = z.object({
   newEmail: z.string().email("Invalid email address"),
@@ -16,34 +17,11 @@ type MessageType = {
 } | null;
 
 export default function ProfileChangeEmailForm() {
-  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+  const currentEmail = useUserEmail();
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<MessageType>(null);
-
-  useEffect(() => {
-    const fetchCurrentEmail = async () => {
-      try {
-        console.log("Fetching current email...");
-        const response = await fetch("/api/user/profile-current-email");
-        console.log("Response status:", response.status);
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Received data:", data);
-          setCurrentEmail(data.email);
-        } else {
-          console.error("Failed to fetch current email");
-          const errorData = await response.json();
-          console.error("Error data:", errorData);
-        }
-      } catch (error) {
-        console.error("Error fetching current email:", error);
-      }
-    };
-
-    fetchCurrentEmail();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
