@@ -42,22 +42,42 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
     const checkSubscription = async () => {
       if (userId) {
         const hasSubscription = await checkUserSubscription(userId);
-        console.log(userId)
-        console.log(hasSubscription)
+        //console.log(userId)
+        //console.log(hasSubscription)
         setShowModal(!hasSubscription);
+      }
+      else{
+        router.push('/subscribe')
       }
     };
 
     // 5-second delay to check the subscription status
     const timer = setTimeout(checkSubscription, 5000);
 
-    return () => clearTimeout(timer);
-  }, [userId]);
+    return () => {clearTimeout(timer);
+    };
+  }, [userId, router]);
+
+  useEffect(() => {
+    if(showModal){
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return() => {
+      (document.body.style.overflow = "auto");
+    };
+  }, [showModal]);
 
   if (loading) return <div>Loading article...</div>;
   if (!article) return <div>Article not found.</div>;
 
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {
+    setShowModal(false);
+    router.push('/');
+  };
+
   const handleSubscribeRedirect = () => {
     setShowModal(false);
     router.push("/subscribe");
@@ -82,6 +102,7 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
       {showModal && (
         <SubscriptionModal
           onSubscribe={handleSubscribeRedirect}
+          onClose={handleModalClose}
         />
       )}
     </div>

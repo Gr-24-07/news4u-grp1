@@ -4,6 +4,7 @@ import { Articles } from './types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
+import { DateTime } from "luxon";
 
 type ArticleCardProps = {
   article: Articles;
@@ -20,6 +21,8 @@ export function ArticleCardLatestNews({ article }: ArticleCardProps) {
         setIsNavigating(true);
         router.push(`/article-page/${article.id}`);
   }
+  
+  const options = { zone: "UTC" };
 
   return (
     <div className="cursor-pointer"  onClick={handleClick}>
@@ -37,9 +40,14 @@ export function ArticleCardLatestNews({ article }: ArticleCardProps) {
         {article.summary}
       </p>
       <p className="text-xs text-gray-500 pt-1 mt-2 ">
-        {new Date(article.createdAt).toLocaleDateString()}
+        <time className="text-muted-foreground">
+          {DateTime.fromJSDate(
+            article.createdAt,
+            options
+          ).toRelative()}
+        </time>      
       </p>
-      <hr className="my-4 border-gray-300" />
+        <hr className="my-4 border-gray-300" />
 
     </div>
   );
@@ -57,6 +65,8 @@ export function ArticleCardPopularNews({ article}: ArticleCardProps) {
       router.push(`/article-page/${article.id}`);
   }
 
+  const options = { zone: "UTC" };
+
   return (
     <div className="cursor-pointer"  onClick={handleClick}>
       <h3 className="font-bold text-base text-black hover:underline" >
@@ -72,8 +82,13 @@ export function ArticleCardPopularNews({ article}: ArticleCardProps) {
       <p className="text-sm text-gray-700 whitespace-normal break-words pt-3 mt-2" >
         {article.summary}
       </p>
-      <p className="text-xs text-gray-500 pt-1 mt-2">
-        {new Date(article.createdAt).toLocaleDateString()}
+      <p className="text-xs text-gray-500 pt-1 mt-2 ">
+        <time className="text-muted-foreground">
+          {DateTime.fromJSDate(
+            article.createdAt,
+            options
+          ).toRelative()}
+        </time>      
       </p>
       <hr className="my-4 border-gray-300" />
     </div>
@@ -92,6 +107,8 @@ export function ArticleCardEditorChoice({ article}: ArticleCardProps) {
         router.push(`/article-page/${article.id}`);
 }
 
+const options = { zone: "UTC" };
+
   return (
     <div className="cursor-pointer"  onClick={handleClick}>
       <h3 className="font-bold text-base text-black hover:underline">
@@ -109,8 +126,13 @@ export function ArticleCardEditorChoice({ article}: ArticleCardProps) {
       <p className="text-sm text-gray-700 whitespace-normal break-words pt-3 mt-2" >
         {article.summary}
       </p>
-      <p className="text-xs text-gray-500 pt-1 mt-2">
-        {new Date(article.createdAt).toLocaleDateString()}
+      <p className="text-xs text-gray-500 pt-1 mt-2 ">
+        <time className="text-muted-foreground">
+          {DateTime.fromJSDate(
+            article.createdAt,
+            options
+          ).toRelative()}
+        </time>      
       </p>
       <hr className="my-4 border-gray-300" />
     </div>
@@ -129,6 +151,9 @@ export function LiveNewsCard({ article}: ArticleCardProps) {
         router.push(`/article-page/${article.id}`);
 }
 
+const options = { zone: "UTC" };
+
+
   return (
     <div className="cursor-pointer"  onClick={handleClick}>
       <h3 className="font-bold text-xl text-black hover:underline " >
@@ -144,8 +169,13 @@ export function LiveNewsCard({ article}: ArticleCardProps) {
       <p className="text-base text-gray-700 whitespace-normal break-words pt-3 mt-2" >
         {article.summary}
       </p>
-      <p className="text-xs text-gray-500 pt-1 mt-2">
-        {new Date(article.createdAt).toLocaleDateString()}
+      <p className="text-xs text-gray-500 pt-1 mt-2 ">
+        <time className="text-muted-foreground">
+          {DateTime.fromJSDate(
+            article.createdAt,
+            options
+          ).toRelative()}
+        </time>      
       </p>
       <hr className="my-4 border-gray-300" />
     </div>
@@ -164,6 +194,8 @@ export function AllLatestNews({ article}: ArticleCardProps) {
         router.push(`/article-page/${article.id}`);
   }
 
+  const options = { zone: "UTC" };
+
   return (
     <div className="cursor-pointer"  onClick={handleClick}>
       <h3 className="font-bold text-sm md:text-base text-black hover:underline ml-1" >
@@ -179,8 +211,13 @@ export function AllLatestNews({ article}: ArticleCardProps) {
       <p className="text-sm text-gray-700 whitespace-normal break-words pt-3 mt-2 ml-1" >
         {article.summary}
       </p>
-      <p className="text-xs text-gray-500 pt-1 mt-2 ml-1 ">
-        {new Date(article.createdAt).toLocaleDateString()}
+      <p className="text-xs text-gray-500 pt-1 mt-2 ">
+        <time className="text-muted-foreground">
+          {DateTime.fromJSDate(
+            article.createdAt,
+            options
+          ).toRelative()}
+        </time>      
       </p>
     </div>
   );

@@ -77,25 +77,6 @@ export default async function HomePage() {
         <CurrentDate />
       </div>
 
-      {/* Latest Live News Section
-            <div className="grid grid-cols-1 lg:grid-cols-4 p-5">            
-                <section className="order-2  lg:order-1 col-span-1  lg:col-span-3 ">
-                    <h2 className="text-3xl font-bold mb-6 text-red-500 hover:text-red-900">
-                        <Link href={"/categories/live"}>Live News</Link>
-                    </h2>
-                    <div className="space-y-3">
-                        {latestLiveNews.map((article) => (
-                            <LiveNewsCard key={article.id} article={article} userId={userId} />
-                        ))}
-                    </div>
-                </section>
-
-                <div className=" hidden lg:block">
-                    <SmallWeatherCard current = {WeatherToday} />        
-                    <CurrencyConverter/>
-                </div>
-            </div> */}
-
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-2">
         {/* Latest News Section */}
         <section className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-2 lg:col-span-2 ">
@@ -108,7 +89,6 @@ export default async function HomePage() {
                 <LiveNewsCard
                   key={article.id}
                   article={article}
-                  userId={userId}
                 />
               ))}
             </div>
@@ -122,7 +102,6 @@ export default async function HomePage() {
                 <ArticleCardLatestNews
                   key={article.id}
                   article={article}
-                  userId={userId}
                 />
               ))}
             </div>
@@ -139,7 +118,6 @@ export default async function HomePage() {
               <ArticleCardPopularNews
                 key={article.id}
                 article={article}
-                userId={userId}
               />
             ))}
           </div>
@@ -160,7 +138,6 @@ export default async function HomePage() {
                 <ArticleCardEditorChoice
                   key={article.id}
                   article={article}
-                  userId={userId}
                 />
               ))}
             </div>
@@ -186,7 +163,6 @@ export default async function HomePage() {
                       <AllLatestNews
                         key={article.id}
                         article={article}
-                        userId={userId}
                       />
                     ))
                   : null}
