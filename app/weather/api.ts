@@ -1,25 +1,50 @@
-import { WeatherData } from "./types";
+import { ApiError } from "./errors";
+import { ErrorApiResponse, SuccessApiResponse, WeatherData } from "./types";
+
+export type WeatherResponse =
+  | SuccessApiResponse<WeatherData>
+  | ErrorApiResponse;
 
 abstract class WeatherApi {
   static baseUrl = "https://weatherapi.dreammaker-it.se";
 
-  static async getWeather(query: string, lang?: string): Promise<WeatherData> {
-    const url = this.baseUrl + "/Forecast";
-    const searchParams = new URLSearchParams();
-    searchParams.append("city", query);
+  static async getWeather(
+    query: string,
+    lang?: string
+  ): Promise<WeatherResponse> {
+    try {
+      const url = this.baseUrl + "/Forecast";
+      const searchParams = new URLSearchParams();
+      searchParams.append("city", query);
 
-    if (lang) {
-      searchParams.append("lang", lang);
+      if (lang) {
+        searchParams.append("lang", lang);
+      }
+      const response = await fetch(url + "?" + searchParams.toString());
+
+      if (!response.ok) {
+        throw new ApiError(response.statusText, response.status);
+      }
+
+      return {
+        success: true,
+        data: await response.json(),
+        statusCode: response.status,
+      };
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return {
+          success: false,
+          error: error.message,
+          statusCode: error.statusCode,
+        };
+      }
+      return {
+        success: false,
+        error: "something went wrong, Try Again!",
+        statusCode: 500,
+      };
     }
-    const response = await fetch(url + "?" + searchParams.toString());
-
-    if (response.status !== 200) {
-      // error handling
-      throw new Error(response.statusText);
-    }
-
-    console.log(response);
-    return response.json();
   }
 
   static async getDailyWeather(
