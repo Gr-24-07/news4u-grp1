@@ -7,9 +7,9 @@ export default async function WeatherPage({
 }: {
   searchParams: { q?: string };
 }) {
-  const currentWeather = await getWeather(searchParams.q ?? "Stockholm");
-  const hourlyForecast = await getHourlyWeather(searchParams.q ?? "Stockholm");
-  const dailyWeather = await getDailyWeather(searchParams.q ?? "Stockholm");
+  const currentWeather = await getWeather(searchParams.q ?? "Linköping ");
+  const hourlyForecast = await getHourlyWeather(searchParams.q ?? "Linköping ");
+  const dailyWeather = await getDailyWeather(searchParams.q ?? "Linköping ");
 
   // throw new Error();
 
