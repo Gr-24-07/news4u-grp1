@@ -19,6 +19,10 @@ export default function ForgotPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (isSuccess) {
       window.scrollTo(0, 0);
     }

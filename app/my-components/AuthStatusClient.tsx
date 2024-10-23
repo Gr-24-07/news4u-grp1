@@ -11,6 +11,7 @@ export default function AuthStatus() {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    window.location.reload();
     router.push("/");
   };
 

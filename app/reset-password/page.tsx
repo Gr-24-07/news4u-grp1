@@ -46,6 +46,10 @@ export default function ResetPasswordPage() {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (isSuccess) {
       window.scrollTo(0, 0);
       const timer = setTimeout(() => {
