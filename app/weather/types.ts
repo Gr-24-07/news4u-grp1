@@ -24,3 +24,17 @@ export interface SmallWeatherData {
     code: string;
   };
 }
+
+export interface BaseApiResponse {
+  statusCode: number;
+}
+
+export interface SuccessApiResponse<TData = unknown> extends BaseApiResponse {
+  success: true;
+  data: TData;
+}
+
+export interface ErrorApiResponse<TData = unknown> extends BaseApiResponse {
+  success: false;
+  error: TData;
+}
