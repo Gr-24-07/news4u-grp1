@@ -23,7 +23,7 @@ export default function AuthStatus() {
       <div className="flex flex-row space-x-2 justify-center">
         <Button
           asChild
-          className="py-1 px-2 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
+          className="p-3 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium"
         >
           <Link href="/profile">Profile</Link>
         </Button>
