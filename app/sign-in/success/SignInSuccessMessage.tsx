@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import AuthBackground from "@/app/my-components/AuthBackground";
@@ -8,7 +8,8 @@ import AuthBackground from "@/app/my-components/AuthBackground";
 export default function SignInSuccessMessage() {
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
     const timer = setTimeout(() => {
       router.push("/");
     }, 2000);

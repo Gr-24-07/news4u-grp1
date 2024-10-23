@@ -47,6 +47,7 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (isSuccess) {
+      window.scrollTo(0, 0);
       const timer = setTimeout(() => {
         router.push("/sign-in");
       }, 5000);

@@ -10,6 +10,7 @@ export default function SignUpSuccessMessage() {
   const [secondsLeft, setSecondsLeft] = useState(30);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const timer = setInterval(() => {
       setSecondsLeft((prevSeconds) => {
         if (prevSeconds <= 1) {

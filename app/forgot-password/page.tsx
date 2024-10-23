@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,6 +17,12 @@ type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export default function ForgotPasswordPage() {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isSuccess) {
+      window.scrollTo(0, 0);
+    }
+  }, [isSuccess]);
 
   const {
     register,

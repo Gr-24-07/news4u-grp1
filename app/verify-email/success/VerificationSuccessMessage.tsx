@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AuthBackground from "@/app/my-components/AuthBackground";
 import { CheckCircle } from "lucide-react";
@@ -8,7 +8,8 @@ import { CheckCircle } from "lucide-react";
 export default function VerificationSuccessMessage() {
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
     const timer = setTimeout(() => {
       router.push("/sign-in"); // Redirect to sign-in page after 5 seconds
     }, 5000);
