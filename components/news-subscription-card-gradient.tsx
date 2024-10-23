@@ -36,21 +36,21 @@ export function NewsSubscriptionCardGradient({
     };
 
     return (
-        <Card className="w-[300px] h-[500px] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 text-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-blue-200 flex flex-col">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-b border-blue-300 h-[130px] flex flex-col justify-start">
-                <CardTitle className="text-2xl font-bold truncate">
+        <Card className="w-[300px] h-[500px] overflow-hidden bg-gradient-to-l from-orange-50 to-white text-black shadow-lg hover:shadow-xl transition-shadow duration-300 border border-orange-200 flex flex-col">
+            <CardHeader className="bg-gradient-to-r from-white to-orange-50 text-white border-b border-orange-300 h-[130px] flex flex-col justify-start">
+                <CardTitle className="text-2xl font-bold truncate text-black">
                     {subscriptionType.name}
                 </CardTitle>
-                <CardDescription className="text-blue-100 line-clamp-2">
+                <CardDescription className="text-gray-600 line-clamp-2">
                     {subscriptionType.description}
                 </CardDescription>
             </CardHeader>
             <CardContent className="pt-6 flex-grow flex flex-col justify-between">
                 <div>
-                    <div className="text-4xl font-extrabold mb-2 text-blue-900">
+                    <div className="text-4xl font-extrabold mb-2 text-black">
                         {formatPrice(subscriptionType.priceInCents)}
                     </div>
-                    <div className="text-sm text-blue-600">
+                    <div className="text-sm text-gray-600">
                         for {formatDuration(subscriptionType.durationInSeconds)}
                     </div>
                 </div>
@@ -75,9 +75,9 @@ export function NewsSubscriptionCardGradient({
                     </li>
                 </ul>
             </CardContent>
-            <CardFooter className="bg-gradient-to-r from-blue-50 to-blue-100 border-t border-blue-200 py-6">
+            <CardFooter className="bg-gradient-to-l from-orange-50 to-white border-t border-orange-200 py-6">
                 <Button
-                    className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
+                    className="w-full bg-orange-600 text-white hover:bg-orange-700 transition-colors duration-300"
                     asChild
                 >
                     <Link href={`/subscribe/${subscriptionType.slug}`}>

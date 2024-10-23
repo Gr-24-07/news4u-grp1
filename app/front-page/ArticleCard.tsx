@@ -7,19 +7,18 @@ import Image from 'next/image';
 
 type ArticleCardProps = {
   article: Articles;
-  userId: string;
 };
 
 // Latest News Card 
-export function ArticleCardLatestNews({ article, userId }: ArticleCardProps) {
+export function ArticleCardLatestNews({ article }: ArticleCardProps) {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
   const handleClick = async () => {
     if (isNavigating) 
       return;
-    setIsNavigating(true);
-    router.push(`/article-page/${article.id}`);
+        setIsNavigating(true);
+        router.push(`/article-page/${article.id}`);
   }
 
   return (
@@ -47,7 +46,7 @@ export function ArticleCardLatestNews({ article, userId }: ArticleCardProps) {
 }
 
 // Popular News Card
-export function ArticleCardPopularNews({ article, userId }: ArticleCardProps) {
+export function ArticleCardPopularNews({ article}: ArticleCardProps) {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -82,7 +81,7 @@ export function ArticleCardPopularNews({ article, userId }: ArticleCardProps) {
 }
 
 // Editor's Choice Card
-export function ArticleCardEditorChoice({ article, userId }: ArticleCardProps) {
+export function ArticleCardEditorChoice({ article}: ArticleCardProps) {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -119,7 +118,7 @@ export function ArticleCardEditorChoice({ article, userId }: ArticleCardProps) {
 }
 
 // Live News Card 
-export function LiveNewsCard({ article, userId }: ArticleCardProps) {
+export function LiveNewsCard({ article}: ArticleCardProps) {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -154,7 +153,7 @@ export function LiveNewsCard({ article, userId }: ArticleCardProps) {
 }
 
 // All News Card 
-export function AllLatestNews({ article, userId }: ArticleCardProps) {
+export function AllLatestNews({ article}: ArticleCardProps) {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 

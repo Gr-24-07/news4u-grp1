@@ -308,7 +308,7 @@ export default async function AdminPage() {
                     return (
                         <div
                             key={subTypeStats.name}
-                            className="border-2 border-slate-300 p-4 rounded-lg flex-grow"
+                            className="border-2 border-orange-300 p-4 rounded-lg flex-grow"
                         >
                             <h1 className="font-bold text-lg">
                                 {subTypeStats.name}
