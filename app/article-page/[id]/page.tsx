@@ -13,7 +13,7 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const { data: session } = useSession(); // Use NextAuth session
-  
+
   const userId = session?.user?.id; // Extract userId from session
 
   // Fetch the article details
@@ -45,28 +45,28 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
         //console.log(userId)
         //console.log(hasSubscription)
         setShowModal(!hasSubscription);
-      }
-      else{
-        router.push('/subscribe')
+      } else {
+        router.push("/subscribe");
       }
     };
 
     // 5-second delay to check the subscription status
     const timer = setTimeout(checkSubscription, 5000);
 
-    return () => {clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
     };
   }, [userId, router]);
 
   useEffect(() => {
-    if(showModal){
+    if (showModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
 
-    return() => {
-      (document.body.style.overflow = "auto");
+    return () => {
+      document.body.style.overflow = "auto";
     };
   }, [showModal]);
 
@@ -75,7 +75,7 @@ export default function ArticlePage({ params }: { params: { id: string } }) {
 
   const handleModalClose = () => {
     setShowModal(false);
-    router.push('/');
+    router.push("/");
   };
 
   const handleSubscribeRedirect = () => {
