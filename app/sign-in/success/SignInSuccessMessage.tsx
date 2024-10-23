@@ -18,7 +18,7 @@ export default function SuccessMessage() {
 
   return (
     <AuthBackground>
-      <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-white">
+      <div className="text-black bg-white rounded-lg shadow-md border border-black my-8">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
           <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
           <h1 className="text-black text-4xl font-bold mb-4">
