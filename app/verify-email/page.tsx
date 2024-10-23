@@ -58,31 +58,29 @@ export default function VerifyEmail() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md rounded-lg shadow-md border border-black">
-        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="px-6 py-8">
-            <h1 className="text-3xl font-extrabold text-black text-center mb-6">
-              Email Verification
-            </h1>
-            {status === "loading" && (
-              <div className="text-center">
-                <Loader2 className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
-                <p className="text-gray-700">Verifying your email...</p>
-              </div>
-            )}
-            {status === "success" && (
-              <div className="text-center">
-                <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                <p className="text-green-600">Email verified successfully!</p>
-              </div>
-            )}
-            {status === "error" && (
-              <div className="text-center">
-                <XCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
-                <p className="text-red-600">{error}</p>
-              </div>
-            )}
-          </div>
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl border border-black my-8">
+        <div className="px-6 py-8 flex flex-col items-center">
+          <h1 className="text-3xl font-extrabold text-black text-center mb-6">
+            Email Verification
+          </h1>
+          {status === "loading" && (
+            <div className="text-center">
+              <Loader2 className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
+              <p className="text-gray-700">Verifying your email...</p>
+            </div>
+          )}
+          {status === "success" && (
+            <div className="text-center">
+              <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <p className="text-green-600">Email verified successfully!</p>
+            </div>
+          )}
+          {status === "error" && (
+            <div className="text-center">
+              <XCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
+              <p className="text-red-600">{error}</p>
+            </div>
+          )}
         </div>
       </div>
     </AuthBackground>

@@ -6,7 +6,7 @@ type AuthBackgroundProps = {
 
 const AuthBackground: React.FC<AuthBackgroundProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-orange-100 to-orange-50">
+    <div className="flex items-center justify-center bg-gradient-to-l from-orange-100 to-orange-50 h-full">
       <div className="w-full max-w-md">{children}</div>
     </div>
   );

@@ -71,8 +71,8 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="container mx-auto -mt-16 sm:-mt-24 mb-auto">
-      <div className="max-w-md mx-auto">
+    <div className="container mx-auto flex items-center justify-center py-8">
+      <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-black">
           <div className="px-6 py-8">
             <h2 className="text-center text-3xl font-extrabold text-black mb-6 pb-4 border-b border-gray-400">
