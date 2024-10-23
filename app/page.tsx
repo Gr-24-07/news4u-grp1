@@ -86,10 +86,7 @@ export default async function HomePage() {
             </h2>
             <div className="space-y-3">
               {latestLiveNews.map((article) => (
-                <LiveNewsCard
-                  key={article.id}
-                  article={article}
-                />
+                <LiveNewsCard key={article.id} article={article} />
               ))}
             </div>
           </div>
@@ -99,10 +96,7 @@ export default async function HomePage() {
             </h2>
             <div className="space-y-5 ">
               {latestNews.map((article) => (
-                <ArticleCardLatestNews
-                  key={article.id}
-                  article={article}
-                />
+                <ArticleCardLatestNews key={article.id} article={article} />
               ))}
             </div>
           </div>
@@ -115,10 +109,7 @@ export default async function HomePage() {
           </h2>
           <div className="space-y-5 ">
             {mostPopular.map((article) => (
-              <ArticleCardPopularNews
-                key={article.id}
-                article={article}
-              />
+              <ArticleCardPopularNews key={article.id} article={article} />
             ))}
           </div>
         </section>
@@ -126,7 +117,9 @@ export default async function HomePage() {
         {/* Editor's Choice Section */}
         <section className="order-3 md:order-3 lg:order-3 col-span-1 md:col-span-1 lg:col-span-1 ">
           <div className=" hidden lg:block">
-            <SmallWeatherCard current={WeatherToday} />
+            <Link href="/weather">
+              <SmallWeatherCard current={WeatherToday} />
+            </Link>
             <CurrencyConverter />
           </div>
           <div>
@@ -135,10 +128,7 @@ export default async function HomePage() {
             </h2>
             <div className="space-y-5 ">
               {editorsChoice.map((article) => (
-                <ArticleCardEditorChoice
-                  key={article.id}
-                  article={article}
-                />
+                <ArticleCardEditorChoice key={article.id} article={article} />
               ))}
             </div>
           </div>
@@ -160,10 +150,7 @@ export default async function HomePage() {
               <div className="space-y-2">
                 {category.articles && category.articles.length > 0
                   ? category.articles.map((article) => (
-                      <AllLatestNews
-                        key={article.id}
-                        article={article}
-                      />
+                      <AllLatestNews key={article.id} article={article} />
                     ))
                   : null}
               </div>

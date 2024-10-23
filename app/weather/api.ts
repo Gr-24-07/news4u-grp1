@@ -20,7 +20,9 @@ abstract class WeatherApi {
       if (lang) {
         searchParams.append("lang", lang);
       }
-      const response = await fetch(url + "?" + searchParams.toString());
+      const response = await fetch(url + "?" + searchParams.toString(), {
+        cache: "no-store",
+      });
 
       if (!response.ok) {
         throw new ApiError(response.statusText, response.status);
