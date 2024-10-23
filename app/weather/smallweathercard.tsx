@@ -20,12 +20,11 @@ export default function SmallWeatherCard({
         />
         <div>
           <h3 className=" font-bold mb-2 border-zinc-700">
-            {`Linköping ${current.temperatureC}°C`}
+            {`${current.city} ${current.temperatureC}°C`}
           </h3>
           <p className="text-sm">{current.summary}</p>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }
