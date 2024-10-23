@@ -11,10 +11,12 @@ export default async function WeatherPage({
   const hourlyForecast = await getHourlyWeather(searchParams.q ?? "Stockholm");
   const dailyWeather = await getDailyWeather(searchParams.q ?? "Stockholm");
 
+  // throw new Error();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] min-h-screen p-5 gap-5 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid min-h-screen p-2 gap-5 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 sm:items-start">
-        <h1 className="w-full text-3xl bg-blue-400 font-bold text-white p-2">
+        <h1 className="w-full text-3xl bg-blue-400 font-bold p-2 text-white">
           Weather Today
         </h1>
         <WeatherCard

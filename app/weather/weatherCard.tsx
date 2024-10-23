@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DropletIcon, WindIcon, Thermometer } from "lucide-react";
+import { DropletIcon, WindIcon, Thermometer, Search } from "lucide-react";
 import Image from "next/image";
 
 export default function WeatherCard({
@@ -47,27 +47,25 @@ export default function WeatherCard({
   return (
     <div className="flex gap-4 w-full flex-wrap md:flex-nowrap">
       <div className="basis-full md:basis-1/2 xl:basis-2/5">
-        <form onSubmit={handleSubmit} className="flex gap-4 mb-4">
+        <form onSubmit={handleSubmit} className="flex mb-4">
           <input
             value={query}
             onChange={handleChange}
-            className="w-full border border-zinc-700 rounded-full h-9.5 px-3"
+            className="w-full border border-zinc-700 h-9.5 px-3 rounded-l-lg"
             placeholder="Enter a city"
           />
-          <Button className="rounded-full bg-blue-600 hover:bg-blue-400">
-            Search
+          <Button className="rounded-l-none">
+            <Search />
           </Button>
         </form>
 
         <div className="w-full border border-zinc-700 rounded-lg p-4">
           <div>
             <div>
-              <div>
-                <h2 className="text-2xl font-bold mb-2">{now.city}</h2>
-                <p className="text-sm text-muted-foreground mb-3">
-                  {formattedDate}
-                </p>
-              </div>
+              <h2 className="text-2xl font-bold mb-2">{now.city}</h2>
+              <p className="text-sm text-muted-foreground mb-3">
+                {formattedDate}
+              </p>
             </div>
           </div>
           <div>
@@ -174,12 +172,12 @@ export default function WeatherCard({
           </TabsContent>
 
           <TabsContent value="daily" className="flex-1">
-            <Card className="h-full">
+            <Card className="h-full border border-zinc-700">
               <CardContent className="grid grid-cols-5 gap-2 h-full p-0">
                 {daily.slice(0, 5).map((daily, index) => (
                   <div
                     key={`daily-${daily.unixTime}-${daily.temperatureC}`}
-                    className="flex flex-col items-center justify-center border-r- last:border-none gap-3"
+                    className="flex flex-col items-center justify-center border-r last:border-none gap-3"
                   >
                     <div>
                       {index === 0
