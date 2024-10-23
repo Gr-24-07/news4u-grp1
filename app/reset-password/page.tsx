@@ -79,83 +79,70 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden border border-black">
-        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="px-6 py-8">
-            {!isSuccess ? (
-              <>
-                <h2 className="text-center text-3xl font-extrabold text-black mb-6">
-                  Reset your password
-                </h2>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="block text-sm font-medium text-gray-700">
-                            New Password
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="password"
-                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-600" />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="block text-sm font-medium text-gray-700">
-                            Confirm New Password
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="password"
-                              className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-600" />
-                        </FormItem>
-                      )}
-                    />
-                    <Button
-                      type="submit"
-                      className="w-full flex justify-center"
-                    >
-                      Reset Password
-                    </Button>
-                  </form>
-                </Form>
-                {message && (
-                  <p className="mt-2 text-sm text-red-600">{message}</p>
-                )}
-              </>
-            ) : (
-              <div className="flex flex-col items-center">
-                <CheckCircle className="mb-4 h-12 w-12 text-green-500" />
-                <div className="text-center">
-                  <p className="text-sm font-medium text-black">{message}</p>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Redirecting to sign-in page...
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <main className="flex w-full max-w-md flex-1 flex-col items-center justify-center px-4 py-8 text-center text-black bg-white rounded-lg shadow-md border border-black my-8 min-h-[300px]">
+        {!isSuccess ? (
+          <>
+            <h2 className="text-4xl font-bold mb-6">Reset your password</h2>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block text-sm font-medium text-gray-700">
+                        New Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="password"
+                          className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-600" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block text-sm font-medium text-gray-700">
+                        Confirm New Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="password"
+                          className="bg-white border border-gray-300 text-black placeholder-gray-400 focus:ring-2"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-600" />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full flex justify-center">
+                  Reset Password
+                </Button>
+              </form>
+            </Form>
+            {message && <p className="mt-2 text-sm text-red-600">{message}</p>}
+          </>
+        ) : (
+          <>
+            <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
+            <p className="text-xl font-medium text-black mb-2">{message}</p>
+            <p className="text-sm text-gray-600">
+              Redirecting to sign-in page...
+            </p>
+          </>
+        )}
+      </main>
     </AuthBackground>
   );
 }

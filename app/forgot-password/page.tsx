@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import AuthBackground from "../my-components/AuthBackground";
 import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -47,67 +48,58 @@ export default function ForgotPasswordPage() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden border border-black">
-        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="px-6 py-8">
-            {!isSuccess ? (
-              <>
-                <div className="border-b border-gray-400 pb-1 mb-8 mt-1">
-                  <h2 className="text-center text-3xl font-extrabold text-black mb-2">
-                    Forgot your password?
-                  </h2>
+      <main className="flex w-full max-w-md flex-1 flex-col items-center justify-center px-4 py-8 text-center text-black bg-white rounded-lg shadow-md border border-black my-8 min-h-[300px]">
+        {!isSuccess ? (
+          <>
+            <h1 className="text-4xl font-bold mb-4">Forgot your password?</h1>
+            <p className="text-sm text-gray-600 mb-6">
+              Enter your email address and we'll send you a link to reset your
+              password.
+            </p>
+            <form
+              className="w-full space-y-6"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 text-left"
+                >
+                  Email address
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    {...register("email")}
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm bg-white text-black"
+                  />
                 </div>
-                <p className="text-center text-sm text-gray-600 mb-6">
-                  Enter your email address and we'll send you a link to reset
-                  your password.
-                </p>
-                <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Email address
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="email"
-                        type="email"
-                        autoComplete="email"
-                        {...register("email")}
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm bg-white text-black"
-                      />
-                    </div>
-                    {errors.email && (
-                      <p className="mt-2 text-sm text-red-600">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <Button
-                      type="submit"
-                      className="w-full flex justify-center"
-                    >
-                      Send reset link
-                    </Button>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <div className="text-center">
-                <p className="text-sm font-medium text-black">{message}</p>
-                <p className="mt-2 text-sm text-gray-600">
-                  Please check your email for further instructions.
-                </p>
+                {errors.email && (
+                  <p className="mt-2 text-sm text-red-600 text-left">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
-            )}
-            {message && !isSuccess && (
-              <p className="mt-2 text-sm text-red-600">{message}</p>
-            )}
-          </div>
-        </div>
-      </div>
+              <Button type="submit" className="w-full flex justify-center">
+                Send reset link
+              </Button>
+            </form>
+          </>
+        ) : (
+          <>
+            <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
+            <p className="text-xl font-medium text-black mb-2">{message}</p>
+            <p className="text-sm text-gray-600">
+              Please check your email for further instructions.
+            </p>
+          </>
+        )}
+        {message && !isSuccess && (
+          <p className="mt-2 text-sm text-red-600">{message}</p>
+        )}
+      </main>
     </AuthBackground>
   );
 }

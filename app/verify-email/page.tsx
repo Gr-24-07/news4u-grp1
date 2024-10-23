@@ -58,7 +58,7 @@ export default function VerifyEmail() {
 
   return (
     <AuthBackground>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl border border-black my-8">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl border border-black my-8 min-h-[300px]">
         <div className="px-6 py-8 flex flex-col items-center">
           <h1 className="text-3xl font-extrabold text-black text-center mb-6">
             Email Verification

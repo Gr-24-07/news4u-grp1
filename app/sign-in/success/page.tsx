@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
-import SuccessMessage from "./SignInSuccessMessage";
+import SignInSuccessMessage from "./SignInSuccessMessage";
 
 export default function SignInSuccessPage() {
-  return <SuccessMessage />;
+  return <SignInSuccessMessage />;
 }
