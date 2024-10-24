@@ -15,6 +15,7 @@ import { getWeather } from "./weather/actions";
 import SmallWeatherCard from "./weather/smallweathercard";
 import CurrentDate from "./current-date/page";
 import { Banknote,Cloud } from "lucide-react";
+import CurrentWeatherIcon from "./weather/currentweathericon";
 
 export default async function HomePage() {
   const WeatherToday = await getWeather("Linköping");
@@ -74,28 +75,25 @@ export default async function HomePage() {
 
   return (
     <main className="w-full pr-10 pl-10">
-      <div>
+      <div className="mb-2">
         <CurrentDate />
       </div>
 
       <div className="sm:hidden flex justify-end w-full mb-2">
-        <Link
-          className="flex gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md ml-auto"
-          href="/weather" // Ensure the path is correct
-        >
-          < Cloud />
+        <Link href="/weather">
+          <CurrentWeatherIcon current={WeatherToday} />
         </Link>
       </div>
       
-      <div className="sm:hidden flex justify-end w-full">
+      {/* <div className="sm:hidden flex justify-end w-full">
         <Link
           className="flex gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md ml-auto"
           href="/currency-conveter" // Ensure the path is correct
         >
           <Banknote />
-           {/* Currency Converter */}
+          Currency Converter 
         </Link>
-      </div>
+      </div>*/}
 
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-2">
         {/* Latest News Section */}
@@ -143,24 +141,22 @@ export default async function HomePage() {
             <CurrencyConverter />
           </div>
 
-          <div className="sm:hidden flex justify-end w-full mb-2">
-            <Link
-              className="flex gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md ml-auto"
-              href="/weather" // Ensure the path is correct
-            >
-              < Cloud/>
+          <div className="hidden md:flex lg:hidden justify-end w-full mt-4">
+            <Link href="/weather">
+              <CurrentWeatherIcon current={WeatherToday} />
             </Link>
-          </div>
+            </div>
 
-          <div>
+
+          {/*<div>
             <Link
               className="justify-center gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md hidden md:flex lg:hidden"
               href="/currency-conveter"// Ensure the path is correct
             >
               <Banknote  />
-              {/* Currency Converter */}
+             Currency Converter 
             </Link>
-          </div>
+          </div>*/}
 
           <div>
             <h2 className="text-sm font-bold mb-6 text-orange-500 hover:text-orange-700">
