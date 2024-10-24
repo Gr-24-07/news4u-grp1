@@ -15,6 +15,7 @@ import ArticleSearch from "../search/search";
 import Hamburger from "hamburger-react";
 import { useSession } from "next-auth/react";
 import { checkUserSubscription } from "../front-page/checkUserSubscription";
+import Image from "next/image";
 
 export default function Navbar() {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -59,7 +60,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-l from-orange-100 to-orange-50">
+    <div className="sticky top-0 z-50 bg-orange-100 ">
       <div className="flex flex-1 pt-3 mr-4 sm:mr-3 justify-end">
         {!subscriber ? (
           <Button className="gap-0.5 mt-2 sm:mt-0 bg-orange-400 hover:bg-orange-500 transition-colors">
@@ -129,9 +130,15 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="font-bold sm:font-bold md:font-bold text-2xl md:text-3xl lg:text-4xl flex items-center justify-end md:justify-center lg:justify-center text-center italic">
+        <div className=" flex items-center justify-end md:justify-center lg:justify-center text-center">
           <Link className="" href="/">
-            News4U
+            <Image
+              src="/new4u.png"
+              alt="News4U"
+              width={200}
+              height={100}
+              className="lg:min-h-[10vh]"
+            />
           </Link>
         </div>
 
