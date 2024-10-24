@@ -1,7 +1,7 @@
+import { authOptions } from "@/lib/api/authOptions";
 import prisma from "@/lib/db";
 import { Article, Category } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export type ArticleWithCategoryAuthor = Article & {
     category: Category[];

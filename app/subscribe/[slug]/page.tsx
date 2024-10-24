@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import PaymentForm from "./payment-form";
+import { authOptions } from "@/lib/api/authOptions";
 
 interface PageProps {
     params: {

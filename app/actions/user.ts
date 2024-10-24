@@ -1,10 +1,10 @@
 "use server";
 
+import { authOptions } from "@/lib/api/authOptions";
 import prisma from "@/lib/db";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 const UpdateUserRoleSchema = z.object({
     id: z.string(),

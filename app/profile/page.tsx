@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import dynamic from "next/dynamic";
@@ -12,6 +11,7 @@ import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
 
 import { User, ProfilePageProps } from "@/types/user";
 import ProfileDeleteAccount from "./ProfileDeleteAccount";
+import { authOptions } from "@/lib/api/authOptions";
 
 const SubscriptionInfoWrapper = dynamic(
     () => import("./SubscriptionInfoWrapper").then((mod) => mod.default),

@@ -6,7 +6,7 @@ import { getCategories } from "../data/categories";
 import { revalidatePath } from "next/cache";
 import xss from "xss";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/api/authOptions";
 
 const CreateArticleSchema = z.object({
     headline: z.string().min(1, "Headline is required"),
