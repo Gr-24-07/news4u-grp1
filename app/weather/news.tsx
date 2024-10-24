@@ -16,4 +16,5 @@ export default async function WeatherNews() {
       </div>
     </div>
   );
+
 }
