@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/db";
 
-const debugLog = (message: string, data?: any) => {
+const debugLog = (message: string, data?: unknown) => {
     if (process.env.NODE_ENV === "development") {
         console.log(
             `%c[EmailAPI] ${message}`,

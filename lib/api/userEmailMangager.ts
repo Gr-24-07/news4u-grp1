@@ -9,7 +9,7 @@ let globalEmailCache: EmailCache | null = null;
 let pendingPromise: Promise<string | null> | null = null;
 const CACHE_DURATION = 60 * 1000; // 1 minute cache
 
-const debugLog = (message: string, data?: any) => {
+const debugLog = (message: string, data?: unknown) => {
     if (process.env.NODE_ENV === "development") {
         console.log(
             `%c[EmailManager] ${message}`,

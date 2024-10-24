@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { NewsSubscriptionCardGradient } from "@/components/news-subscription-card-gradient";
 import { Prisma } from "@prisma/client";
 
-type SubscriptionType = Prisma.SubscriptionTypeGetPayload<{}>;
+type SubscriptionType = Prisma.SubscriptionTypeGetPayload<object>;
 
 interface SubscribeClientWrapperProps {
     subscriptionTypes: SubscriptionType[];
