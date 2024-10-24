@@ -37,6 +37,7 @@ export function useCancelSubscription() {
 
   return { cancelSubscription, isLoading, error };
 }
+
 export function useUpdateAutoRenew() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

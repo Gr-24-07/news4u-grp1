@@ -81,7 +81,17 @@ export default function ProfileSubscriptionInfo({
   };
 
   const handleAutoRenewToggle = async () => {
-    await onUpdateAutoRenew(!subscription.autoRenew);
+    if (!subscription.autoRenew && subscription.status === "CANCELLED") {
+      if (
+        window.confirm(
+          "Would you like to reactivate your subscription? This will remove the cancellation and continue your subscription."
+        )
+      ) {
+        await onUpdateAutoRenew(true);
+      }
+    } else {
+      await onUpdateAutoRenew(!subscription.autoRenew);
+    }
   };
 
   return (
@@ -124,7 +134,7 @@ export default function ProfileSubscriptionInfo({
             <Switch
               checked={subscription.autoRenew}
               onCheckedChange={handleAutoRenewToggle}
-              disabled={!isActive || subscription.status === "CANCELLED"}
+              disabled={!isActive && expiresAt <= now}
             />
           </div>
           {subscription.status === "ACTIVE" && (
