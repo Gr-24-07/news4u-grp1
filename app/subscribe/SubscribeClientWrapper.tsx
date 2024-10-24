@@ -16,7 +16,6 @@ interface SubscribeClientWrapperProps {
 
 export default function SubscribeClientWrapper({
     subscriptionTypes,
-    userId,
     isResubscribing,
     subscriptionStatus,
 }: SubscribeClientWrapperProps) {
