@@ -9,6 +9,7 @@ export default async function WeatherNews() {
 
   const weatherArticles = await prisma.article.findMany({
     where: { category: { some: { name: "Weather" } } },
+    take: 3,
   });
 
   return (
