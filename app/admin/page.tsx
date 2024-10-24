@@ -1,6 +1,6 @@
 import { ChartConfig } from "@/components/ui/chart";
 import {
-    getNewSubscribersData,
+    // getNewSubscribersData,
     getSubscriptionCountsByType,
 } from "../data/subscriptions";
 import NewSubsChart from "./new-sub-chart";
