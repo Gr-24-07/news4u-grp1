@@ -78,7 +78,7 @@ export default async function NationalNews() {
 
         {/* Most Popular Section */}
         <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-1 lg:col-span-1 ">
-          <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
+          <h2 className="text-sm font-bold mb-6 text-orange-500 hover:text-orange-700">Most Popular News</h2>
           <div className="space-y-5 ">
             {mostPopular.map((article) => (
               <ArticleCardPopularNews key={article.id} article={article}  />  
@@ -88,7 +88,7 @@ export default async function NationalNews() {
 
         {/* Editor's Choice Section */}
         <section className="order-3 md:order-3 lg:order-3 col-span-1 md:col-span-1 lg:col-span-1 ">
-          <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+          <h2 className="text-sm font-bold mb-6 text-orange-500 hover:text-orange-700">Editor's Choice</h2>
           <div className="space-y-5 ">
             {editorsChoice.map((article) => (
               <ArticleCardEditorChoice key={article.id} article={article}  />  

@@ -5,6 +5,8 @@ import { ArticleCardLatestNews, ArticleCardPopularNews, ArticleCardEditorChoice,
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CurrentDate from '@/app/current-date/page';
 import CurrencyConverter from '@/app/currency-conveter/page';
+import Link from "next/link";
+import {Banknote} from "lucide-react";
 
 export default async function EconomyNews() {
   const session = await getServerSession(authOptions);
@@ -69,6 +71,17 @@ export default async function EconomyNews() {
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-10 p-5">            
         {/* Latest News Section */}
         <section className="order-1 md:order-2 lg:order-2 col-span-1 md:col-span-2 lg:col-span-2 ">
+        
+          <div className="sm:hidden flex justify-end w-full">
+            <Link
+              className="flex gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md ml-auto"
+              href="/currency-conveter" // Ensure the path is correct
+            >
+              <Banknote/>
+              Currency Converter
+            </Link>
+          </div>
+          
           <h2 className="text-sm font-bold mb-6 text-red-500 hover:text-red-900">Latest News</h2>
           <div className="space-y-5 ">
             {latestNews.map((article) => (
@@ -79,7 +92,7 @@ export default async function EconomyNews() {
 
         {/* Most Popular Section */}
         <section className="order-2 md:order-1 lg:order-1 col-span-1 md:col-span-1 lg:col-span-1 ">
-          <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Most Popular News</h2>
+          <h2 className="text-sm font-bold mb-6 text-orange-500 hover:text-orange-700">Most Popular News</h2>
           <div className="space-y-5 ">
             {mostPopular.map((article) => (
               <ArticleCardPopularNews key={article.id} article={article}  />  
@@ -92,8 +105,19 @@ export default async function EconomyNews() {
           <div className=" hidden lg:block">
             <CurrencyConverter/>
           </div>
+          
           <div>
-            <h2 className="text-sm font-bold mb-6 text-blue-500 hover:text-blue-900">Editor's Choice</h2>
+            <Link
+              className="justify-center gap-0.5 items-center text-xs text-white bg-black px-3 py-2 rounded-md hidden md:flex lg:hidden"
+              href="/currency-conveter"// Ensure the path is correct
+            >
+              <Banknote />
+              Currency Converter
+            </Link>
+          </div>
+
+          <div>
+            <h2 className="text-sm font-bold mb-6 text-orange-500 hover:text-orange-700">Editor's Choice</h2>
             <div className="space-y-5 ">
               {editorsChoice.map((article) => (
                 <ArticleCardEditorChoice key={article.id} article={article}  />  
