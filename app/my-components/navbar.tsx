@@ -60,7 +60,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="sticky top-0 z-50 bg-orange-100 ">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-100 via-orange-50 to-orange-50 ">
       <div className="flex flex-1 pt-3 mr-4 sm:mr-3 justify-end">
         {!subscriber ? (
           <Button className="gap-0.5 mt-2 sm:mt-0 bg-orange-400 hover:bg-orange-500 transition-colors">
