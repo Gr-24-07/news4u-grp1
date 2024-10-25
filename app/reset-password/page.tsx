@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import AuthBackground from "../my-components/AuthBackground";
-import { CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 const resetPasswordSchema = z
   .object({
@@ -142,8 +142,9 @@ export default function ResetPasswordPage() {
           <>
             <CheckCircle className="mb-6 h-16 w-16 text-green-600" />
             <p className="text-xl font-medium text-black mb-2">{message}</p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 flex items-center justify-center">
               Redirecting to sign-in page...
+              <ArrowRight className="ml-2 h-4 w-4" />
             </p>
           </>
         )}

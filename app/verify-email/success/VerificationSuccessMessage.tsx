@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AuthBackground from "@/app/my-components/AuthBackground";
-import { CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 export default function VerificationSuccessMessage() {
   const router = useRouter();
@@ -30,6 +30,7 @@ export default function VerificationSuccessMessage() {
           </p>
           <p className="text-sm text-gray-500 text-center">
             Redirecting to sign-in page...
+            <ArrowRight className="ml-2 h-4 w-4" />
           </p>
         </div>
       </div>
