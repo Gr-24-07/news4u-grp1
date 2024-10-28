@@ -1,13 +1,14 @@
 import { getDailyWeather, getHourlyWeather, getWeather } from "./actions";
 import WeatherCard from "./weatherCard";
 import WeatherNews from "./news";
+import { use } from "react";
 
 export default async function WeatherPage({
     searchParams,
 }: {
-    searchParams: { q?: Promise<string> };
+    searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-    const query = await searchParams.q;
+    const query = use(searchParams).q;
     const currentWeather = await getWeather(query ?? "Linköping ");
     const hourlyForecast = await getHourlyWeather(query ?? "Linköping ");
     const dailyWeather = await getDailyWeather(query ?? "Linköping ");

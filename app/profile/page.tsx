@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
-import dynamic from "next/dynamic";
 
 import AuthBackground from "../my-components/AuthBackground";
 import ProfilePersonalInfoForm from "./ProfilePersonalInfoForm";
@@ -13,15 +12,16 @@ import { User, ProfilePageProps } from "@/types/user";
 import ProfileDeleteAccount from "./ProfileDeleteAccount";
 import { authOptions } from "@/lib/api/authOptions";
 import SubscriptionInfoWrapper from "./SubscriptionInfoWrapper";
+import { use } from "react";
 
 type PageProps = {
-    searchParams: {
-        [key: string]: Promise<string> | Promise<string[]> | Promise<undefined>;
-    };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function ProfilePage({ searchParams }: PageProps) {
     const session = await getServerSession(authOptions);
+
+    const params = use(searchParams);
 
     if (!session) {
         redirect("/sign-in");
@@ -45,7 +45,7 @@ export default async function ProfilePage({ searchParams }: PageProps) {
         !!user.subscription &&
         new Date(user.subscription.expiresAt) > new Date();
 
-    const error = (await searchParams.error) as string | undefined;
+    const error = params.error as string | undefined;
 
     const props: ProfilePageProps = { user: user as User, error };
 
