@@ -12,14 +12,12 @@ import ProfileNewsletterPreferences from "./ProfileNewsletterPreferences";
 import { User, ProfilePageProps } from "@/types/user";
 import ProfileDeleteAccount from "./ProfileDeleteAccount";
 import { authOptions } from "@/lib/api/authOptions";
-
-const SubscriptionInfoWrapper = dynamic(
-    () => import("./SubscriptionInfoWrapper").then((mod) => mod.default),
-    { ssr: false }
-);
+import SubscriptionInfoWrapper from "./SubscriptionInfoWrapper";
 
 type PageProps = {
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: {
+        [key: string]: Promise<string> | Promise<string[]> | Promise<undefined>;
+    };
 };
 
 export default async function ProfilePage({ searchParams }: PageProps) {
@@ -47,7 +45,7 @@ export default async function ProfilePage({ searchParams }: PageProps) {
         !!user.subscription &&
         new Date(user.subscription.expiresAt) > new Date();
 
-    const error = searchParams.error as string | undefined;
+    const error = (await searchParams.error) as string | undefined;
 
     const props: ProfilePageProps = { user: user as User, error };
 
