@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-
 interface CurrencySelectProps {
     selectedCurrency: string;
     handleCurrency: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function CurrencySelect({ selectedCurrency, handleCurrency }: CurrencySelectProps) {
+interface CurrencySelectProps {
+    selectedCurrency: string;
+    handleCurrency(...args: unknown[]): unknown;
+}
+
+export default function CurrencySelect({
+    selectedCurrency,
+    handleCurrency
+}: CurrencySelectProps) {
     const currencyCodes = [
         "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
         "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
@@ -49,9 +55,3 @@ export default function CurrencySelect({ selectedCurrency, handleCurrency }: Cur
         </div>
     );
 }
-
-// Optional: Prop types for validation if you're using this in a JS environment
-CurrencySelect.propTypes = {
-    selectedCurrency: PropTypes.string.isRequired,
-    handleCurrency: PropTypes.func.isRequired,
-};

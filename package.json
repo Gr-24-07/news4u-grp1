@@ -37,13 +37,13 @@
         "hamburger-react": "^2.5.1",
         "lucide-react": "^0.441.0",
         "luxon": "^3.5.0",
-        "next": "^14.2.14",
+        "next": "^15.0.2-canary.9",
         "next-auth": "^4.24.8",
         "next-themes": "^0.3.0",
         "nodemailer": "^6.9.15",
-        "react": "^18",
+        "react": "^19.0.0-rc-cae764ce-20241025",
         "react-chartjs-2": "^5.2.0",
-        "react-dom": "^18",
+        "react-dom": "^19.0.0-rc-cae764ce-20241025",
         "react-quill": "^2.0.0",
         "recharts": "^2.12.7",
         "tailwind-merge": "^2.5.2",
@@ -57,10 +57,10 @@
         "@types/next-auth": "^3.13.0",
         "@types/node": "^20.16.5",
         "@types/nodemailer": "^6.4.16",
-        "@types/react": "^18.3.12",
-        "@types/react-dom": "^18",
+        "@types/react": "npm:types-react@rc",
+        "@types/react-dom": "npm:types-react-dom@rc",
         "eslint": "^8",
-        "eslint-config-next": "14.2.11",
+        "eslint-config-next": "^15.0.0-rc.1",
         "postcss": "^8",
         "prisma": "^5.19.1",
         "react-hook-form": "^7.53.0",
@@ -71,5 +71,9 @@
     },
     "prisma": {
         "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    },
+    "overrides": {
+        "@types/react": "npm:types-react@rc",
+        "@types/react-dom": "npm:types-react-dom@rc"
     }
 }
