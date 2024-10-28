@@ -12,7 +12,6 @@ import { User, ProfilePageProps } from "@/types/user";
 import ProfileDeleteAccount from "./ProfileDeleteAccount";
 import { authOptions } from "@/lib/api/authOptions";
 import SubscriptionInfoWrapper from "./SubscriptionInfoWrapper";
-import { use } from "react";
 
 type PageProps = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -21,7 +20,7 @@ type PageProps = {
 export default async function ProfilePage({ searchParams }: PageProps) {
     const session = await getServerSession(authOptions);
 
-    const params = use(searchParams);
+    const params = await searchParams;
 
     if (!session) {
         redirect("/sign-in");
